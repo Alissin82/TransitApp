@@ -15,6 +15,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
-        "mdbootstrap": "^4.20.0"
+        "mdbootstrap": "^4.20.0",
+        "toastr": "^2.1.4"
     }
 }
