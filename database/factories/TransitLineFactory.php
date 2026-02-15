@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Terminal;
 use App\Models\TransitLine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,11 +19,9 @@ class TransitLineFactory extends Factory
     public function definition(): array
     {
         return [
-            'origin_city' => $this->faker->city(),
-            'destination_city' => $this->faker->city(),
-            'origin_terminal' => $this->faker->streetName(),
-            'destination_terminal' => $this->faker->streetName(),
             'price' => $this->faker->numberBetween(1000, 10000),
+            'origin_terminal_id' => Terminal::factory(),
+            'destination_terminal_id' => Terminal::factory(),
         ];
     }
 }

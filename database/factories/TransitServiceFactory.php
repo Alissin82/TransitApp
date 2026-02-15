@@ -19,8 +19,8 @@ class TransitServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'transit_line_id' => TransitLine::factory(),
             'departure_time' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
+            'transit_line_id' => TransitLine::factory(),
         ];
     }
 }

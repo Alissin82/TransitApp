@@ -13,8 +13,8 @@ class TransitService extends Model
     use HasFactory;
 
     protected $fillable = [
-        'transit_line_id',
         'departure_time',
+        'transit_line_id',
     ];
 
     public function transitLine(): BelongsTo
