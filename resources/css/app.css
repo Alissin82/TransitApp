@@ -1,7 +1,6 @@
 @import 'tailwindcss/theme.css' layer(theme) prefix(tw);
 @import 'tailwindcss/utilities.css' layer(utilities) prefix(tw);
-@import 'mdbootstrap/css/bootstrap.min.css';
-@import 'mdbootstrap/css/mdb.min.css';
+@import 'mdb-ui-kit/css/mdb.rtl.min.css';
 
 @font-face {
         font-family: 'IRANSans';
