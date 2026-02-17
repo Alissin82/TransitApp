@@ -42,6 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">داشبورد</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('terminals.index') }}">پایانه‌ها</a>
+                    </li>
                 </ul>
                 <!-- Left links -->
             </div>
