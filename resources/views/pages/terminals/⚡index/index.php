@@ -2,12 +2,10 @@
 
 use App\Services\TerminalService;
 use App\Traits\ToastR;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-new #[Title('پایانه‌ها')]
-class extends Component
+new class extends Component
 {
     use ToastR, WithPagination;
 
@@ -32,10 +30,10 @@ class extends Component
         $this->toastSuccess('پایانه با موفقیت حذف شد.');
     }
 
-    public function render(TerminalService $service): Illuminate\View\View
+    public function render(TerminalService $service)
     {
-        return view('pages.terminals.⚡index.index', [
+        return $this->view()->with([
             'terminals' => $service->paginate($this->perPage, $this->search)
-        ]);
+        ])->title(__('terminals'));
     }
 };

@@ -129,7 +129,6 @@ new class extends Component
 
     public function render()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         return $this->view()->title(
             $this->terminal ? $this->terminal->name : 'پایانه جدید'
         );
