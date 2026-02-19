@@ -4,12 +4,12 @@
         <h2 class="mb-0">
             <a href="{{ request()->url() }}">
                 <i class="fas fa-bus me-2"></i>
-                {{ $terminal ? 'ویرایش پایانه' : 'ایجاد پایانه جدید' }}
+                {{ $terminal ? __('Terminal.Edit Terminal') : __('Terminal.Create New Terminal') }}
             </a>
         </h2>
         <a href="{{ route('terminals.index') }}" class="btn btn-outline-secondary" wire:navigate>
             <i class="fas fa-arrow-right me-2"></i>
-            بازگشت
+            {{ __('Back') }}
         </a>
     </div>
 
@@ -22,7 +22,7 @@
                     <div class="col-12">
                         <x-forms.input
                             name="name"
-                            label="نام پایانه"
+                            :label="__('Terminal.Name Label')"
                             wire:model="name"
                             required
                         />
@@ -35,7 +35,7 @@
                         <x-forms.input
                             input-type="select"
                             name="province_id"
-                            label="استان"
+                            :label="__('Region.Province')"
                             :options="$provinces"
                             wire:model.live="province_id"
                             required
@@ -45,7 +45,7 @@
                         <x-forms.input
                             input-type="select"
                             name="county_id"
-                            label="شهرستان"
+                            :label="__('Region.County')"
                             :options="$counties"
                             wire:model.live="county_id"
                             :disabled="!$province_id"
@@ -60,7 +60,7 @@
                         <x-forms.input
                             input-type="select"
                             name="district_id"
-                            label="بخش"
+                            :label="__('Region.District')"
                             :options="$districts"
                             wire:model.live="district_id"
                             :disabled="!$county_id"
@@ -71,7 +71,7 @@
                         <x-forms.input
                             input-type="select"
                             name="settlement_id"
-                            label="دهستان/شهر"
+                            :label="__('Region.Settlement')"
                             :options="$settlements"
                             wire:model.live="settlement_id"
                             :disabled="!$district_id"
@@ -86,7 +86,7 @@
                         <x-forms.input
                             input-type="select"
                             name="village_id"
-                            label="روستا (اختیاری)"
+                            :label="__('Region.Village') . ' (' . __('Optional') . ')'"
                             :options="$villages"
                             wire:model="village_id"
                             :disabled="!$settlement_id"
@@ -98,7 +98,7 @@
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save me-2"></i>
-                        {{ $terminal ? 'ذخیره تغییرات' : 'ذخیره' }}
+                        {{ $terminal ? __('Save Changes') : __('Save') }}
                     </button>
                 </div>
             </form>

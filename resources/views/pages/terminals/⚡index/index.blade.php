@@ -4,12 +4,12 @@
         <h2 class="mb-0">
             <a href="{{ route('terminals.index') }}" wire:navigate>
                 <i class="fas fa-bus me-2"></i>
-                مدیریت پایانه‌ها
+                {{ __('Terminal.Manage Terminals') }}
             </a>
         </h2>
         <a href="{{ route('terminals.create') }}" class="btn btn-primary" wire:navigate>
             <i class="fas fa-plus me-2"></i>
-            پایانه جدید
+            {{ __('Terminal.New Terminal') }}
         </a>
     </div>
 
@@ -18,9 +18,9 @@
         <div class="card-body">
             <x-forms.input
                     name="searchInput"
-                    label="جستجو"
+                    :label="__('Search')"
                     wire:model.live.debounce.300ms="search"
-                    placeholder="جستجو در پایانه‌ها..."
+                    :placeholder="__('Terminal.Search Placeholder')"
             />
         </div>
     </div>
@@ -38,13 +38,13 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>نام پایانه</th>
-                            <th>استان</th>
-                            <th>شهرستان</th>
-                            <th>بخش</th>
-                            <th>دهستان/شهر</th>
-                            <th>روستا</th>
-                            <th>عملیات</th>
+                            <th>{{ __('Terminal.Name Label') }}</th>
+                            <th>{{ __('Region.Province') }}</th>
+                            <th>{{ __('Region.County') }}</th>
+                            <th>{{ __('Region.District') }}</th>
+                            <th>{{ __('Region.Settlement') }}</th>
+                            <th>{{ __('Region.Village') }}</th>
+                            <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,7 +68,7 @@
                                         </a>
                                         <button
                                             wire:click="delete({{ $terminal->id }})"
-                                            wire:confirm="آیا از حذف این پایانه مطمئن هستید؟"
+                                            wire:confirm="{{ __('Terminal.Delete Confirmation') }}"
                                             class="btn btn-danger"
                                         >
                                             <i class="fas fa-trash"></i>
@@ -80,7 +80,7 @@
                             <tr>
                                 <td colspan="8" class="text-center text-muted py-4">
                                     <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-                                    هیچ پایانه‌ای یافت نشد.
+                                    {{ __('Terminal.No Terminals Found') }}
                                 </td>
                             </tr>
                         @endforelse

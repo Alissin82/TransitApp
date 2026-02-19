@@ -22,7 +22,7 @@
                 {{ $attributes->merge(['class' => "form-select $errorClass"]) }}
                 @disabled($disabled)
         >
-            <option value="">{{ $placeholder ?? 'انتخاب کنید' }}</option>
+            <option value="">{{ $placeholder ?? __('Select an option') }}</option>
             @foreach ($options as $key => $optionLabel)
                 <option value="{{ $key }}">{{ $optionLabel }}</option>
             @endforeach

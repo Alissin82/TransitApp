@@ -113,10 +113,10 @@ new class extends Component
 
             if ($this->terminal) {
                 $service->update($this->terminal, $validated);
-                $this->toastSuccess('پایانه با موفقیت ویرایش شد.');
+                $this->toastSuccess(__('Terminal.Terminal Edited Successfully.'));
             } else {
                 $terminal = $service->create($validated);
-                $this->toastSuccess('پایانه با موفقیت ایجاد شد.');
+                $this->toastSuccess(__('Terminal.Terminal Created Successfully.'));
                 $this->redirect(route('terminals.edit',[
                     'id' => $terminal->id,
                 ]), true);
@@ -130,7 +130,7 @@ new class extends Component
     public function render()
     {
         return $this->view()->title(
-            $this->terminal ? $this->terminal->name : 'پایانه جدید'
+            $this->terminal ? $this->terminal->name : __('Terminal.New Terminal')
         );
     }
 };
