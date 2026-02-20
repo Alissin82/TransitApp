@@ -4,7 +4,7 @@
         <h2 class="mb-0">
             <a href="{{ request()->url() }}">
                 <i class="fas fa-bus me-2"></i>
-                {{ $terminal ? __('Terminal.Edit Terminal') : __('Terminal.Create New Terminal') }}
+                {{ $terminal ? __('Terminal.Edit Record') : __('Terminal.New Record') }}
             </a>
         </h2>
         <a href="{{ route('terminals.index') }}" class="btn btn-outline-secondary" wire:navigate>
@@ -22,9 +22,8 @@
                     <div class="col-12">
                         <x-forms.input
                             name="name"
-                            :label="__('Terminal.Name Label')"
+                            :label="__('Terminal.Attributes.Name')"
                             wire:model="name"
-                            required
                         />
                     </div>
                 </div>
@@ -38,7 +37,6 @@
                             :label="__('Region.Province')"
                             :options="$provinces"
                             wire:model.live="province_id"
-                            required
                         />
                     </div>
                     <div class="col-md-6">
@@ -49,7 +47,6 @@
                             :options="$counties"
                             wire:model.live="county_id"
                             :disabled="!$province_id"
-                            required
                         />
                     </div>
                 </div>
@@ -64,7 +61,6 @@
                             :options="$districts"
                             wire:model.live="district_id"
                             :disabled="!$county_id"
-                            required
                         />
                     </div>
                     <div class="col-md-6">
@@ -75,7 +71,6 @@
                             :options="$settlements"
                             wire:model.live="settlement_id"
                             :disabled="!$district_id"
-                            required
                         />
                     </div>
                 </div>

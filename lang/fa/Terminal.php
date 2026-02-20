@@ -2,20 +2,18 @@
 
 return [
     // Nouns
-    'Singular' => 'پایانه',
     'Plural' => 'پایانه‌ها',
 
     // Phrases
-    'Manage Terminals' => 'مدیریت پایانه‌ها',
-    'New Terminal' => 'پایانه جدید',
-    'Edit Terminal' => 'ویرایش پایانه',
-    'Create New Terminal' => 'ایجاد پایانه جدید',
+    'Manage Records' => 'مدیریت پایانه‌ها',
+    'New Record' => 'پایانه جدید',
+    'Edit Record' => 'ویرایش پایانه',
 
     // Alerts
-    'Terminal Not Found!' => "پایانه مورد نظر یافت نشد!",
-    'Terminal Created Successfully.' => 'پایانه با موفقیت ویرایش شد.',
-    'Terminal Edited Successfully.' => 'پایانه با موفقیت ویرایش شد.',
-    'Terminal Deleted Successfully.' => 'پایانه با موفقیت حذف شد.',
+    'Record Not Found!' => "پایانه مورد نظر یافت نشد!",
+    'Record Created Successfully.' => 'پایانه با موفقیت ویرایش شد.',
+    'Record Edited Successfully.' => 'پایانه با موفقیت ویرایش شد.',
+    'Record Deleted Successfully.' => 'پایانه با موفقیت حذف شد.',
 
     // Attributes
     'Attributes' => [
@@ -24,8 +22,8 @@ return [
 
     // Index/Table
     'Search Placeholder' => 'جستجو در پایانه‌ها...',
-    'No Terminals Found' => 'هیچ پایانه‌ای یافت نشد.',
+    'No Records Found' => 'هیچ پایانه‌ای یافت نشد.',
 
     // Delete
-    'Delete Confirmation' => 'آیا از حذف این پایانه مطمئن هستید؟',
+    'Record Delete Confirmation' => 'آیا از حذف این پایانه اطمینان دارید؟',
 ];

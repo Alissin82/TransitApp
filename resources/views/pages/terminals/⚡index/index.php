@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Terminal;
 use App\Services\TerminalService;
 use App\Traits\ToastR;
 use Livewire\Component;
@@ -17,17 +18,10 @@ new class extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id, TerminalService $service): void
+    public function delete(Terminal $terminal, TerminalService $service): void
     {
-        $terminal = $service->find($id);
-
-        if (!$terminal) {
-            $this->toastError(__('Terminal.Terminal Not Found!'));
-            return;
-        }
-
         $service->delete($terminal);
-        $this->toastSuccess(__('Terminal.Terminal Deleted Successfully.'));
+        $this->toastSuccess(__('Terminal.Record Deleted Successfully.'));
     }
 
     public function render(TerminalService $service)

@@ -4,12 +4,12 @@
         <h2 class="mb-0">
             <a href="{{ route('terminals.index') }}" wire:navigate>
                 <i class="fas fa-bus me-2"></i>
-                {{ __('Terminal.Manage Terminals') }}
+                {{ __('Terminal.Manage Records') }}
             </a>
         </h2>
         <a href="{{ route('terminals.create') }}" class="btn btn-primary" wire:navigate>
             <i class="fas fa-plus me-2"></i>
-            {{ __('Terminal.New Terminal') }}
+            {{ __('Terminal.New Record') }}
         </a>
     </div>
 
@@ -38,7 +38,7 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>{{ __('Terminal.Name Label') }}</th>
+                            <th>{{ __('Terminal.Attributes.Name') }}</th>
                             <th>{{ __('Region.Province') }}</th>
                             <th>{{ __('Region.County') }}</th>
                             <th>{{ __('Region.District') }}</th>
@@ -68,7 +68,7 @@
                                         </a>
                                         <button
                                             wire:click="delete({{ $terminal->id }})"
-                                            wire:confirm="{{ __('Terminal.Delete Confirmation') }}"
+                                            wire:confirm="{{ __('Terminal.Record Delete Confirmation') }}"
                                             class="btn btn-danger"
                                         >
                                             <i class="fas fa-trash"></i>
@@ -80,7 +80,7 @@
                             <tr>
                                 <td colspan="8" class="text-center text-muted py-4">
                                     <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-                                    {{ __('Terminal.No Terminals Found') }}
+                                    {{ __('Terminal.No Records Found') }}
                                 </td>
                             </tr>
                         @endforelse

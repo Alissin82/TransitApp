@@ -40,10 +40,10 @@
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">داشبورد</a>
+                        <a class="nav-link" href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('terminals.index') }}">پایانه‌ها</a>
+                        <a class="nav-link" href="{{ route('terminals.index') }}">{{ __('Terminal.Plural') }}</a>
                     </li>
                 </ul>
                 <!-- Left links -->
@@ -64,7 +64,7 @@
 
 <footer>
     <div class="container-fluid text-center p-3 bg-body-tertiary">
-        تمام حقوق این برنامه محفوظ می‌باشد.
+        {{ __('All rights reserved.') }}
     </div>
 </footer>
 

@@ -8,7 +8,6 @@
     "Go to page :page": "رفتن به صفحه :page",
     "All rights reserved.": "تمامی حقوق محفوظ است.",
     "Dashboard": "داشبورد",
-    "Terminals": "پایانه‌ها",
     "Actions": "عملیات",
     "Search": "جستجو",
     "Save": "ذخیره",
@@ -25,5 +24,11 @@
     "Optional": "اختیاری",
     "Select an option": "انتخاب کنید",
     "Home": "خانه",
-    "Hello World": "سلام دنیا"
+    "Hello World": "سلام دنیا",
+    "Filters": "فیلترها",
+    "Apply Filters": "اعمال فیلتر",
+    "Clear Filters": "حذف فیلتر",
+    "Price": "قیمت(تومان)",
+    "Min Price": "حداقل قیمت(تومان)",
+    "Max Price": "حداکثر قیمت(تومان)"
 }

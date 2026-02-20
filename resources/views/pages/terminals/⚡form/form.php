@@ -113,10 +113,10 @@ new class extends Component
 
             if ($this->terminal) {
                 $service->update($this->terminal, $validated);
-                $this->toastSuccess(__('Terminal.Terminal Edited Successfully.'));
+                $this->toastSuccess(__('Terminal.Record Edited Successfully.'));
             } else {
                 $terminal = $service->create($validated);
-                $this->toastSuccess(__('Terminal.Terminal Created Successfully.'));
+                $this->toastSuccess(__('Terminal.Record Created Successfully.'));
                 $this->redirect(route('terminals.edit',[
                     'id' => $terminal->id,
                 ]), true);
@@ -130,7 +130,7 @@ new class extends Component
     public function render()
     {
         return $this->view()->title(
-            $this->terminal ? $this->terminal->name : __('Terminal.New Terminal')
+            $this->terminal ? $this->terminal->name : __('Terminal.New Record')
         );
     }
 };
