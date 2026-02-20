@@ -33,60 +33,52 @@
                 {{ $terminals->links() }}
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
+            <x-mdb.table :records-count="$terminals->count()">
+                <x-slot:header>
+                    <th>#</th>
+                    <th>{{ __('Terminal.Attributes.Name') }}</th>
+                    <th>{{ __('Region.Province') }}</th>
+                    <th>{{ __('Region.County') }}</th>
+                    <th>{{ __('Region.District') }}</th>
+                    <th>{{ __('Region.Settlement') }}</th>
+                    <th>{{ __('Region.Village') }}</th>
+                    <th>{{ __('Actions') }}</th>
+                </x-slot:header>
+                <x-slot:notFound colspan="8">
+                    {{ __('Terminal.No Records Found') }}
+                </x-slot:notFound>
+                <x-slot:body>
+                    @foreach ($terminals as $terminal)
                         <tr>
-                            <th>#</th>
-                            <th>{{ __('Terminal.Attributes.Name') }}</th>
-                            <th>{{ __('Region.Province') }}</th>
-                            <th>{{ __('Region.County') }}</th>
-                            <th>{{ __('Region.District') }}</th>
-                            <th>{{ __('Region.Settlement') }}</th>
-                            <th>{{ __('Region.Village') }}</th>
-                            <th>{{ __('Actions') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($terminals as $terminal)
-                            <tr>
-                                <td>{{ $terminal->id }}</td>
-                                <td>{{ $terminal->name }}</td>
-                                <td>{{ $terminal->province->name }}</td>
-                                <td>{{ $terminal->county->name }}</td>
-                                <td>{{ $terminal->district->name }}</td>
-                                <td>{{ $terminal->settlement->name }}</td>
-                                <td>{{ $terminal->village->name ?? '-' }}</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <a
+                            <td>{{ $terminal->id }}</td>
+                            <td>{{ $terminal->name }}</td>
+                            <td>{{ $terminal->province->name }}</td>
+                            <td>{{ $terminal->county->name }}</td>
+                            <td>{{ $terminal->district->name }}</td>
+                            <td>{{ $terminal->settlement->name }}</td>
+                            <td>{{ $terminal->village->name ?? '-' }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a
                                             href="{{ route('terminals.edit', $terminal) }}"
                                             class="btn btn-warning"
                                             wire:navigate
-                                        >
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <button
+                                    >
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button
                                             wire:click="delete({{ $terminal->id }})"
                                             wire:confirm="{{ __('Terminal.Record Delete Confirmation') }}"
                                             class="btn btn-danger"
-                                        >
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8" class="text-center text-muted py-4">
-                                    <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-                                    {{ __('Terminal.No Records Found') }}
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+                                    >
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </x-slot:body>
+            </x-mdb.table>
 
             <!-- Pagination -->
             <div class="mt-4">
