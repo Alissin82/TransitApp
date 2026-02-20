@@ -33,7 +33,7 @@
             <!-- Collapsible wrapper -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Navbar brand -->
-                <a class="navbar-brand mt-2 mt-lg-0 d-flex align-items-center gap-2" href="javascript:void(0)">
+                <a class="navbar-brand mt-2 mt-lg-0 d-flex align-items-center gap-2" href="{{ route('home') }}">
                     <img src="{{ asset('logo.svg') }}" alt="TransitApp Logo" width="30" height="30">
                     {{ config('app.name') }}
                 </a>

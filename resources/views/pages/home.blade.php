@@ -4,7 +4,10 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 new class extends Component {
-    #[Title(__('Home'))]
+    public function render()
+    {
+        return $this->view()->title(__('Home'));
+    }
 };
 ?>
 
