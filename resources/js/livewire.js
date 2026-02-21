@@ -39,5 +39,11 @@ document.addEventListener('livewire:navigated', function () {
         if (label && notchMiddle) {
             notchMiddle.style.width = `${label.offsetWidth}px`;
         }
+
+        input.addEventListener('focusout', function () {
+            if (this.value.length > 0) {
+                this.classList.add('active');
+            }
+        });
     });
 });
