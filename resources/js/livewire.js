@@ -24,9 +24,6 @@ document.addEventListener('livewire:init', () => {
             case 'info':
                 window.toastr.info(toast.message, title)
                 break;
-            default:
-                window.toastr.show(toast.message, title)
-                break;
         }
     });
 
