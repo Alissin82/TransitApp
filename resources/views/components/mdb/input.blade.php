@@ -76,6 +76,14 @@
         </label>
     @endif
 
+    @if($inputType != 'select' && $inputType != 'textarea')
+        <div class="form-notch" wire:ignore>
+            <div class="form-notch-leading" style="width: 9px;"></div>
+            <div class="form-notch-middle"></div>
+            <div class="form-notch-trailing"></div>
+        </div>
+    @endif
+
     @error($name)
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror
