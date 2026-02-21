@@ -16,7 +16,7 @@
     <!-- Search -->
     <div class="card mb-4">
         <div class="card-body">
-            <x-forms.input
+            <x-mdb.input
                     name="searchInput"
                     :label="__('Search')"
                     wire:model.live.debounce.300ms="search"

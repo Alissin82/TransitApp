@@ -20,10 +20,11 @@
                 <!-- Name - Full width -->
                 <div class="row mb-4">
                     <div class="col-12">
-                        <x-forms.input
+                        <x-mdb.input
                             name="name"
                             :label="__('Terminal.Attributes.Name')"
                             wire:model="name"
+                            :active="$terminal != null"
                         />
                     </div>
                 </div>
@@ -31,7 +32,7 @@
                 <!-- Province & County -->
                 <div class="row mb-4">
                     <div class="col-md-6">
-                        <x-forms.input
+                        <x-mdb.input
                             input-type="select"
                             name="province_id"
                             :label="__('Region.Province')"
@@ -40,7 +41,7 @@
                         />
                     </div>
                     <div class="col-md-6">
-                        <x-forms.input
+                        <x-mdb.input
                             input-type="select"
                             name="county_id"
                             :label="__('Region.County')"
@@ -54,7 +55,7 @@
                 <!-- District & Settlement -->
                 <div class="row mb-4">
                     <div class="col-md-6">
-                        <x-forms.input
+                        <x-mdb.input
                             input-type="select"
                             name="district_id"
                             :label="__('Region.District')"
@@ -64,7 +65,7 @@
                         />
                     </div>
                     <div class="col-md-6">
-                        <x-forms.input
+                        <x-mdb.input
                             input-type="select"
                             name="settlement_id"
                             :label="__('Region.Settlement')"
@@ -78,7 +79,7 @@
                 <!-- Village - Full width -->
                 <div class="row mb-4">
                     <div class="col-md-6">
-                        <x-forms.input
+                        <x-mdb.input
                             input-type="select"
                             name="village_id"
                             :label="__('Region.Village') . ' (' . __('Optional') . ')'"
