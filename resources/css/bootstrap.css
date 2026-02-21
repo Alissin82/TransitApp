@@ -1,0 +1,26 @@
+@import 'tailwindcss/theme.css' layer(theme) prefix(tw);
+@import 'tailwindcss/utilities.css' layer(utilities) prefix(tw);
+@import 'mdb-ui-kit/css/mdb.rtl.min.css';
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "toastr/build/toastr.min.css";
+
+@font-face {
+        font-family: 'IRANSans';
+        src: url('../fonts/iransansweb.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+}
+
+@font-face {
+        font-family: 'IRANSansFaNum';
+        src: url('../fonts/iransansweb-fa-num.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+}
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
