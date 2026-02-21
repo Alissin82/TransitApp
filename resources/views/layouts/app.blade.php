@@ -45,6 +45,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('terminals.index') }}">{{ __('Terminal.Plural') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('transit-lines.index') }}">{{ __('TransitLine.Plural') }}</a>
+                    </li>
                 </ul>
                 <!-- Left links -->
             </div>

@@ -81,4 +81,75 @@ class TerminalService
     {
         return $terminal->delete();
     }
+
+    /**
+     * Get terminals for select dropdown (grouped by region)
+     */
+    public function getTerminalsForSelect(
+        ?int $provinceId = null,
+        ?int $countyId = null,
+        ?int $districtId = null,
+        ?int $settlementId = null,
+        ?int $villageId = null
+    ): array {
+        $query = Terminal::with([
+            'province',
+            'county',
+            'district',
+            'settlement',
+        ]);
+
+        if ($provinceId) {
+            $query->where('province_id', $provinceId);
+        }
+
+        if ($countyId) {
+            $query->where('county_id', $countyId);
+        }
+
+        if ($districtId) {
+            $query->where('district_id', $districtId);
+        }
+
+        if ($settlementId) {
+            $query->where('settlement_id', $settlementId);
+        }
+
+        if ($villageId) {
+            $query->where('village_id', $villageId);
+        }
+
+        return $query->orderBy('name')
+            ->get()
+            ->mapWithKeys(fn ($terminal) => [
+                $terminal->id => $this->formatTerminalName($terminal)
+            ])
+            ->toArray();
+    }
+
+    /**
+     * Format terminal name with region hierarchy
+     */
+    private function formatTerminalName(Terminal $terminal): string
+    {
+        $parts = [$terminal->name];
+
+        if ($terminal->province) {
+            $parts[] = $terminal->province->name;
+        }
+
+        if ($terminal->county) {
+            $parts[] = $terminal->county->name;
+        }
+
+        if ($terminal->district) {
+            $parts[] = $terminal->district->name;
+        }
+
+        if ($terminal->settlement) {
+            $parts[] = $terminal->settlement->name;
+        }
+
+        return implode(' - ', $parts);
+    }
 }
