@@ -36,7 +36,7 @@ new class extends Component
         $this->provinces = $regionsService->getProvincesForSelect();
 
         if ($terminal) {
-            $this->terminal = $regionsService->find($terminal->id);
+            $this->terminal = $terminalService->find($terminal->id);
 
             $this->name = $this->terminal->name;
             $this->province_id = $this->terminal->province_id;
@@ -45,10 +45,10 @@ new class extends Component
             $this->settlement_id = $this->terminal->settlement_id;
             $this->village_id = $this->terminal->village_id;
 
-            $this->counties = $terminalService->getCountiesByProvince($this->province_id);
-            $this->districts = $terminalService->getDistrictsByCounty($this->county_id);
-            $this->settlements = $terminalService->getSettlementsByDistrict($this->district_id);
-            $this->villages = $terminalService->getVillagesBySettlement($this->settlement_id);
+            $this->counties = $regionsService->getCountiesByProvince($this->province_id);
+            $this->districts = $regionsService->getDistrictsByCounty($this->county_id);
+            $this->settlements = $regionsService->getSettlementsByDistrict($this->district_id);
+            $this->villages = $regionsService->getVillagesBySettlement($this->settlement_id);
         }
     }
 
