@@ -16,7 +16,7 @@
     <!-- Form -->
     <div class="card">
         <div class="card-body">
-            <form wire:submit="save">
+            <form wire:submit.prevent="save">
                 <!-- Name - Full width -->
                 <div class="row mb-4">
                     <div class="col-12">
