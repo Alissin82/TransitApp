@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Terminal;
+use App\Services\RegionsService;
 use App\Services\TerminalService;
 use App\Traits\ToastR;
 use Illuminate\Validation\ValidationException;
@@ -26,12 +27,16 @@ new class extends Component
     public array $villages = [];
 
 
-    public function mount(TerminalService $service, $terminal = null): void
+    public function mount(
+        TerminalService $terminalService,
+        RegionsService $regionsService,
+        $terminal = null
+    ): void
     {
-        $this->provinces = $service->getProvincesForSelect();
+        $this->provinces = $regionsService->getProvincesForSelect();
 
         if ($terminal) {
-            $this->terminal = $service->find($terminal->id);
+            $this->terminal = $regionsService->find($terminal->id);
 
             $this->name = $this->terminal->name;
             $this->province_id = $this->terminal->province_id;
@@ -40,14 +45,14 @@ new class extends Component
             $this->settlement_id = $this->terminal->settlement_id;
             $this->village_id = $this->terminal->village_id;
 
-            $this->counties = $service->getCountiesByProvince($this->province_id);
-            $this->districts = $service->getDistrictsByCounty($this->county_id);
-            $this->settlements = $service->getSettlementsByDistrict($this->district_id);
-            $this->villages = $service->getVillagesBySettlement($this->settlement_id);
+            $this->counties = $terminalService->getCountiesByProvince($this->province_id);
+            $this->districts = $terminalService->getDistrictsByCounty($this->county_id);
+            $this->settlements = $terminalService->getSettlementsByDistrict($this->district_id);
+            $this->villages = $terminalService->getVillagesBySettlement($this->settlement_id);
         }
     }
 
-    public function updatedProvinceId($value, TerminalService $service): void
+    public function updatedProvinceId($value, RegionsService $service): void
     {
         $this->county_id = null;
         $this->district_id = null;
@@ -63,7 +68,7 @@ new class extends Component
         }
     }
 
-    public function updatedCountyId($value, TerminalService $service): void
+    public function updatedCountyId($value, RegionsService $service): void
     {
         $this->district_id = null;
         $this->settlement_id = null;
@@ -77,7 +82,7 @@ new class extends Component
         }
     }
 
-    public function updatedDistrictId($value, TerminalService $service): void
+    public function updatedDistrictId($value, RegionsService $service): void
     {
         $this->settlement_id = null;
         $this->village_id = null;
@@ -89,7 +94,7 @@ new class extends Component
         }
     }
 
-    public function updatedSettlementId($value, TerminalService $service): void
+    public function updatedSettlementId($value, RegionsService $service): void
     {
         $this->village_id = null;
         $this->villages = [];
