@@ -26,8 +26,8 @@ document.addEventListener('livewire:init', () => {
                 break;
         }
     });
-
 });
+
 document.addEventListener('livewire:navigated', function () {
     document.querySelectorAll('[data-mdb-input-init] input:not([type="hidden"])').forEach(input => {
         const wrapper = input.closest('[data-mdb-input-init]');
