@@ -11,7 +11,7 @@ new class extends Component {
 };
 ?>
 
-<div class="d-flex flex-column justify-content-center align-items-center p-3">
-    <h1 class="font-weight-bold">{{ __('Hello World') }}</h1>
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <h1 class="md-typescale-display-medium">{{ __('Hello World') }}</h1>
     <span wire:poll.keep-alive.1s class="text-muted">{{ now()->format("H:i:s") }}</span>
 </div>

@@ -1,7 +1,8 @@
 @import 'tailwindcss/theme.css' layer(theme) prefix(tw);
 @import 'tailwindcss/utilities.css' layer(utilities) prefix(tw);
-@import 'mdb-ui-kit/css/mdb.rtl.min.css';
 @import "@fortawesome/fontawesome-free/css/all.min.css";
+@import '@material/web/typography/md-typescale-styles.css';
+@import 'material-symbols/index.css';
 @import "toastr/build/toastr.min.css";
 
 @font-face {
@@ -19,6 +20,63 @@
         font-style: normal;
         font-display: swap;
 }
+
+:root {
+        --md-ref-typeface-brand: 'IRANSansFaNum';
+        --md-ref-typeface-plain: system-ui;
+}
+
+/*!* Apply IRANSans to Material Web components *!*/
+/*md-outlined-text-field,*/
+/*md-outlined-select,*/
+/*md-filled-button,*/
+/*md-tonal-button,*/
+/*md-outlined-button,*/
+/*md-icon-button {*/
+/*    font-family: 'IRANSansFaNum', 'IRANSans', sans-serif;*/
+/*}*/
+
+/*!* Material Web Components Display Fix *!*/
+/*md-outlined-text-field,*/
+/*md-outlined-select {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*}*/
+
+/*md-filled-button,*/
+/*md-tonal-button,*/
+/*md-outlined-button {*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*}*/
+
+/*!* Fix for select in flex layout *!*/
+/*md-outlined-select {*/
+/*    margin-top: 8px;*/
+/*}*/
+
+/*!* Ensure icons render properly *!*/
+/*md-icon {*/
+/*    font-family: 'Material Symbols Outlined';*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*    font-size: 24px;*/
+/*    line-height: 1;*/
+/*    letter-spacing: normal;*/
+/*    text-transform: none;*/
+/*    display: inline-block;*/
+/*    white-space: nowrap;*/
+/*    word-wrap: normal;*/
+/*    direction: ltr;*/
+/*    vertical-align: middle;*/
+/*}*/
+
+/*md-icon[slot="icon"] {*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

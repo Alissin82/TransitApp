@@ -17,27 +17,23 @@
 <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <!-- Toggle button -->
-            <button
-                    data-mdb-collapse-init
+            <md-icon-button
                     class="navbar-toggler"
                     type="button"
-                    data-mdb-target="#navbarSupportedContent"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
             >
-                <i class="fas fa-bars"></i>
-            </button>
+                <md-icon>menu</md-icon>
+            </md-icon-button>
 
-            <!-- Collapsible wrapper -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Navbar brand -->
                 <a class="navbar-brand mt-2 mt-lg-0 d-flex align-items-center gap-2" href="{{ route('home') }}">
-                    <img src="{{ asset('logo.svg') }}" alt="TransitApp Logo" width="30" height="30">
+                    <img src="{{ asset('logo.svg') }}" alt="Logo" width="30" height="30">
                     {{ config('app.name') }}
                 </a>
-                <!-- Left links -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
@@ -49,14 +45,10 @@
                         <a class="nav-link" href="{{ route('transit-lines.index') }}">{{ __('TransitLine.Plural') }}</a>
                     </li>
                 </ul>
-                <!-- Left links -->
             </div>
-            <!-- Collapsible wrapper -->
 
-            <!-- End elements -->
             <div class="d-flex align-items-center">
             </div>
-            <!-- End elements -->
         </div>
     </nav>
 </header>

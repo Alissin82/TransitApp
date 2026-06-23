@@ -1,12 +1,12 @@
 import axios from 'axios';
-import * as mdb from 'mdb-ui-kit';
-import { initMDB } from 'mdb-ui-kit';
+import '@material/web/all.js';
+import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
 import toastr from 'toastr';
 
 window.axios = axios;
 window.toastr = toastr;
 
-// TODO: consider tree-shaking later to improve performance
-initMDB(mdb);
+document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

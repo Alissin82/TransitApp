@@ -3,14 +3,14 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">
             <a href="{{ request()->url() }}">
-                <i class="fas fa-route me-2"></i>
+                <md-icon class="me-2">route</md-icon>
                 {{ $transitLine ? __('TransitLine.Edit Record') : __('TransitLine.New Record') }}
             </a>
         </h2>
-        <a href="{{ route('transit-lines.index') }}" class="btn btn-outline-secondary" wire:navigate>
-            <i class="fas fa-arrow-right me-2"></i>
+        <md-outlined-button href="{{ route('transit-lines.index') }}" wire:navigate>
+            <md-icon slot="icon">arrow_back</md-icon>
             {{ __('Back') }}
-        </a>
+        </md-outlined-button>
     </div>
 
     <!-- Form -->
@@ -18,138 +18,190 @@
         <div class="card-body">
             <!-- Region Filters -->
             <div class="card mb-4">
-                <x-mdb.collapse collapse-id="terminalRegionsFilter">
-                    <x-slot:trigger class="card-header">
+                <div x-data="{ open: false }" class="card">
+                    <div
+                        class="card-header d-flex justify-content-between align-items-center"
+                        role="button"
+                        @click="open = !open"
+                    >
                         <h5 class="mb-0">
-                            <i class="fas fa-filter me-2"></i>
+                            <md-icon class="me-2">filter_list</md-icon>
                             {{ __('TransitLine.Filters.Terminals Region') }}
                         </h5>
-                    </x-slot:trigger>
-                    <x-slot:content class="card-body">
+                        <md-icon x-show="!open">expand_more</md-icon>
+                        <md-icon x-show="open">expand_less</md-icon>
+                    </div>
+                    <div x-show="open" x-collapse class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <x-mdb.input
-                                        input-type="select"
-                                        name="province_id"
-                                        :label="__('Region.Province')"
-                                        :options="$provinces"
-                                        wire:model.live="province_id"
-                                        :placeholder="__('Region.Select Province')"
-                                />
+                                <md-outlined-select
+                                    name="province_id"
+                                    label="{{ __('Region.Province') }}"
+                                    wire:model.live="province_id"
+                                >
+                                    <md-select-option value="" disabled selected>
+                                        <div slot="headline">{{ __('Region.Select Province') }}</div>
+                                    </md-select-option>
+                                    @foreach($provinces as $value => $label)
+                                        <md-select-option value="{{ $value }}">
+                                            <div slot="headline">{{ $label }}</div>
+                                        </md-select-option>
+                                    @endforeach
+                                </md-outlined-select>
                             </div>
                             <div class="col-md-6">
-                                <x-mdb.input
-                                        input-type="select"
-                                        name="county_id"
-                                        :label="__('Region.County')"
-                                        :options="$counties"
-                                        wire:model.live="county_id"
-                                        :disabled="!$province_id"
-                                        :placeholder="__('Region.Select County')"
-                                />
+                                <md-outlined-select
+                                    name="county_id"
+                                    label="{{ __('Region.County') }}"
+                                    wire:model.live="county_id"
+                                    @disabled(!$province_id)
+                                >
+                                    <md-select-option value="" disabled selected>
+                                        <div slot="headline">{{ __('Region.Select County') }}</div>
+                                    </md-select-option>
+                                    @foreach($counties as $value => $label)
+                                        <md-select-option value="{{ $value }}">
+                                            <div slot="headline">{{ $label }}</div>
+                                        </md-select-option>
+                                    @endforeach
+                                </md-outlined-select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <x-mdb.input
-                                        input-type="select"
-                                        name="district_id"
-                                        :label="__('Region.District')"
-                                        :options="$districts"
-                                        wire:model.live="district_id"
-                                        :disabled="!$county_id"
-                                        :placeholder="__('Region.Select District')"
-                                />
+                                <md-outlined-select
+                                    name="district_id"
+                                    label="{{ __('Region.District') }}"
+                                    wire:model.live="district_id"
+                                    @disabled(!$county_id)
+                                >
+                                    <md-select-option value="" disabled selected>
+                                        <div slot="headline">{{ __('Region.Select District') }}</div>
+                                    </md-select-option>
+                                    @foreach($districts as $value => $label)
+                                        <md-select-option value="{{ $value }}">
+                                            <div slot="headline">{{ $label }}</div>
+                                        </md-select-option>
+                                    @endforeach
+                                </md-outlined-select>
                             </div>
                             <div class="col-md-6">
-                                <x-mdb.input
-                                        input-type="select"
-                                        name="settlement_id"
-                                        :label="__('Region.Settlement')"
-                                        :options="$settlements"
-                                        wire:model.live="settlement_id"
-                                        :disabled="!$district_id"
-                                        :placeholder="__('Region.Select Settlement')"
-                                />
+                                <md-outlined-select
+                                    name="settlement_id"
+                                    label="{{ __('Region.Settlement') }}"
+                                    wire:model.live="settlement_id"
+                                    @disabled(!$district_id)
+                                >
+                                    <md-select-option value="" disabled selected>
+                                        <div slot="headline">{{ __('Region.Select Settlement') }}</div>
+                                    </md-select-option>
+                                    @foreach($settlements as $value => $label)
+                                        <md-select-option value="{{ $value }}">
+                                            <div slot="headline">{{ $label }}</div>
+                                        </md-select-option>
+                                    @endforeach
+                                </md-outlined-select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <x-mdb.input
-                                        input-type="select"
-                                        name="village_id"
-                                        :label="__('Region.Village')"
-                                        :options="$villages"
-                                        wire:model.live="village_id"
-                                        :disabled="!$settlement_id"
-                                        :placeholder="__('Region.Select Village')"
-                                />
+                                <md-outlined-select
+                                    name="village_id"
+                                    label="{{ __('Region.Village') }}"
+                                    wire:model.live="village_id"
+                                    @disabled(!$settlement_id)
+                                >
+                                    <md-select-option value="" disabled selected>
+                                        <div slot="headline">{{ __('Region.Select Village') }}</div>
+                                    </md-select-option>
+                                    @foreach($villages as $value => $label)
+                                        <md-select-option value="{{ $value }}">
+                                            <div slot="headline">{{ $label }}</div>
+                                        </md-select-option>
+                                    @endforeach
+                                </md-outlined-select>
                             </div>
                         </div>
                         <!-- Filter Actions -->
                         <div class="d-flex gap-2">
-                            <button class="btn btn-primary" wire:click.prevent="applyFilters">
-                                <i class="fas fa-search me-2"></i>
+                            <md-filled-button wire:click.prevent="applyFilters">
+                                <md-icon slot="icon">search</md-icon>
                                 {{ __('Apply Filters') }}
-                            </button>
-                            <button class="btn btn-outline-secondary" wire:click.prevent="clearFilters">
-                                <i class="fas fa-times me-2"></i>
+                            </md-filled-button>
+                            <md-outlined-button wire:click.prevent="clearFilters">
+                                <md-icon slot="icon">close</md-icon>
                                 {{ __('Clear Filters') }}
-                            </button>
+                            </md-outlined-button>
                         </div>
-                    </x-slot:content>
-                </x-mdb.collapse>
+                    </div>
+                </div>
             </div>
 
-            <form wire:submit.prevent="save">
+            <form wire:submit.prevent="save" id="transit-line-form">
                 <!-- Transit Line Fields -->
                 <div class="row mb-4">
                     <div class="col-md-6">
-                        <x-mdb.input
-                            input-type="select"
+                        <md-outlined-select
                             name="origin_terminal_id"
-                            :label="__('TransitLine.Attributes.Origin Terminal')"
-                            :options="$originTerminals"
+                            label="{{ __('TransitLine.Attributes.Origin Terminal') }}"
                             wire:model="origin_terminal_id"
-                            :active="$transitLine != null"
-                        />
+                            form="transit-line-form"
+                        >
+                            <md-select-option value="" disabled selected>
+                                <div slot="headline">{{ __('TransitLine.Select Origin Terminal') }}</div>
+                            </md-select-option>
+                            @foreach($originTerminals as $value => $label)
+                                <md-select-option value="{{ $value }}">
+                                    <div slot="headline">{{ $label }}</div>
+                                </md-select-option>
+                            @endforeach
+                        </md-outlined-select>
                     </div>
                     <div class="col-md-6">
-                        <x-mdb.input
-                            input-type="select"
+                        <md-outlined-select
                             name="destination_terminal_id"
-                            :label="__('TransitLine.Attributes.Destination Terminal')"
-                            :options="$destinationTerminals"
+                            label="{{ __('TransitLine.Attributes.Destination Terminal') }}"
                             wire:model="destination_terminal_id"
-                            :disabled="!$originTerminals"
-                            :active="$transitLine != null"
-                        />
+                            form="transit-line-form"
+                            @disabled(!$originTerminals)
+                        >
+                            <md-select-option value="" disabled selected>
+                                <div slot="headline">{{ __('TransitLine.Select Destination Terminal') }}</div>
+                            </md-select-option>
+                            @foreach($destinationTerminals as $value => $label)
+                                <md-select-option value="{{ $value }}">
+                                    <div slot="headline">{{ $label }}</div>
+                                </md-select-option>
+                            @endforeach
+                        </md-outlined-select>
                     </div>
                 </div>
 
                 <div class="row mb-4">
                     <div class="col-md-6">
-                        <x-mdb.input
+                        <md-outlined-text-field
                             name="price"
-                            :label="__('TransitLine.Attributes.Price')"
+                            label="{{ __('TransitLine.Attributes.Price') }}"
                             type="number"
-                            wire:model="price"
                             placeholder="50000"
-                            :active="$transitLine != null"
-                        />
+                            wire:model="price"
+                            form="transit-line-form"
+                            style="width: 100%;"
+                        >
+                        </md-outlined-text-field>
                     </div>
                 </div>
 
                 <!-- Submit Buttons -->
                 <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-2"></i>
+                    <md-filled-button type="submit">
+                        <md-icon slot="icon">save</md-icon>
                         {{ $transitLine ? __('Save Changes') : __('Save') }}
-                    </button>
-                    <a href="{{ route('transit-lines.index') }}" class="btn btn-outline-secondary" wire:navigate>
-                        <i class="fas fa-times me-2"></i>
+                    </md-filled-button>
+                    <md-outlined-button href="{{ route('transit-lines.index') }}" wire:navigate>
+                        <md-icon slot="icon">close</md-icon>
                         {{ __('Cancel') }}
-                    </a>
+                    </md-outlined-button>
                 </div>
             </form>
         </div>
