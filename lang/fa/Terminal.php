@@ -26,4 +26,7 @@ return [
 
     // Delete
     'Record Delete Confirmation' => 'آیا از حذف این پایانه اطمینان دارید؟',
+    'Delete Confirmation Title' => 'تأیید حذف پایانه',
+    'Delete Confirmation Message' => 'آیا از حذف این پایانه اطمینان دارید؟ این عمل غیرقابل بازگشت است.',
+    'Delete Cascade Warning' => 'WARNING: This terminal has :count associated transit line(s) that will also be deleted.',
 ];

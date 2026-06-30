@@ -30,5 +30,8 @@
     "Clear Filters": "حذف فیلتر",
     "Price": "قیمت(تومان)",
     "Min Price": "حداقل قیمت(تومان)",
-    "Max Price": "حداکثر قیمت(تومان)"
+    "Max Price": "حداکثر قیمت(تومان)",
+    "Terminal.Delete Confirmation Title": "تأیید حذف پایانه",
+    "Terminal.Delete Confirmation Message": "آیا از حذف این پایانه اطمینان دارید؟ این عمل غیرقابل بازگشت است.",
+    "Terminal.Delete Cascade Warning": "هشدار: این پایانه :count خط ترانزیتی مرتبط دارد که آنها نیز حذف خواهند شد."
 }

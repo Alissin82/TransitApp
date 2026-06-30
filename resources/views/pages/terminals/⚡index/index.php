@@ -12,16 +12,52 @@ new class extends Component
 
     public int $perPage = 15;
     public string $search = '';
+    public ?int $pendingDeleteId = null;
 
     public function updatedSearch(): void
     {
         $this->resetPage();
     }
 
-    public function delete(Terminal $terminal, TerminalService $service): void
+    public function confirmDelete(int $terminalId): void
     {
-        $service->delete($terminal);
-        $this->toastSuccess(__('Terminal.Record Deleted Successfully.'));
+        $this->pendingDeleteId = $terminalId;
+        $this->dispatch('show-delete-confirm');
+    }
+
+    public function executeDelete(TerminalService $service): void
+    {
+        if ($this->pendingDeleteId === null) {
+            return;
+        }
+
+        $terminal = Terminal::find($this->pendingDeleteId);
+        if ($terminal) {
+            $service->delete($terminal);
+            $this->toastSuccess(__('Terminal.Record Deleted Successfully.'));
+        }
+
+        $this->pendingDeleteId = null;
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->pendingDeleteId = null;
+    }
+
+    public function getAffectedCountProperty(): int
+    {
+        if ($this->pendingDeleteId === null) {
+            return 0;
+        }
+
+        $terminal = Terminal::find($this->pendingDeleteId);
+        if (!$terminal) {
+            return 0;
+        }
+
+        return $terminal->departureTransitLines()->count()
+            + $terminal->arrivalTransitLines()->count();
     }
 
     public function render(TerminalService $service)

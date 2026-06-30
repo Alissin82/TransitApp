@@ -75,8 +75,7 @@
                                                 <md-icon slot="icon">edit</md-icon>
                                             </md-filled-tonal-button>
                                             <md-filled-button
-                                                wire:click="delete({{ $terminal->id }})"
-                                                wire:confirm="{{ __('Terminal.Record Delete Confirmation') }}"
+                                                wire:click="confirmDelete({{ $terminal->id }})"
                                             >
                                                 <md-icon slot="icon">delete</md-icon>
                                             </md-filled-button>
@@ -95,4 +94,37 @@
             </div>
         </div>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <dialog id="deleteConfirmModal" wire:ignore.self>
+        <form method="dialog">
+            <div class="modal-content">
+                <h3>{{ __('Terminal.Delete Confirmation Title') }}</h3>
+                <p>{{ __('Terminal.Delete Confirmation Message') }}</p>
+                @if($this->affectedCount > 0)
+                    <div class="alert alert-warning">
+                        <md-icon class="me-2">warning</md-icon>
+                        {{ __('Terminal.Delete Cascade Warning', ['count' => $this->affectedCount]) }}
+                    </div>
+                @endif
+                <div class="d-flex gap-2 justify-content-end mt-4">
+                    <md-filled-tonal-button wire:click="cancelDelete()" onclick="document.getElementById('deleteConfirmModal').close()">
+                        {{ __('Cancel') }}
+                    </md-filled-tonal-button>
+                    <md-filled-button wire:click="executeDelete()" onclick="document.getElementById('deleteConfirmModal').close()" class="bg-danger">
+                        <md-icon slot="icon">delete</md-icon>
+                        {{ __('Delete') }}
+                    </md-filled-button>
+                </div>
+            </div>
+        </form>
+    </dialog>
+
+    @script
+    <script>
+        $wire.on('show-delete-confirm', () => {
+            document.getElementById('deleteConfirmModal').showModal();
+        });
+    </script>
+    @endscript
 </div>
