@@ -7,13 +7,13 @@
 <td>
     <div
             @class([
-                'd-flex',
+                'flex',
 
-                'flex-column' => $columnDisplay,
-                'align-items-end' => $columnDisplay && $ltr,
+                'flex-col' => $columnDisplay,
+                'items-end' => $columnDisplay && $ltr,
 
                 'flex-row' => !$columnDisplay,
-                'justify-content-end' => !$columnDisplay && $ltr,
+                'justify-end' => !$columnDisplay && $ltr,
             ])
             {{ $attributes->merge() }}
     >

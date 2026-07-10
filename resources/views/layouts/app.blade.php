@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="light">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
 
     @livewireStyles
 </head>
-<body class="d-flex flex-column min-h-screen">
+<body class="flex flex-col min-h-screen">
 <header>
     <nav class="navbar bg-base-200 shadow-sm">
         <div class="navbar-start">
