@@ -1,8 +1,9 @@
-@import 'tailwindcss/theme.css' layer(theme) prefix(tw);
-@import 'tailwindcss/utilities.css' layer(utilities) prefix(tw);
+@import "tailwindcss";
+
 @plugin "daisyui" {
-    themes: silk --default
-};
+    themes: corporate --default, silk;
+}
+
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 @import "toastr/build/toastr.min.css";
 
@@ -26,3 +27,39 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+
+:root {
+        --app-font-sans:
+                'IRANSansFaNum',
+                'IRANSans',
+                'Instrument Sans',
+                ui-sans-serif,
+                system-ui,
+                sans-serif,
+                'Apple Color Emoji',
+                'Segoe UI Emoji',
+                'Segoe UI Symbol',
+                'Noto Color Emoji';
+}
+
+@theme {
+        --font-sans: var(--app-font-sans), serif;
+}
+
+body {
+        font-family: var(--app-font-sans), serif;
+}
+
+select.select,
+select.select-bordered {
+        direction: rtl;
+        text-align: right;
+        text-align-last: right;
+        background-position: left 0.875rem center;
+        padding-inline-start: 1rem;
+        padding-inline-end: 2.75rem;
+}
+
+select.select option {
+        direction: rtl;
+}

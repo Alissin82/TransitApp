@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="corporate">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,9 @@
 
     @livewireStyles
 </head>
-<body class="flex flex-col min-h-screen bg-base-100">
+<body class="flex min-h-screen flex-col bg-base-100 text-base-content antialiased">
 <header class="sticky top-0 z-50">
-    <nav class="navbar bg-base-200 shadow-sm px-4">
+    <nav class="navbar bg-base-200 px-4 shadow-sm">
         <div class="navbar-start">
             <div class="dropdown" dir="rtl">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-sm lg:hidden">
@@ -22,13 +22,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
                     </svg>
                 </div>
-                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow-lg border border-base-300">
+                <ul tabindex="0" class="menu menu-sm dropdown-content z-50 mt-3 w-52 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
                     <li><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
                     <li><a href="{{ route('terminals.index') }}">{{ __('Terminal.Plural') }}</a></li>
                     <li><a href="{{ route('transit-lines.index') }}">{{ __('TransitLine.Plural') }}</a></li>
                 </ul>
             </div>
-            <a class="btn btn-ghost text-lg gap-2" href="{{ route('home') }}">
+            <a class="btn btn-ghost gap-2 text-lg" href="{{ route('home') }}">
                 <img src="{{ asset('logo.svg') }}" alt="Logo" class="w-8 h-8">
                 {{ config('app.name') }}
             </a>
