@@ -1,10 +1,10 @@
-<div class="container py-4">
-    <div class="flex justify-between items-center mb-6">
+<div class="py-4">
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
         <h2 class="text-2xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-bus"></i>
+            <i class="fa-solid fa-bus text-primary"></i>
             {{ $terminal ? __('Terminal.Edit Record') : __('Terminal.New Record') }}
         </h2>
-        <a href="{{ route('terminals.index') }}" class="btn btn-outline btn-sm" wire:navigate>
+        <a href="{{ route('terminals.index') }}" class="btn btn-outline btn-sm gap-2" wire:navigate>
             <i class="fa-solid fa-arrow-right"></i>
             {{ __('Back') }}
         </a>
@@ -14,32 +14,30 @@
         <div class="card-body">
             <form wire:submit.prevent="save" id="terminal-form">
                 <!-- Name -->
-                <div class="grid grid-cols-1 mb-4">
-                    <div class="form-control">
-                        <label class="label" for="name">
-                            <span class="label-text">{{ __('Terminal.Attributes.Name') }}</span>
+                <div class="form-control mb-4">
+                    <label class="label" for="name">
+                        <span class="label-text font-medium">{{ __('Terminal.Attributes.Name') }}</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        wire:model="name"
+                        autocomplete="off"
+                        class="input input-bordered w-full @error('name') input-error @enderror"
+                    />
+                    @error('name')
+                        <label class="label">
+                            <span class="label-text-alt text-error">{{ $message }}</span>
                         </label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            wire:model="name"
-                            autocomplete="off"
-                            class="input input-bordered w-full @error('name') input-error @enderror"
-                        />
-                        @error('name')
-                            <label class="label">
-                                <span class="label-text-alt text-error">{{ $message }}</span>
-                            </label>
-                        @enderror
-                    </div>
+                    @enderror
                 </div>
 
                 <!-- Region Selects -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="form-control">
                         <label class="label" for="province_id">
-                            <span class="label-text">{{ __('Region.Province') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.Province') }}</span>
                         </label>
                         <select
                             id="province_id"
@@ -55,7 +53,7 @@
                     </div>
                     <div class="form-control">
                         <label class="label" for="county_id">
-                            <span class="label-text">{{ __('Region.County') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.County') }}</span>
                         </label>
                         <select
                             id="county_id"
@@ -75,7 +73,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="form-control">
                         <label class="label" for="district_id">
-                            <span class="label-text">{{ __('Region.District') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.District') }}</span>
                         </label>
                         <select
                             id="district_id"
@@ -92,13 +90,13 @@
                     </div>
                     <div class="form-control">
                         <label class="label" for="settlement_id">
-                            <span class="label-text">{{ __('Region.Settlement') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.Settlement') }}</span>
                         </label>
                         <select
                             id="settlement_id"
                             name="settlement_id"
                             wire:model.live="settlement_id"
-                            {{ !$districtId ? 'disabled' : '' }}
+                            {{ !$district_id ? 'disabled' : '' }}
                             class="select select-bordered w-full"
                         >
                             <option value="">{{ __('Region.Select Settlement') }}</option>
@@ -109,16 +107,16 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div class="form-control">
                         <label class="label" for="village_id">
-                            <span class="label-text">{{ __('Region.Village') }} ({{ __('Optional') }})</span>
+                            <span class="label-text font-medium">{{ __('Region.Village') }} <span class="text-xs text-base-content/50">({{ __('Optional') }})</span></span>
                         </label>
                         <select
                             id="village_id"
                             name="village_id"
                             wire:model="village_id"
-                            {{ !$settlementId ? 'disabled' : '' }}
+                            {{ !$settlement_id ? 'disabled' : '' }}
                             class="select select-bordered w-full"
                         >
                             <option value="">{{ __('Region.Select Village') }}</option>
@@ -131,7 +129,7 @@
 
                 <!-- Submit -->
                 <div class="flex gap-2">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary gap-2">
                         <i class="fa-solid fa-floppy-disk"></i>
                         {{ $terminal ? __('Save Changes') : __('Save') }}
                     </button>

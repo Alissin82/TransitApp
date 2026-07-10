@@ -1,10 +1,10 @@
-<div class="container py-4">
-    <div class="flex justify-between items-center mb-6">
+<div class="py-4">
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
         <h2 class="text-2xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-route"></i>
+            <i class="fa-solid fa-route text-primary"></i>
             {{ $transitLine ? __('TransitLine.Edit Record') : __('TransitLine.New Record') }}
         </h2>
-        <a href="{{ route('transit-lines.index') }}" class="btn btn-outline btn-sm" wire:navigate>
+        <a href="{{ route('transit-lines.index') }}" class="btn btn-outline btn-sm gap-2" wire:navigate>
             <i class="fa-solid fa-arrow-right"></i>
             {{ __('Back') }}
         </a>
@@ -15,15 +15,15 @@
             <!-- Region Filters -->
             <div class="collapse collapse-arrow bg-base-200 mb-4">
                 <input type="checkbox" />
-                <div class="collapse-title text-xl font-medium flex items-center gap-2">
-                    <i class="fa-solid fa-filter"></i>
+                <div class="collapse-title text-lg font-medium flex items-center gap-2">
+                    <i class="fa-solid fa-filter text-primary"></i>
                     {{ __('TransitLine.Filters.Terminals Region') }}
                 </div>
                 <div class="collapse-content">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="form-control">
                             <label class="label" for="province_id">
-                                <span class="label-text">{{ __('Region.Province') }}</span>
+                                <span class="label-text font-medium">{{ __('Region.Province') }}</span>
                             </label>
                             <select
                                 id="province_id"
@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-control">
                             <label class="label" for="county_id">
-                                <span class="label-text">{{ __('Region.County') }}</span>
+                                <span class="label-text font-medium">{{ __('Region.County') }}</span>
                             </label>
                             <select
                                 id="county_id"
@@ -59,7 +59,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="form-control">
                             <label class="label" for="district_id">
-                                <span class="label-text">{{ __('Region.District') }}</span>
+                                <span class="label-text font-medium">{{ __('Region.District') }}</span>
                             </label>
                             <select
                                 id="district_id"
@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-control">
                             <label class="label" for="settlement_id">
-                                <span class="label-text">{{ __('Region.Settlement') }}</span>
+                                <span class="label-text font-medium">{{ __('Region.Settlement') }}</span>
                             </label>
                             <select
                                 id="settlement_id"
@@ -96,7 +96,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="form-control">
                             <label class="label" for="village_id">
-                                <span class="label-text">{{ __('Region.Village') }}</span>
+                                <span class="label-text font-medium">{{ __('Region.Village') }}</span>
                             </label>
                             <select
                                 id="village_id"
@@ -114,11 +114,11 @@
                     </div>
 
                     <div class="flex gap-2">
-                        <button class="btn btn-primary btn-sm" wire:click.prevent="applyFilters">
+                        <button class="btn btn-primary btn-sm gap-2" wire:click.prevent="applyFilters">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             {{ __('Apply Filters') }}
                         </button>
-                        <button class="btn btn-outline btn-sm" wire:click.prevent="clearFilters">
+                        <button class="btn btn-outline btn-sm gap-2" wire:click.prevent="clearFilters">
                             <i class="fa-solid fa-xmark"></i>
                             {{ __('Clear Filters') }}
                         </button>
@@ -127,11 +127,10 @@
             </div>
 
             <form wire:submit.prevent="save" id="transit-line-form">
-                <!-- Transit Line Fields -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="form-control">
                         <label class="label" for="origin_terminal_id">
-                            <span class="label-text">{{ __('TransitLine.Attributes.Origin Terminal') }}</span>
+                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Origin Terminal') }}</span>
                         </label>
                         <select
                             id="origin_terminal_id"
@@ -148,7 +147,7 @@
                     </div>
                     <div class="form-control">
                         <label class="label" for="destination_terminal_id">
-                            <span class="label-text">{{ __('TransitLine.Attributes.Destination Terminal') }}</span>
+                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Destination Terminal') }}</span>
                         </label>
                         <select
                             id="destination_terminal_id"
@@ -166,10 +165,10 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div class="form-control">
                         <label class="label" for="price">
-                            <span class="label-text">{{ __('TransitLine.Attributes.Price') }}</span>
+                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Price') }}</span>
                         </label>
                         <input
                             type="number"
@@ -188,13 +187,12 @@
                     </div>
                 </div>
 
-                <!-- Submit Buttons -->
                 <div class="flex gap-2">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary gap-2">
                         <i class="fa-solid fa-floppy-disk"></i>
                         {{ $transitLine ? __('Save Changes') : __('Save') }}
                     </button>
-                    <a href="{{ route('transit-lines.index') }}" class="btn btn-outline" wire:navigate>
+                    <a href="{{ route('transit-lines.index') }}" class="btn btn-outline gap-2" wire:navigate>
                         <i class="fa-solid fa-xmark"></i>
                         {{ __('Cancel') }}
                     </a>

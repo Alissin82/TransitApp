@@ -1,10 +1,10 @@
-<div class="container py-4">
-    <div class="flex justify-between items-center mb-6">
+<div class="py-4">
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
         <h2 class="text-2xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-route"></i>
+            <i class="fa-solid fa-route text-primary"></i>
             {{ __('TransitLine.Manage Records') }}
         </h2>
-        <a href="{{ route('transit-lines.create') }}" class="btn btn-primary btn-sm" wire:navigate>
+        <a href="{{ route('transit-lines.create') }}" class="btn btn-primary btn-sm gap-2" wire:navigate>
             <i class="fa-solid fa-plus"></i>
             {{ __('TransitLine.New Record') }}
         </a>
@@ -14,33 +14,26 @@
     <div class="card bg-base-100 shadow-sm mb-4">
         <div class="collapse collapse-arrow">
             <input type="checkbox" />
-            <div class="collapse-title text-xl font-medium flex items-center gap-2">
-                <i class="fa-solid fa-filter"></i>
+            <div class="collapse-title text-lg font-medium flex items-center gap-2">
+                <i class="fa-solid fa-filter text-primary"></i>
                 {{ __('Filters') }}
             </div>
             <div class="collapse-content">
                 <!-- Search -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-control">
-                        <label class="label" for="search">
-                            <span class="label-text">{{ __('TransitLine.Search Label') }}</span>
-                        </label>
-                        <input
-                            type="text"
-                            id="search"
-                            name="search"
-                            placeholder="{{ __('TransitLine.Search Placeholder') }}"
-                            wire:model.live.debounce.300ms="search"
-                            class="input input-bordered w-full"
-                        />
-                    </div>
+                <div class="form-control mb-4">
+                    <input
+                        type="text"
+                        placeholder="{{ __('TransitLine.Search Placeholder') }}"
+                        wire:model.live.debounce.300ms="search"
+                        class="input input-bordered w-full"
+                    />
                 </div>
 
                 <!-- Region Filters -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="form-control">
                         <label class="label" for="province_id">
-                            <span class="label-text">{{ __('Region.Province') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.Province') }}</span>
                         </label>
                         <select
                             id="province_id"
@@ -56,7 +49,7 @@
                     </div>
                     <div class="form-control">
                         <label class="label" for="county_id">
-                            <span class="label-text">{{ __('Region.County') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.County') }}</span>
                         </label>
                         <select
                             id="county_id"
@@ -76,7 +69,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="form-control">
                         <label class="label" for="district_id">
-                            <span class="label-text">{{ __('Region.District') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.District') }}</span>
                         </label>
                         <select
                             id="district_id"
@@ -93,7 +86,7 @@
                     </div>
                     <div class="form-control">
                         <label class="label" for="settlement_id">
-                            <span class="label-text">{{ __('Region.Settlement') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.Settlement') }}</span>
                         </label>
                         <select
                             id="settlement_id"
@@ -113,7 +106,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="form-control">
                         <label class="label" for="village_id">
-                            <span class="label-text">{{ __('Region.Village') }}</span>
+                            <span class="label-text font-medium">{{ __('Region.Village') }}</span>
                         </label>
                         <select
                             id="village_id"
@@ -134,7 +127,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="form-control">
                         <label class="label" for="origin_terminal_id">
-                            <span class="label-text">{{ __('TransitLine.Attributes.Origin Terminal') }}</span>
+                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Origin Terminal') }}</span>
                         </label>
                         <select
                             id="origin_terminal_id"
@@ -150,7 +143,7 @@
                     </div>
                     <div class="form-control">
                         <label class="label" for="destination_terminal_id">
-                            <span class="label-text">{{ __('TransitLine.Attributes.Destination Terminal') }}</span>
+                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Destination Terminal') }}</span>
                         </label>
                         <select
                             id="destination_terminal_id"
@@ -170,7 +163,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="form-control">
                         <label class="label" for="min_price">
-                            <span class="label-text">{{ __('Min Price') }}</span>
+                            <span class="label-text font-medium">{{ __('Min Price') }}</span>
                         </label>
                         <input
                             type="number"
@@ -182,7 +175,7 @@
                     </div>
                     <div class="form-control">
                         <label class="label" for="max_price">
-                            <span class="label-text">{{ __('Max Price') }}</span>
+                            <span class="label-text font-medium">{{ __('Max Price') }}</span>
                         </label>
                         <input
                             type="number"
@@ -196,7 +189,7 @@
 
                 <!-- Filter Actions -->
                 <div class="flex gap-2">
-                    <button class="btn btn-outline btn-sm" wire:click.prevent="clearFilters">
+                    <button class="btn btn-outline btn-sm gap-2" wire:click.prevent="clearFilters">
                         <i class="fa-solid fa-xmark"></i>
                         {{ __('Clear Filters') }}
                     </button>
@@ -207,66 +200,67 @@
 
     <!-- Table -->
     <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-            <div class="mb-4">
+        <div class="card-body p-0">
+            <div class="p-4">
                 {{ $transitLines->links() }}
             </div>
 
             <div class="overflow-x-auto">
-                <table class="table table-zebra table-hover">
+                <table class="table table-zebra">
                     <thead>
                     <tr>
                         <th>#</th>
                         <th>{{ __('TransitLine.Attributes.Origin Terminal') }}</th>
                         <th>{{ __('TransitLine.Attributes.Destination Terminal') }}</th>
                         <th>{{ __('TransitLine.Attributes.Price') }}</th>
-                        <th>{{ __('Actions') }}</th>
+                        <th class="text-center">{{ __('Actions') }}</th>
                     </tr>
                     </thead>
                     <tbody>
                         @if($transitLines->count() == 0)
                             <tr>
-                                <td colspan="5" class="text-center text-base-content/50 py-4">
+                                <td colspan="5" class="text-center text-base-content/50 py-8">
+                                    <i class="fa-solid fa-inbox text-4xl mb-2 block text-base-content/30"></i>
                                     {{ __('TransitLine.No Records Found') }}
                                 </td>
                             </tr>
                         @else
                             @foreach ($transitLines as $transitLine)
-                                <tr>
-                                    <td>{{ $transitLine->id }}</td>
+                                <tr class="hover">
+                                    <td class="font-mono text-sm">{{ $transitLine->id }}</td>
                                     <td>
                                         <div class="flex flex-col">
-                                            <strong>{{ $transitLine->originTerminal->name }}</strong>
-                                            <small class="text-base-content/60">
+                                            <span class="font-medium">{{ $transitLine->originTerminal->name }}</span>
+                                            <span class="text-xs text-base-content/60">
                                                 {{ $transitLine->originTerminal->province->name }}
                                                 - {{ $transitLine->originTerminal->county->name }}
-                                            </small>
+                                            </span>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="flex flex-col">
-                                            <strong>{{ $transitLine->destinationTerminal->name }}</strong>
-                                            <small class="text-base-content/60">
+                                            <span class="font-medium">{{ $transitLine->destinationTerminal->name }}</span>
+                                            <span class="text-xs text-base-content/60">
                                                 {{ $transitLine->destinationTerminal->province->name }}
                                                 - {{ $transitLine->destinationTerminal->county->name }}
-                                            </small>
+                                            </span>
                                         </div>
                                     </td>
-                                    <td dir="ltr" style="text-align: end;">{{ number_format($transitLine->price) }}</td>
+                                    <td dir="ltr" class="text-end font-mono">{{ number_format($transitLine->price) }}</td>
                                     <td>
                                         <div class="flex gap-1 justify-center">
                                             <a
                                                 href="{{ route('transit-lines.edit', $transitLine) }}"
                                                 wire:navigate
-                                                class="btn btn-ghost btn-sm"
-                                                aria-label="{{ __('Edit') }}"
+                                                class="btn btn-ghost btn-xs text-info"
+                                                title="{{ __('Edit') }}"
                                             >
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
                                             <button
                                                 wire:click="confirmDelete({{ $transitLine->id }})"
-                                                class="btn btn-ghost btn-sm text-error"
-                                                aria-label="{{ __('Delete') }}"
+                                                class="btn btn-ghost btn-xs text-error"
+                                                title="{{ __('Delete') }}"
                                             >
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
@@ -279,7 +273,7 @@
                 </table>
             </div>
 
-            <div class="mt-4">
+            <div class="p-4">
                 {{ $transitLines->links() }}
             </div>
         </div>
@@ -296,7 +290,7 @@
                     <button class="btn" wire:click="cancelDelete()">{{ __('Cancel') }}</button>
                 </form>
                 <form method="dialog">
-                    <button class="btn btn-error" wire:click="executeDelete()">
+                    <button class="btn btn-error gap-2" wire:click="executeDelete()">
                         <i class="fa-solid fa-trash"></i>
                         {{ __('Delete') }}
                     </button>

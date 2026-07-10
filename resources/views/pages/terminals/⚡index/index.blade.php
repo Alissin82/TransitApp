@@ -1,10 +1,10 @@
-<div class="container py-4">
-    <div class="flex justify-between items-center mb-6">
+<div class="py-4">
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
         <h2 class="text-2xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-bus"></i>
+            <i class="fa-solid fa-bus text-primary"></i>
             {{ __('Terminal.Manage Records') }}
         </h2>
-        <a href="{{ route('terminals.create') }}" class="btn btn-primary btn-sm" wire:navigate>
+        <a href="{{ route('terminals.create') }}" class="btn btn-primary btn-sm gap-2" wire:navigate>
             <i class="fa-solid fa-plus"></i>
             {{ __('Terminal.New Record') }}
         </a>
@@ -12,15 +12,10 @@
 
     <!-- Search -->
     <div class="card bg-base-100 shadow-sm mb-4">
-        <div class="card-body">
+        <div class="card-body py-4">
             <div class="form-control">
-                <label class="label" for="searchInput">
-                    <span class="label-text">{{ __('Search') }}</span>
-                </label>
                 <input
                     type="text"
-                    id="searchInput"
-                    name="searchInput"
                     placeholder="{{ __('Terminal.Search Placeholder') }}"
                     wire:model.live.debounce.300ms="search"
                     class="input input-bordered w-full"
@@ -31,13 +26,13 @@
 
     <!-- Table -->
     <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-            <div class="mb-4">
+        <div class="card-body p-0">
+            <div class="p-4">
                 {{ $terminals->links() }}
             </div>
 
             <div class="overflow-x-auto">
-                <table class="table table-zebra table-hover">
+                <table class="table table-zebra">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -47,21 +42,22 @@
                         <th>{{ __('Region.District') }}</th>
                         <th>{{ __('Region.Settlement') }}</th>
                         <th>{{ __('Region.Village') }}</th>
-                        <th>{{ __('Actions') }}</th>
+                        <th class="text-center">{{ __('Actions') }}</th>
                     </tr>
                     </thead>
                     <tbody>
                         @if($terminals->count() == 0)
                             <tr>
-                                <td colspan="8" class="text-center text-base-content/50 py-4">
+                                <td colspan="8" class="text-center text-base-content/50 py-8">
+                                    <i class="fa-solid fa-inbox text-4xl mb-2 block text-base-content/30"></i>
                                     {{ __('Terminal.No Records Found') }}
                                 </td>
                             </tr>
                         @else
                             @foreach ($terminals as $terminal)
-                                <tr>
-                                    <td>{{ $terminal->id }}</td>
-                                    <td>{{ $terminal->name }}</td>
+                                <tr class="hover">
+                                    <td class="font-mono text-sm">{{ $terminal->id }}</td>
+                                    <td class="font-medium">{{ $terminal->name }}</td>
                                     <td>{{ $terminal->province->name }}</td>
                                     <td>{{ $terminal->county->name }}</td>
                                     <td>{{ $terminal->district->name }}</td>
@@ -72,15 +68,15 @@
                                             <a
                                                 href="{{ route('terminals.edit', $terminal) }}"
                                                 wire:navigate
-                                                class="btn btn-ghost btn-sm"
-                                                aria-label="{{ __('Edit') }}"
+                                                class="btn btn-ghost btn-xs text-info"
+                                                title="{{ __('Edit') }}"
                                             >
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
                                             <button
                                                 wire:click="confirmDelete({{ $terminal->id }})"
-                                                class="btn btn-ghost btn-sm text-error"
-                                                aria-label="{{ __('Delete') }}"
+                                                class="btn btn-ghost btn-xs text-error"
+                                                title="{{ __('Delete') }}"
                                             >
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
@@ -93,7 +89,7 @@
                 </table>
             </div>
 
-            <div class="mt-4">
+            <div class="p-4">
                 {{ $terminals->links() }}
             </div>
         </div>
