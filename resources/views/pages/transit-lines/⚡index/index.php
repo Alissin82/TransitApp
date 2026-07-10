@@ -14,6 +14,7 @@ new class extends Component
 
     public int $perPage = 15;
     public ?string $search = '';
+    public ?int $pendingDeleteId = null;
 
     // Region filters
     public ?int $province_id = null;
@@ -188,6 +189,32 @@ new class extends Component
                 $this->village_id
             );
         }
+    }
+
+    public function confirmDelete(int $transitLineId): void
+    {
+        $this->pendingDeleteId = $transitLineId;
+        $this->dispatch('show-delete-confirm');
+    }
+
+    public function executeDelete(TransitLineService $service): void
+    {
+        if ($this->pendingDeleteId === null) {
+            return;
+        }
+
+        $transitLine = TransitLine::find($this->pendingDeleteId);
+        if ($transitLine) {
+            $service->delete($transitLine);
+            $this->toastSuccess(__('TransitLine.Record Deleted Successfully.'));
+        }
+
+        $this->pendingDeleteId = null;
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->pendingDeleteId = null;
     }
 
     public function delete(TransitLine $transitLine, TransitLineService $service): void

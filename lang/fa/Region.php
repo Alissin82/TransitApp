@@ -28,4 +28,11 @@ return [
     'Village' => 'روستا',
     'Villages' => 'روستاها',
     "All Villages" => "همه روستاها",
+
+    // Empty states
+    "No Provinces" => "هیچ استانی موجود نیست",
+    "No Counties" => "هیچ شهرستانی موجود نیست",
+    "No Districts" => "هیچ بخشی موجود نیست",
+    "No Settlements" => "هیچ دهستان/شهری موجود نیست",
+    "No Villages" => "هیچ روستایی موجود نیست",
 ];

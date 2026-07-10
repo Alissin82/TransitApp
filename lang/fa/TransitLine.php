@@ -35,4 +35,6 @@ return [
 
     // Delete
     'Record Delete Confirmation' => 'آیا از حذف این خط تردد اطمینان دارید؟',
+    'Delete Confirmation Title' => 'تأیید حذف خط تردد',
+    'Delete Confirmation Message' => 'آیا از حذف این خط تردد اطمینان دارید؟ این عمل غیرقابل بازگشت است.',
 ];

@@ -1,43 +1,44 @@
 <div class="container py-4">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">
-            <a href="{{ route('terminals.index') }}" wire:navigate>
-                <md-icon class="me-2">directions_bus</md-icon>
-                {{ __('Terminal.Manage Records') }}
-            </a>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold flex items-center gap-2">
+            <i class="fa-solid fa-bus"></i>
+            {{ __('Terminal.Manage Records') }}
         </h2>
-        <md-filled-button href="{{ route('terminals.create') }}" wire:navigate>
-            <md-icon slot="icon">add</md-icon>
+        <a href="{{ route('terminals.create') }}" class="btn btn-primary btn-sm" wire:navigate>
+            <i class="fa-solid fa-plus"></i>
             {{ __('Terminal.New Record') }}
-        </md-filled-button>
+        </a>
     </div>
 
     <!-- Search -->
-    <div class="card mb-4">
+    <div class="card bg-base-100 shadow-sm mb-4">
         <div class="card-body">
-            <md-outlined-text-field
-                name="searchInput"
-                label="{{ __('Search') }}"
-                placeholder="{{ __('Terminal.Search Placeholder') }}"
-                wire:model.live.debounce.300ms="search"
-                style="width: 100%;"
-            >
-            </md-outlined-text-field>
+            <div class="form-control">
+                <label class="label" for="searchInput">
+                    <span class="label-text">{{ __('Search') }}</span>
+                </label>
+                <input
+                    type="text"
+                    id="searchInput"
+                    name="searchInput"
+                    placeholder="{{ __('Terminal.Search Placeholder') }}"
+                    wire:model.live.debounce.300ms="search"
+                    class="input input-bordered w-full"
+                />
+            </div>
         </div>
     </div>
 
     <!-- Table -->
-    <div class="card">
+    <div class="card bg-base-100 shadow-sm">
         <div class="card-body">
-            <!-- Pagination -->
             <div class="mb-4">
                 {{ $terminals->links() }}
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-group-divider align-middle">
-                    <thead class="table-light">
+            <div class="overflow-x-auto">
+                <table class="table table-zebra table-hover">
+                    <thead>
                     <tr>
                         <th>#</th>
                         <th>{{ __('Terminal.Attributes.Name') }}</th>
@@ -52,7 +53,7 @@
                     <tbody>
                         @if($terminals->count() == 0)
                             <tr>
-                                <td colspan="8" class="text-center text-muted py-4">
+                                <td colspan="8" class="text-center text-base-content/50 py-4">
                                     {{ __('Terminal.No Records Found') }}
                                 </td>
                             </tr>
@@ -67,18 +68,22 @@
                                     <td>{{ $terminal->settlement->name }}</td>
                                     <td>{{ $terminal->village->name ?? '-' }}</td>
                                     <td>
-                                        <div class="d-flex gap-2">
-                                            <md-filled-tonal-button
+                                        <div class="flex gap-1 justify-center">
+                                            <a
                                                 href="{{ route('terminals.edit', $terminal) }}"
                                                 wire:navigate
+                                                class="btn btn-ghost btn-sm"
+                                                aria-label="{{ __('Edit') }}"
                                             >
-                                                <md-icon slot="icon">edit</md-icon>
-                                            </md-filled-tonal-button>
-                                            <md-filled-button
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <button
                                                 wire:click="confirmDelete({{ $terminal->id }})"
+                                                class="btn btn-ghost btn-sm text-error"
+                                                aria-label="{{ __('Delete') }}"
                                             >
-                                                <md-icon slot="icon">delete</md-icon>
-                                            </md-filled-button>
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -88,7 +93,6 @@
                 </table>
             </div>
 
-            <!-- Pagination -->
             <div class="mt-4">
                 {{ $terminals->links() }}
             </div>
@@ -96,27 +100,32 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <dialog id="deleteConfirmModal" wire:ignore.self>
-        <form method="dialog">
-            <div class="modal-content">
-                <h3>{{ __('Terminal.Delete Confirmation Title') }}</h3>
-                <p>{{ __('Terminal.Delete Confirmation Message') }}</p>
-                @if($this->affectedCount > 0)
-                    <div class="alert alert-warning">
-                        <md-icon class="me-2">warning</md-icon>
-                        {{ __('Terminal.Delete Cascade Warning', ['count' => $this->affectedCount]) }}
-                    </div>
-                @endif
-                <div class="d-flex gap-2 justify-content-end mt-4">
-                    <md-filled-tonal-button wire:click="cancelDelete()" onclick="document.getElementById('deleteConfirmModal').close()">
-                        {{ __('Cancel') }}
-                    </md-filled-tonal-button>
-                    <md-filled-button wire:click="executeDelete()" onclick="document.getElementById('deleteConfirmModal').close()" class="bg-danger">
-                        <md-icon slot="icon">delete</md-icon>
-                        {{ __('Delete') }}
-                    </md-filled-button>
+    <dialog id="deleteConfirmModal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">{{ __('Terminal.Delete Confirmation Title') }}</h3>
+            <p class="py-4">{{ __('Terminal.Delete Confirmation Message') }}</p>
+
+            @if($this->affectedCount > 0)
+                <div class="alert alert-warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>{{ __('Terminal.Delete Cascade Warning', ['count' => $this->affectedCount]) }}</span>
                 </div>
+            @endif
+
+            <div class="modal-action">
+                <form method="dialog">
+                    <button class="btn" wire:click="cancelDelete()">{{ __('Cancel') }}</button>
+                </form>
+                <form method="dialog">
+                    <button class="btn btn-error" wire:click="executeDelete()">
+                        <i class="fa-solid fa-trash"></i>
+                        {{ __('Delete') }}
+                    </button>
+                </form>
             </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
         </form>
     </dialog>
 

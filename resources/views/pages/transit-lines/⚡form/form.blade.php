@@ -1,207 +1,203 @@
 <div class="container py-4">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">
-            <a href="{{ request()->url() }}">
-                <md-icon class="me-2">route</md-icon>
-                {{ $transitLine ? __('TransitLine.Edit Record') : __('TransitLine.New Record') }}
-            </a>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold flex items-center gap-2">
+            <i class="fa-solid fa-route"></i>
+            {{ $transitLine ? __('TransitLine.Edit Record') : __('TransitLine.New Record') }}
         </h2>
-        <md-outlined-button href="{{ route('transit-lines.index') }}" wire:navigate>
-            <md-icon slot="icon">arrow_back</md-icon>
+        <a href="{{ route('transit-lines.index') }}" class="btn btn-outline btn-sm" wire:navigate>
+            <i class="fa-solid fa-arrow-right"></i>
             {{ __('Back') }}
-        </md-outlined-button>
+        </a>
     </div>
 
-    <!-- Form -->
-    <div class="card">
+    <div class="card bg-base-100 shadow-sm">
         <div class="card-body">
             <!-- Region Filters -->
-            <div class="card mb-4">
-                <div x-data="{ open: false }" class="card">
-                    <div
-                        class="card-header d-flex justify-content-between align-items-center"
-                        role="button"
-                        @click="open = !open"
-                    >
-                        <h5 class="mb-0">
-                            <md-icon class="me-2">filter_list</md-icon>
-                            {{ __('TransitLine.Filters.Terminals Region') }}
-                        </h5>
-                        <md-icon x-show="!open">expand_more</md-icon>
-                        <md-icon x-show="open">expand_less</md-icon>
+            <div class="collapse collapse-arrow bg-base-200 mb-4">
+                <input type="checkbox" />
+                <div class="collapse-title text-xl font-medium flex items-center gap-2">
+                    <i class="fa-solid fa-filter"></i>
+                    {{ __('TransitLine.Filters.Terminals Region') }}
+                </div>
+                <div class="collapse-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="form-control">
+                            <label class="label" for="province_id">
+                                <span class="label-text">{{ __('Region.Province') }}</span>
+                            </label>
+                            <select
+                                id="province_id"
+                                name="province_id"
+                                wire:model.live="province_id"
+                                class="select select-bordered w-full"
+                            >
+                                <option value="">{{ __('Region.Select Province') }}</option>
+                                @foreach($provinces as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="county_id">
+                                <span class="label-text">{{ __('Region.County') }}</span>
+                            </label>
+                            <select
+                                id="county_id"
+                                name="county_id"
+                                wire:model.live="county_id"
+                                {{ !$province_id ? 'disabled' : '' }}
+                                class="select select-bordered w-full"
+                            >
+                                <option value="">{{ __('Region.Select County') }}</option>
+                                @foreach($counties as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div x-show="open" x-collapse class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <md-outlined-select
-                                    name="province_id"
-                                    label="{{ __('Region.Province') }}"
-                                    wire:model.live="province_id"
-                                >
-                                    <md-select-option value="" disabled selected>
-                                        <div slot="headline">{{ __('Region.Select Province') }}</div>
-                                    </md-select-option>
-                                    @foreach($provinces as $value => $label)
-                                        <md-select-option value="{{ $value }}">
-                                            <div slot="headline">{{ $label }}</div>
-                                        </md-select-option>
-                                    @endforeach
-                                </md-outlined-select>
-                            </div>
-                            <div class="col-md-6">
-                                <md-outlined-select
-                                    name="county_id"
-                                    label="{{ __('Region.County') }}"
-                                    wire:model.live="county_id"
-                                    @disabled(!$province_id)
-                                >
-                                    <md-select-option value="" disabled selected>
-                                        <div slot="headline">{{ __('Region.Select County') }}</div>
-                                    </md-select-option>
-                                    @foreach($counties as $value => $label)
-                                        <md-select-option value="{{ $value }}">
-                                            <div slot="headline">{{ $label }}</div>
-                                        </md-select-option>
-                                    @endforeach
-                                </md-outlined-select>
-                            </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="form-control">
+                            <label class="label" for="district_id">
+                                <span class="label-text">{{ __('Region.District') }}</span>
+                            </label>
+                            <select
+                                id="district_id"
+                                name="district_id"
+                                wire:model.live="district_id"
+                                {{ !$county_id ? 'disabled' : '' }}
+                                class="select select-bordered w-full"
+                            >
+                                <option value="">{{ __('Region.Select District') }}</option>
+                                @foreach($districts as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <md-outlined-select
-                                    name="district_id"
-                                    label="{{ __('Region.District') }}"
-                                    wire:model.live="district_id"
-                                    @disabled(!$county_id)
-                                >
-                                    <md-select-option value="" disabled selected>
-                                        <div slot="headline">{{ __('Region.Select District') }}</div>
-                                    </md-select-option>
-                                    @foreach($districts as $value => $label)
-                                        <md-select-option value="{{ $value }}">
-                                            <div slot="headline">{{ $label }}</div>
-                                        </md-select-option>
-                                    @endforeach
-                                </md-outlined-select>
-                            </div>
-                            <div class="col-md-6">
-                                <md-outlined-select
-                                    name="settlement_id"
-                                    label="{{ __('Region.Settlement') }}"
-                                    wire:model.live="settlement_id"
-                                    @disabled(!$district_id)
-                                >
-                                    <md-select-option value="" disabled selected>
-                                        <div slot="headline">{{ __('Region.Select Settlement') }}</div>
-                                    </md-select-option>
-                                    @foreach($settlements as $value => $label)
-                                        <md-select-option value="{{ $value }}">
-                                            <div slot="headline">{{ $label }}</div>
-                                        </md-select-option>
-                                    @endforeach
-                                </md-outlined-select>
-                            </div>
+                        <div class="form-control">
+                            <label class="label" for="settlement_id">
+                                <span class="label-text">{{ __('Region.Settlement') }}</span>
+                            </label>
+                            <select
+                                id="settlement_id"
+                                name="settlement_id"
+                                wire:model.live="settlement_id"
+                                {{ !$district_id ? 'disabled' : '' }}
+                                class="select select-bordered w-full"
+                            >
+                                <option value="">{{ __('Region.Select Settlement') }}</option>
+                                @foreach($settlements as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <md-outlined-select
-                                    name="village_id"
-                                    label="{{ __('Region.Village') }}"
-                                    wire:model.live="village_id"
-                                    @disabled(!$settlement_id)
-                                >
-                                    <md-select-option value="" disabled selected>
-                                        <div slot="headline">{{ __('Region.Select Village') }}</div>
-                                    </md-select-option>
-                                    @foreach($villages as $value => $label)
-                                        <md-select-option value="{{ $value }}">
-                                            <div slot="headline">{{ $label }}</div>
-                                        </md-select-option>
-                                    @endforeach
-                                </md-outlined-select>
-                            </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="form-control">
+                            <label class="label" for="village_id">
+                                <span class="label-text">{{ __('Region.Village') }}</span>
+                            </label>
+                            <select
+                                id="village_id"
+                                name="village_id"
+                                wire:model.live="village_id"
+                                {{ !$settlement_id ? 'disabled' : '' }}
+                                class="select select-bordered w-full"
+                            >
+                                <option value="">{{ __('Region.Select Village') }}</option>
+                                @foreach($villages as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <!-- Filter Actions -->
-                        <div class="d-flex gap-2">
-                            <md-filled-button wire:click.prevent="applyFilters">
-                                <md-icon slot="icon">search</md-icon>
-                                {{ __('Apply Filters') }}
-                            </md-filled-button>
-                            <md-outlined-button wire:click.prevent="clearFilters">
-                                <md-icon slot="icon">close</md-icon>
-                                {{ __('Clear Filters') }}
-                            </md-outlined-button>
-                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button class="btn btn-primary btn-sm" wire:click.prevent="applyFilters">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            {{ __('Apply Filters') }}
+                        </button>
+                        <button class="btn btn-outline btn-sm" wire:click.prevent="clearFilters">
+                            <i class="fa-solid fa-xmark"></i>
+                            {{ __('Clear Filters') }}
+                        </button>
                     </div>
                 </div>
             </div>
 
             <form wire:submit.prevent="save" id="transit-line-form">
                 <!-- Transit Line Fields -->
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <md-outlined-select
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="form-control">
+                        <label class="label" for="origin_terminal_id">
+                            <span class="label-text">{{ __('TransitLine.Attributes.Origin Terminal') }}</span>
+                        </label>
+                        <select
+                            id="origin_terminal_id"
                             name="origin_terminal_id"
-                            label="{{ __('TransitLine.Attributes.Origin Terminal') }}"
-                            wire:model="origin_terminal_id"
+                            wire:model.live="origin_terminal_id"
                             form="transit-line-form"
+                            class="select select-bordered w-full"
                         >
-                            <md-select-option value="" disabled selected>
-                                <div slot="headline">{{ __('TransitLine.Select Origin Terminal') }}</div>
-                            </md-select-option>
+                            <option value=""></option>
                             @foreach($originTerminals as $value => $label)
-                                <md-select-option value="{{ $value }}">
-                                    <div slot="headline">{{ $label }}</div>
-                                </md-select-option>
+                                <option value="{{ $value }}" {{ (string) $value === (string) $origin_terminal_id ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
-                        </md-outlined-select>
+                        </select>
                     </div>
-                    <div class="col-md-6">
-                        <md-outlined-select
+                    <div class="form-control">
+                        <label class="label" for="destination_terminal_id">
+                            <span class="label-text">{{ __('TransitLine.Attributes.Destination Terminal') }}</span>
+                        </label>
+                        <select
+                            id="destination_terminal_id"
                             name="destination_terminal_id"
-                            label="{{ __('TransitLine.Attributes.Destination Terminal') }}"
-                            wire:model="destination_terminal_id"
+                            wire:model.live="destination_terminal_id"
                             form="transit-line-form"
-                            @disabled(!$originTerminals)
+                            {{ !$originTerminals ? 'disabled' : '' }}
+                            class="select select-bordered w-full"
                         >
-                            <md-select-option value="" disabled selected>
-                                <div slot="headline">{{ __('TransitLine.Select Destination Terminal') }}</div>
-                            </md-select-option>
+                            <option value=""></option>
                             @foreach($destinationTerminals as $value => $label)
-                                <md-select-option value="{{ $value }}">
-                                    <div slot="headline">{{ $label }}</div>
-                                </md-select-option>
+                                <option value="{{ $value }}" {{ (string) $value === (string) $destination_terminal_id ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
-                        </md-outlined-select>
+                        </select>
                     </div>
                 </div>
 
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <md-outlined-text-field
-                            name="price"
-                            label="{{ __('TransitLine.Attributes.Price') }}"
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="form-control">
+                        <label class="label" for="price">
+                            <span class="label-text">{{ __('TransitLine.Attributes.Price') }}</span>
+                        </label>
+                        <input
                             type="number"
+                            id="price"
+                            name="price"
                             placeholder="50000"
                             wire:model="price"
                             form="transit-line-form"
-                            style="width: 100%;"
-                        >
-                        </md-outlined-text-field>
+                            class="input input-bordered w-full @error('price') input-error @enderror"
+                        />
+                        @error('price')
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ $message }}</span>
+                            </label>
+                        @enderror
                     </div>
                 </div>
 
                 <!-- Submit Buttons -->
-                <div class="d-flex gap-2">
-                    <md-filled-button type="submit">
-                        <md-icon slot="icon">save</md-icon>
+                <div class="flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-floppy-disk"></i>
                         {{ $transitLine ? __('Save Changes') : __('Save') }}
-                    </md-filled-button>
-                    <md-outlined-button href="{{ route('transit-lines.index') }}" wire:navigate>
-                        <md-icon slot="icon">close</md-icon>
+                    </button>
+                    <a href="{{ route('transit-lines.index') }}" class="btn btn-outline" wire:navigate>
+                        <i class="fa-solid fa-xmark"></i>
                         {{ __('Cancel') }}
-                    </md-outlined-button>
+                    </a>
                 </div>
             </form>
         </div>

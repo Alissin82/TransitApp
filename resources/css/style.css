@@ -19,3 +19,25 @@
 body {
         font-family: var(--app-font-sans), serif;
 }
+
+/* Table RTL fixes */
+[dir="rtl"] .table th,
+[dir="rtl"] .table td {
+        text-align: right;
+}
+
+/* Table action cells - center content */
+.table td.align-middle {
+        text-align: center;
+        vertical-align: middle;
+}
+
+/* Card header clickable area */
+.card-header[role="button"] {
+        cursor: pointer;
+        user-select: none;
+}
+
+.card-header[role="button"]:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+}
