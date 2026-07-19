@@ -28,9 +28,9 @@ class Settlement extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public function parent(): HasOne
+    public function parent(): BelongsTo
     {
-        return $this->hasOne(self::class, 'id', 'parent_id');
+        return $this->belongsTo(self::class, 'id', 'parent_id');
     }
 
     public function district(): BelongsTo
