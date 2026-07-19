@@ -51,7 +51,7 @@ return new class extends Migration
             $table->enum('type', SettlementTypeEnum::values());
             $table->string('statistical_code')->nullable();
 
-            $table->foreignId('parent_id')->nullable()->constrained('settlements')->cascadeOnDelete();
+            $table->foreignId('parent_id')->nullable()->constrained('settlements');
             $table->foreignId('district_id')->constrained('districts');
 
             $table->timestamps();
