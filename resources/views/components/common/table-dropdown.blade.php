@@ -1,7 +1,9 @@
+{{-- Table action dropdown: positioned via Popper.js for accurate placement --}}
 <div x-data="{
     isOpen: false,
     popperInstance: null,
     init() {
+        // Initialize Popper.js for dropdown positioning
         this.$nextTick(() => {
             this.popperInstance = createPopper(this.$refs.button, this.$refs.content, {
                 placement: 'bottom-end',
@@ -25,10 +27,13 @@
     }
 }"
 @click.away="isOpen = false">
+
+    {{-- Trigger button --}}
     <div @click="toggle()" x-ref="button" class="cursor-pointer">
         {{ $button }}
     </div>
 
+    {{-- Dropdown content: fixed positioning for overflow contexts --}}
     <div class="z-50 fixed" x-ref="content">
         <div x-show="isOpen" x-cloak class="p-2 bg-white border border-gray-200 rounded-2xl shadow-lg dark:border-gray-800 dark:bg-gray-dark w-40">
             <div class="space-y-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">

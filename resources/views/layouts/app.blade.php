@@ -12,15 +12,15 @@
         سامانه ترابری
     </title>
 
-    <!-- Scripts -->
+    {{-- Vite assets: CSS and JS bundles --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Alpine.js -->
-    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
+    {{-- Alpine.js: loaded via Vite, not CDN --}}
 
-    <!-- Theme Store -->
+    {{-- Alpine.js store: theme management --}}
     <script>
         document.addEventListener('alpine:init', () => {
+            {{-- Theme store: persists light/dark preference in localStorage --}}
             Alpine.store('theme', {
                 init() {
                     const savedTheme = localStorage.getItem('theme');
@@ -48,21 +48,20 @@
                 }
             });
 
+            {{-- Sidebar store: controls expansion, mobile open, and hover states --}}
             Alpine.store('sidebar', {
-                // Initialize based on screen size
-                isExpanded: window.innerWidth >= 1280, // true for desktop, false for mobile
+                isExpanded: window.innerWidth >= 1280,
                 isMobileOpen: false,
                 isHovered: false,
 
                 toggleExpanded() {
                     this.isExpanded = !this.isExpanded;
-                    // When toggling desktop sidebar, ensure mobile menu is closed
+                    // Close mobile menu when toggling desktop sidebar
                     this.isMobileOpen = false;
                 },
 
                 toggleMobileOpen() {
                     this.isMobileOpen = !this.isMobileOpen;
-                    // Don't modify isExpanded when toggling mobile menu
                 },
 
                 setMobileOpen(val) {
@@ -70,7 +69,7 @@
                 },
 
                 setHovered(val) {
-                    // Only allow hover effects on desktop when sidebar is collapsed
+                    // Only allow hover-to-expand on desktop when sidebar is collapsed
                     if (window.innerWidth >= 1280 && !this.isExpanded) {
                         this.isHovered = val;
                     }
@@ -79,7 +78,7 @@
         });
     </script>
 
-    <!-- Apply dark mode immediately to prevent flash -->
+    {{-- Inline script: apply dark mode immediately to prevent flash of wrong theme --}}
     <script>
         (function() {
             const savedTheme = localStorage.getItem('theme');
@@ -94,9 +93,10 @@
             }
         })();
     </script>
-    
+
 </head>
 
+{{-- Body: initializes sidebar state and responsive resize handler --}}
 <body
     x-data="{ 'loaded': true}"
     x-init="$store.sidebar.isExpanded = window.innerWidth >= 1280;
@@ -111,32 +111,33 @@
     };
     window.addEventListener('resize', checkMobile);">
 
-    {{-- preloader --}}
+    {{-- Preloader: loading spinner shown on initial page load --}}
     <x-common.preloader/>
-    {{-- preloader end --}}
 
+    {{-- Main layout: sidebar + content area --}}
     <div class="min-h-screen xl:flex">
+        {{-- Mobile backdrop overlay --}}
         @include('layouts.backdrop')
+        {{-- Sidebar navigation --}}
         @include('layouts.sidebar')
 
+        {{-- Content area: shifts right/left based on sidebar state --}}
         <div class="flex-1 transition-all duration-300 ease-in-out"
             :class="{
                 'xl:ms-72.5': $store.sidebar.isExpanded || $store.sidebar.isHovered,
                 'xl:ms-22.5': !$store.sidebar.isExpanded && !$store.sidebar.isHovered,
                 'ms-0': $store.sidebar.isMobileOpen
             }">
-            <!-- app header start -->
+            {{-- App header --}}
             @include('layouts.app-header')
-            <!-- app header end -->
 
-            <!-- app content start -->
-            {{-- failsafe for template legacy usage--}}
+            {{-- Main page content --}}
+            {{-- Supports both slot (component usage) and yield (legacy) --}}
             @if(isset($slot))
                 {{ $slot }}
             @else
                 @yield('content')
             @endif
-            <!-- app content end -->
         </div>
 
     </div>

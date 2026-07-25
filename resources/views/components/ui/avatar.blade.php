@@ -1,4 +1,4 @@
-
+{{-- Avatar component: user image with optional size and online/offline/busy status indicator --}}
 @props([
     'src' => '',
     'alt' => 'User Avatar',
@@ -7,6 +7,7 @@
 ])
 
 @php
+    // Size mapping for avatar dimensions
     $sizeClasses = [
         'xsmall' => 'h-6 w-6 max-w-6',
         'small' => 'h-8 w-8 max-w-8',
@@ -16,6 +17,7 @@
         'xxlarge' => 'h-16 w-16 max-w-16',
     ];
 
+    // Status indicator size (scales with avatar)
     $statusSizeClasses = [
         'xsmall' => 'h-1.5 w-1.5 max-w-1.5',
         'small' => 'h-2 w-2 max-w-2',
@@ -25,6 +27,7 @@
         'xxlarge' => 'h-4 w-4 max-w-4',
     ];
 
+    // Status indicator colors
     $statusColorClasses = [
         'online' => 'bg-green-500',
         'offline' => 'bg-red-400',
@@ -36,13 +39,16 @@
     $statusColorClass = $statusColorClasses[$status] ?? '';
 @endphp
 
+{{-- Avatar container --}}
 <div class="relative rounded-full {{ $sizeClass }}">
-    <img 
-        src="{{ $src }}" 
-        alt="{{ $alt }}" 
+    {{-- Avatar image --}}
+    <img
+        src="{{ $src }}"
+        alt="{{ $alt }}"
         class="h-full w-full object-cover rounded-full"
     />
-    
+
+    {{-- Status indicator dot (bottom-right corner) --}}
     @if($status !== 'none')
         <span class="absolute bottom-0 end-0 rounded-full border-[1.5px] border-white dark:border-gray-900 {{ $statusSizeClass }} {{ $statusColorClass }}"></span>
     @endif

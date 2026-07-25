@@ -1,4 +1,4 @@
-
+{{-- YouTube embed component: responsive iframe wrapper with configurable aspect ratio --}}
 @props([
     'videoId' => '',
     'aspectRatio' => '16:9',
@@ -7,16 +7,18 @@
 ])
 
 @php
+    // Aspect ratio to Tailwind class mapping
     $aspectRatioClasses = [
         '16:9' => 'aspect-video',
         '4:3' => 'aspect-4/3',
         '21:9' => 'aspect-21/9',
         '1:1' => 'aspect-square',
     ];
-    
+
     $aspectRatioClass = $aspectRatioClasses[$aspectRatio] ?? $aspectRatioClasses['16:9'];
 @endphp
 
+{{-- Responsive container with aspect ratio constraint --}}
 <div class="overflow-hidden rounded-lg {{ $aspectRatioClass }} {{ $className }}">
     <iframe
         src="https://www.youtube.com/embed/{{ $videoId }}"

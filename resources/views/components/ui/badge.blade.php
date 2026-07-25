@@ -1,4 +1,4 @@
-
+{{-- Badge component: pill-shaped label with light/solid variants and color options --}}
 @props([
     'variant' => 'light',
     'size' => 'md',
@@ -10,11 +10,13 @@
 @php
     $baseStyles = 'inline-flex items-center px-2.5 py-0.5 justify-center gap-1 rounded-full font-medium capitalize';
 
+    // Size variants
     $sizeStyles = [
         'sm' => 'text-xs',
         'md' => 'text-sm',
     ];
 
+    // Color variants: light (subtle) and solid (vibrant)
     $variants = [
         'light' => [
             'primary' => 'bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-400',
@@ -41,12 +43,14 @@
 @endphp
 
 <span class="{{ $baseStyles }} {{ $sizeClass }} {{ $colorStyles }}" {{ $attributes }}>
+    {{-- Optional start icon --}}
     @if($startIcon)
         {!! $startIcon !!}
     @endif
 
     {{ $slot }}
 
+    {{-- Optional end icon --}}
     @if($endIcon)
         {!! $endIcon !!}
     @endif

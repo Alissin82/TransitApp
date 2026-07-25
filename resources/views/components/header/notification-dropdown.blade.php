@@ -1,4 +1,4 @@
-{{-- Notification Dropdown Component --}}
+{{-- Notification dropdown: bell icon with unread badge and notification list --}}
 <div class="relative" x-data="{
     dropdownOpen: false,
     notifying: true,
@@ -18,13 +18,14 @@
         this.closeDropdown();
     }
 }" @click.away="closeDropdown()">
-    <!-- Notification Button -->
+
+    {{-- Bell icon button with notification badge --}}
     <button
         class="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
         @click="toggleDropdown()"
         type="button"
     >
-        <!-- Notification Badge -->
+        {{-- Unread notification indicator: pulsing orange dot --}}
         <span
             x-show="notifying"
             class="absolute end-0 top-0.5 z-1 h-2 w-2 rounded-full bg-orange-400"
@@ -34,7 +35,7 @@
             ></span>
         </span>
 
-        <!-- Bell Icon -->
+        {{-- Bell icon --}}
         <svg
             class="fill-current"
             width="20"
@@ -52,7 +53,7 @@
         </svg>
     </button>
 
-    <!-- Dropdown Start -->
+    {{-- Dropdown panel: notification header, list, and view all link --}}
     <div
         x-show="dropdownOpen"
         x-transition:enter="transition ease-out duration-100"
@@ -64,30 +65,20 @@
         class="absolute -end-[240px] mt-[17px] flex h-[480px] w-[350px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark sm:w-[361px] lg:end-0"
         style="display: none;"
     >
-        <!-- Dropdown Header -->
+        {{-- Dropdown header with title and close button --}}
         <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 dark:border-gray-800">
             <h5 class="text-lg font-semibold text-gray-800 dark:text-white/90">{{ __('Notification') }}</h5>
 
             <button @click="closeDropdown()" class="text-gray-500 dark:text-gray-400" type="button">
-                <svg
-                    class="fill-current"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                <svg class="fill-current" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M6.21967 7.28131C5.92678 6.98841 5.92678 6.51354 6.21967 6.22065C6.51256 5.92775 6.98744 5.92775 7.28033 6.22065L11.999 10.9393L16.7176 6.22078C17.0105 5.92789 17.4854 5.92788 17.7782 6.22078C18.0711 6.51367 18.0711 6.98855 17.7782 7.28144L13.0597 12L17.7782 16.7186C18.0711 17.0115 18.0711 17.4863 17.7782 17.7792C17.4854 18.0721 17.0105 18.0721 16.7176 17.7792L11.999 13.0607L7.28033 17.7794C6.98744 18.0722 6.51256 18.0722 6.21967 17.7794C5.92678 17.4865 5.92678 17.0116 6.21967 16.7187L10.9384 12L6.21967 7.28131Z"
-                        fill=""
-                    />
+                        fill="" />
                 </svg>
             </button>
         </div>
 
-        <!-- Notification List -->
+        {{-- Scrollable notification list --}}
         <ul class="flex flex-col h-auto overflow-y-auto custom-scrollbar">
             @php
                 $notifications = [
@@ -174,12 +165,14 @@
                 ];
             @endphp
 
+            {{-- Render each notification item --}}
             @foreach ($notifications as $notification)
                 <li @click="handleItemClick()">
                     <a
                         class="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
                         href="#"
                     >
+                        {{-- User avatar with online/offline status indicator --}}
                         <span class="relative block w-full h-10 rounded-full z-1 max-w-10">
                             <img src="{{ $notification['userImage'] }}" alt="{{ __('User') }}" class="overflow-hidden rounded-full" />
                             <span
@@ -187,6 +180,7 @@
                             ></span>
                         </span>
 
+                        {{-- Notification text and metadata --}}
                         <span class="block">
                             <span class="mb-1.5 block text-theme-sm text-gray-500 dark:text-gray-400">
                                 <span class="font-medium text-gray-800 dark:text-white/90">
@@ -209,7 +203,7 @@
             @endforeach
         </ul>
 
-        <!-- View All Button -->
+        {{-- View all notifications link --}}
         <a
             href="#"
             class="mt-3 flex justify-center rounded-lg border border-gray-300 bg-white p-3 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200"
@@ -218,5 +212,4 @@
             {{ __('View All Notification') }}
         </a>
     </div>
-    <!-- Dropdown End -->
 </div>
