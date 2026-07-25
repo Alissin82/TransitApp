@@ -102,29 +102,29 @@
             <table class="w-full min-w-[1102px]">
                 <thead>
                     <tr class="border-b border-gray-100 dark:border-gray-800">
-                        <th class="px-5 py-3 text-left sm:px-6">
+                        <th class="px-5 py-3 text-start sm:px-6">
                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                User
+                                {{ __('User') }}
                             </p>
                         </th>
-                        <th class="px-5 py-3 text-left sm:px-6">
+                        <th class="px-5 py-3 text-start sm:px-6">
                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                Project Name
+                                {{ __('Project Name') }}
                             </p>
                         </th>
-                        <th class="px-5 py-3 text-left sm:px-6">
+                        <th class="px-5 py-3 text-start sm:px-6">
                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                Team
+                                {{ __('Team') }}
                             </p>
                         </th>
-                        <th class="px-5 py-3 text-left sm:px-6">
+                        <th class="px-5 py-3 text-start sm:px-6">
                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                Status
+                                {{ __('Status') }}
                             </p>
                         </th>
-                        <th class="px-5 py-3 text-left sm:px-6">
+                        <th class="px-5 py-3 text-start sm:px-6">
                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                Budget
+                                {{ __('Budget') }}
                             </p>
                         </th>
                     </tr>
@@ -150,7 +150,7 @@
                                 <div class="flex -space-x-2">
                                     <template x-for="(teamImage, index) in order.team.images" :key="index">
                                         <div class="w-6 h-6 overflow-hidden border-2 border-white rounded-full dark:border-gray-900">
-                                            <img :src="teamImage" alt="team member">
+                                            <img :src="teamImage" alt="{{ __('team member') }}">
                                         </div>
                                     </template>
                                 </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full" dir="ltr">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full" dir="rtl">
 
 <head>
     <meta charset="utf-8">
@@ -121,9 +121,9 @@
 
         <div class="flex-1 transition-all duration-300 ease-in-out"
             :class="{
-                'xl:ml-72.5': $store.sidebar.isExpanded || $store.sidebar.isHovered,
-                'xl:ml-22.5': !$store.sidebar.isExpanded && !$store.sidebar.isHovered,
-                'ml-0': $store.sidebar.isMobileOpen
+                'xl:ms-72.5': $store.sidebar.isExpanded || $store.sidebar.isHovered,
+                'xl:ms-22.5': !$store.sidebar.isExpanded && !$store.sidebar.isHovered,
+                'ms-0': $store.sidebar.isMobileOpen
             }">
             <!-- app header start -->
             @include('layouts.app-header')

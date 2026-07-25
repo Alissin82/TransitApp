@@ -10,7 +10,7 @@ return [
     'Edit Record' => 'ویرایش پایانه',
 
     // Alerts
-    'Record Not Found!' => "پایانه مورد نظر یافت نشد!",
+    'Record Not Found!' => 'پایانه مورد نظر یافت نشد!',
     'Record Created Successfully.' => 'پایانه با موفقیت ویرایش شد.',
     'Record Edited Successfully.' => 'پایانه با موفقیت ویرایش شد.',
     'Record Deleted Successfully.' => 'پایانه با موفقیت حذف شد.',
@@ -28,5 +28,5 @@ return [
     'Record Delete Confirmation' => 'آیا از حذف این پایانه اطمینان دارید؟',
     'Delete Confirmation Title' => 'تأیید حذف پایانه',
     'Delete Confirmation Message' => 'آیا از حذف این پایانه اطمینان دارید؟ این عمل غیرقابل بازگشت است.',
-    'Delete Cascade Warning' => 'WARNING: This terminal has :count associated transit line(s) that will also be deleted.',
+    'Delete Cascade Warning' => 'هشدار: این پایانه :count خط ترانزیتی مرتبط دارد که آنها نیز حذف خواهند شد.',
 ];

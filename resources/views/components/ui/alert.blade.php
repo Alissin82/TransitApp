@@ -6,7 +6,7 @@
     'message' => '',
     'showLink' => false,
     'linkHref' => '#',
-    'linkText' => 'Learn more'
+    'linkText' => __('Learn more')
 ])
 
 @php

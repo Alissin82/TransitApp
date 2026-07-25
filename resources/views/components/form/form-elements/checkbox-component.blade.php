@@ -1,4 +1,4 @@
-<x-common.component-card title="Checkboxes">
+<x-common.component-card title="{{ __('Checkboxes') }}">
     <div class="flex flex-wrap items-center gap-8">
         <div x-data="{ checkboxToggle: false }">
             <label for="checkboxLabelOne"
@@ -8,7 +8,7 @@
                         @change="checkboxToggle = !checkboxToggle" />
                     <div :class="checkboxToggle ? 'border-brand-500 bg-brand-500' :
                         'bg-transparent border-gray-300 dark:border-gray-700'"
-                        class="f hover:border-brand-500 dark:hover:border-brand-500 mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
+                        class="f hover:border-brand-500 dark:hover:border-brand-500 me-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
                         <span :class="checkboxToggle ? '' : 'opacity-0'">
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +18,7 @@
                         </span>
                     </div>
                 </div>
-                Default
+                {{ __('Default') }}
             </label>
         </div>
 
@@ -30,7 +30,7 @@
                         @change="checkboxToggle = !checkboxToggle" />
                     <div :class="checkboxToggle ? 'border-brand-500 bg-brand-500' :
                         'bg-transparent border-gray-300 dark:border-gray-700'"
-                        class="hover:border-brand-500 dark:hover:border-brand-500 mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
+                        class="hover:border-brand-500 dark:hover:border-brand-500 me-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
                         <span :class="checkboxToggle ? '' : 'opacity-0'">
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +40,7 @@
                         </span>
                     </div>
                 </div>
-                Checked
+                {{ __('Checked') }}
             </label>
         </div>
 
@@ -52,7 +52,7 @@
                         @change="checkboxToggle = !checkboxToggle" disabled />
                     <div :class="checkboxToggle ? 'bg-transparent border-gray-200 dark:border-gray-800' :
                         'border-brand-500 bg-brand-500'"
-                        class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
+                        class="me-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
                         <span :class="checkboxToggle ? '' : 'opacity-0'">
                             <svg class="stroke-gray-200 dark:stroke-gray-800" width="14" height="14"
                                 viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +62,7 @@
                         </span>
                     </div>
                 </div>
-                Disabled
+                {{ __('Disabled') }}
             </label>
         </div>
     </div>

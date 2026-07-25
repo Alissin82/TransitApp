@@ -1,4 +1,4 @@
-<x-common.component-card title="Toggle switch input">
+<x-common.component-card title="{{ __('Toggle switch input') }}">
     <!-- Elements -->
     <div class="mb-6 flex flex-wrap items-center gap-6 sm:gap-8">
         <div x-data="{ switcherToggle: false }">
@@ -10,11 +10,11 @@
                         :class="switcherToggle ? 'bg-brand-500 dark:bg-brand-500' : 'bg-gray-200 dark:bg-white/10'">
                     </div>
                     <div :class="switcherToggle ? 'translate-x-full' : 'translate-x-0'"
-                        class="shadow-theme-sm absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
+                        class="shadow-theme-sm absolute top-0.5 start-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
                     </div>
                 </div>
 
-                Default
+                {{ __('Default') }}
             </label>
         </div>
 
@@ -27,11 +27,11 @@
                         :class="switcherToggle ? 'bg-brand-500 dark:bg-brand-500' : 'bg-gray-200 dark:bg-white/10'">
                     </div>
                     <div :class="switcherToggle ? 'translate-x-full' : 'translate-x-0'"
-                        class="shadow-theme-sm absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
+                        class="shadow-theme-sm absolute top-0.5 start-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
                     </div>
                 </div>
 
-                Checked
+                {{ __('Checked') }}
             </label>
         </div>
 
@@ -45,11 +45,11 @@
                         :class="switcherToggle ? 'bg-brand-500 dark:bg-brand-500' : 'bg-gray-100 dark:bg-gray-800'">
                     </div>
                     <div :class="switcherToggle ? 'translate-x-full' : 'translate-x-0'"
-                        class="shadow-theme-sm absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-gray-50 duration-300 ease-linear">
+                        class="shadow-theme-sm absolute top-0.5 start-0.5 h-5 w-5 rounded-full bg-gray-50 duration-300 ease-linear">
                     </div>
                 </div>
 
-                Disabled
+                {{ __('Disabled') }}
             </label>
         </div>
     </div>
@@ -64,11 +64,11 @@
                     <div class="block h-6 w-11 rounded-full"
                         :class="switcherToggle ? 'bg-gray-700 dark:bg-white/10' : 'bg-gray-200 dark:bg-gray-800'"></div>
                     <div :class="switcherToggle ? 'translate-x-full' : 'translate-x-0'"
-                        class="shadow-theme-sm absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
+                        class="shadow-theme-sm absolute top-0.5 start-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
                     </div>
                 </div>
 
-                Default
+                {{ __('Default') }}
             </label>
         </div>
 
@@ -81,11 +81,11 @@
                     <div class="block h-6 w-11 rounded-full"
                         :class="switcherToggle ? 'bg-gray-700 dark:bg-white/10' : 'bg-gray-200 dark:bg-gray-800'"></div>
                     <div :class="switcherToggle ? 'translate-x-full' : 'translate-x-0'"
-                        class="shadow-theme-sm absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
+                        class="shadow-theme-sm absolute top-0.5 start-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
                     </div>
                 </div>
 
-                Checked
+                {{ __('Checked') }}
             </label>
         </div>
 
@@ -99,11 +99,11 @@
                         :class="switcherToggle ? 'bg-gray-700 dark:bg-white/10' : 'bg-gray-100 dark:bg-gray-800'">
                     </div>
                     <div :class="switcherToggle ? 'translate-x-full' : 'translate-x-0'"
-                        class="shadow-theme-sm absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-gray-50 duration-300 ease-linear">
+                        class="shadow-theme-sm absolute top-0.5 start-0.5 h-5 w-5 rounded-full bg-gray-50 duration-300 ease-linear">
                     </div>
                 </div>
 
-                Disabled
+                {{ __('Disabled') }}
             </label>
         </div>
     </div>

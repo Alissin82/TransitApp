@@ -23,10 +23,10 @@
     <div class="flex justify-between">
         <div>
             <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
-                Customers Demographic
+                {{ __('Customers Demographic') }}
             </h3>
             <p class="mt-1 text-theme-sm text-gray-500 dark:text-gray-400">
-                Number of customer based on country
+                {{ __('Number of customer based on country') }}
             </p>
         </div>
 
@@ -51,7 +51,7 @@
                             {{ $country['name'] }}
                         </p>
                         <span class="block text-theme-xs text-gray-500 dark:text-gray-400">
-                            {{ $country['customers'] }} Customers
+                            {{ $country['customers'] }} {{ __('Customers') }}
                         </span>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                 <div class="flex w-full max-w-[140px] items-center gap-3">
                     <div class="relative block h-2 w-full max-w-[100px] rounded-sm bg-gray-200 dark:bg-gray-800">
                         <div 
-                            class="absolute left-0 top-0 flex h-full items-center justify-center rounded-sm bg-brand-500 text-xs font-medium text-white"
+                            class="absolute start-0 top-0 flex h-full items-center justify-center rounded-sm bg-brand-500 text-xs font-medium text-white"
                             style="width: {{ $country['percentage'] }}%"
                         ></div>
                     </div>

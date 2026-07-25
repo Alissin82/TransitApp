@@ -1,4 +1,4 @@
-<x-common.component-card title="Radio Buttons">
+<x-common.component-card title="{{ __('Radio Buttons') }}">
     <div class="flex flex-wrap items-center gap-8">
         <div x-data="{ checkboxToggle: false }">
             <label for="radioLabelOne"
@@ -7,12 +7,12 @@
                     <input type="checkbox" id="radioLabelOne" class="sr-only" @change="checkboxToggle = !checkboxToggle" />
                     <div :class="checkboxToggle ? 'border-brand-500 bg-brand-500' :
                         'bg-transparent border-gray-300 dark:border-gray-700'"
-                        class="hover:border-brand-500 dark:hover:border-brand-500 mr-3 flex h-5 w-5 items-center justify-center rounded-full border-[1.25px]">
+                        class="hover:border-brand-500 dark:hover:border-brand-500 me-3 flex h-5 w-5 items-center justify-center rounded-full border-[1.25px]">
                         <span class="h-2 w-2 rounded-full"
                             :class="checkboxToggle ? 'bg-white' : 'bg-white dark:bg-[#171f2e]'"></span>
                     </div>
                 </div>
-                Default
+                {{ __('Default') }}
             </label>
         </div>
 
@@ -24,12 +24,12 @@
                         @change="checkboxToggle = !checkboxToggle" />
                     <div :class="checkboxToggle ? 'border-brand-500 bg-brand-500' :
                         'bg-transparent border-gray-300 dark:border-gray-700'"
-                        class="hover:border-brand-500 dark:hover:border-brand-500 mr-3 flex h-5 w-5 items-center justify-center rounded-full border-[1.25px]">
+                        class="hover:border-brand-500 dark:hover:border-brand-500 me-3 flex h-5 w-5 items-center justify-center rounded-full border-[1.25px]">
                         <span class="h-2 w-2 rounded-full"
                             :class="checkboxToggle ? 'bg-white' : 'bg-white dark:bg-[#171f2e]'"></span>
                     </div>
                 </div>
-                Secondary
+                {{ __('Secondary') }}
             </label>
         </div>
 
@@ -41,12 +41,12 @@
                         @change="checkboxToggle = !checkboxToggle" disabled />
                     <div :class="checkboxToggle ? 'bg-transparent border-gray-300 dark:border-gray-700' :
                         'border-brand-500 bg-brand-500'"
-                        class="mr-3 flex h-5 w-5 items-center justify-center rounded-full border-[1.25px]">
+                        class="me-3 flex h-5 w-5 items-center justify-center rounded-full border-[1.25px]">
                         <span class="h-2 w-2 rounded-full"
                             :class="checkboxToggle ? 'bg-white' : 'bg-white dark:bg-[#171f2e]'"></span>
                     </div>
                 </div>
-                Disabled Secondary
+                {{ __('Disabled Secondary') }}
             </label>
         </div>
     </div>

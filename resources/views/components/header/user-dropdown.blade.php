@@ -13,11 +13,11 @@
         @click.prevent="toggleDropdown()"
         type="button"
     >
-        <span class="mr-3 overflow-hidden rounded-full h-11 w-11">
-            <img src="/images/user/owner.png" alt="User" />
+        <span class="me-3 overflow-hidden rounded-full h-11 w-11">
+            <img src="/images/user/owner.png" alt="{{ __('User') }}" />
         </span>
 
-       <span class="block mr-1 font-medium text-theme-sm">Musharof</span>
+       <span class="block me-1 font-medium text-theme-sm">Musharof</span>
 
         <!-- Chevron Icon -->
         <svg
@@ -40,7 +40,7 @@
         x-transition:leave="transition ease-in duration-75"
         x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95"
-        class="absolute right-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark z-50"
+        class="absolute end-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark z-50"
         style="display: none;"
     >
         <!-- User Info -->
@@ -54,7 +54,7 @@
             @php
                 $menuItems = [
                     [
-                        'text' => 'Edit profile',
+                        'text' => __('Edit profile'),
                         'icon' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 fill-rule="evenodd"
@@ -66,7 +66,7 @@
                         'path' => 'profile',
                     ],
                     [
-                        'text' => 'Account settings',
+                        'text' => __('Account settings'),
                         'icon' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                            <path
                             fill-rule="evenodd"
@@ -78,7 +78,7 @@
                         'path' => 'chat'
                     ],
                     [
-                        'text' => 'Support',
+                        'text' => __('Support'),
                         'icon' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
                             fill-rule="evenodd"
@@ -120,7 +120,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                     </svg>
                 </span>
-                Sign out
+                {{ __('Sign out') }}
             </a>
         {{-- </form> --}}
     </div>

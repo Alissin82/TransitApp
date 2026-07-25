@@ -64,7 +64,7 @@
 >
     <div class="flex justify-between gap-2 mb-4 sm:items-center">
         <div>
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Featured Campaigns</h3>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">{{ __('Featured Campaigns') }}</h3>
         </div>
 
         <div class="relative"></div>
@@ -77,17 +77,17 @@
                 <tr class="border-gray-100 border-y dark:border-gray-800">
                     <th class="py-3 font-normal">
                         <div class="flex items-center">
-                            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Creator</p>
+                            <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ __('Creator') }}</p>
                         </div>
                     </th>
                     <th class="py-3 font-normal">
                         <div class="flex items-center">
-                            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Campaign</p>
+                            <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ __('Campaign') }}</p>
                         </div>
                     </th>
                     <th class="py-3 font-normal">
                         <div class="flex items-center">
-                            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Status</p>
+                            <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ __('Status') }}</p>
                         </div>
                     </th>
                 </tr>

@@ -8,7 +8,7 @@
 @endphp
 
 <aside id="sidebar"
-    class="fixed flex flex-col mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-99999 border-r border-gray-200"
+    class="fixed flex flex-col mt-0 top-0 px-5 start-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-99999 border-e border-gray-200"
     x-data="{
         openSubmenus: {},
         init() {
@@ -54,7 +54,7 @@
         'w-72.5': $store.sidebar.isExpanded || $store.sidebar.isMobileOpen || $store.sidebar.isHovered,
         'w-22.5': !$store.sidebar.isExpanded && !$store.sidebar.isHovered,
         'translate-x-0': $store.sidebar.isMobileOpen,
-        '-translate-x-full xl:translate-x-0': !$store.sidebar.isMobileOpen
+        'translate-x-full xl:translate-x-0': !$store.sidebar.isMobileOpen
     }"
     @mouseenter="if (!$store.sidebar.isExpanded) $store.sidebar.setHovered(true)"
     @mouseleave="$store.sidebar.setHovered(false)">
@@ -65,12 +65,12 @@
         'justify-start'">
         <a href="/">
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                class="dark:hidden" src="{{ asset('images/logo/logo.svg') }}" alt="Logo" width="150" height="40" />
+                class="dark:hidden" src="{{ asset('images/logo/logo.svg') }}" alt="لوگو" width="150" height="40" />
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                class="hidden dark:block" src="{{ asset('images/logo/logo-dark.svg') }}" alt="Logo" width="150"
+                class="hidden dark:block" src="{{ asset('images/logo/logo-dark.svg') }}" alt="لوگو" width="150"
                 height="40" />
             <img x-show="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen"
-                src="{{ asset('images/logo/logo-icon.svg') }}" alt="Logo" width="32" height="32" />
+                src="{{ asset('images/logo/logo-icon.svg') }}" alt="لوگو" width="32" height="32" />
 
         </a>
     </div>
@@ -123,18 +123,18 @@
                                                 class="menu-item-text flex items-center gap-2">
                                                 {{ $item['name'] }}
                                                 @if (!empty($item['new']))
-                                                    <span class="absolute right-10"
+                                                    <span class="absolute end-10"
                                                         :class="isActive('{{ $item['path'] ?? '' }}') ?
                                                             'menu-dropdown-badge menu-dropdown-badge-active' :
                                                             'menu-dropdown-badge menu-dropdown-badge-inactive'">
-                                                        new
+                                                        جدید
                                                     </span>
                                                 @endif
                                             </span>
 
                                             <!-- Chevron Down Icon -->
                                             <svg x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                                                class="ml-auto w-5 h-5 transition-transform duration-200"
+                                                class="ms-auto w-5 h-5 transition-transform duration-200"
                                                 :class="{
                                                     'rotate-180 text-brand-500': isSubmenuOpen({{ $groupIndex }},
                                                         {{ $itemIndex }})
@@ -146,7 +146,7 @@
 
                                         <!-- Submenu -->
                                         <div x-show="isSubmenuOpen({{ $groupIndex }}, {{ $itemIndex }}) && ($store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen)">
-                                            <ul class="mt-2 space-y-1 ml-9">
+                                            <ul class="mt-2 space-y-1 ms-9">
                                                 @foreach ($item['subItems'] as $subItem)
                                                     <li>
                                                         <a href="{{ $subItem['path'] }}" class="menu-dropdown-item"
@@ -154,13 +154,13 @@
                                                                 'menu-dropdown-item-active' :
                                                                 'menu-dropdown-item-inactive'">
                                                             {{ $subItem['name'] }}
-                                                            <span class="flex items-center gap-1 ml-auto">
+                                                            <span class="flex items-center gap-1 ms-auto">
                                                                 @if (!empty($subItem['new']))
                                                                     <span
                                                                         :class="isActive('{{ $subItem['path'] }}') ?
                                                                             'menu-dropdown-badge menu-dropdown-badge-active' :
                                                                             'menu-dropdown-badge menu-dropdown-badge-inactive'">
-                                                                        new
+                                                                        جدید
                                                                     </span>
                                                                 @endif
                                                                 @if (!empty($subItem['pro']))
@@ -168,7 +168,7 @@
                                                                         :class="isActive('{{ $subItem['path'] }}') ?
                                                                             'menu-dropdown-badge-pro menu-dropdown-badge-pro-active' :
                                                                             'menu-dropdown-badge-pro menu-dropdown-badge-pro-inactive'">
-                                                                        pro
+                                                                        حرفه‌ای
                                                                     </span>
                                                                 @endif
                                                             </span>
@@ -202,8 +202,8 @@
                                                 {{ $item['name'] }}
                                                 @if (!empty($item['new']))
                                                     <span
-                                                        class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-brand-500 text-white">
-                                                        new
+                                                        class="ms-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-brand-500 text-white">
+                                                        جدید
                                                     </span>
                                                 @endif
                                             </span>

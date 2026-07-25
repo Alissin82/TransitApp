@@ -1,6 +1,6 @@
 <div>
     <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-        Multiple Select Options
+        {{ __('Multiple Select Options') }}
     </label>
 
     <div x-data="{
@@ -34,10 +34,10 @@
             <div class="flex flex-1 flex-wrap items-center gap-2">
                 <template x-for="id in selected" :key="id">
                     <div
-                        class="group flex items-center justify-center rounded-full border-[0.7px] border-transparent bg-gray-100 py-1 pr-2 pl-2.5 text-sm text-gray-800 hover:border-gray-200 dark:bg-gray-800 dark:text-white/90 dark:hover:border-gray-800">
+                        class="group flex items-center justify-center rounded-full border-[0.7px] border-transparent bg-gray-100 py-1 pe-2 ps-2.5 text-sm text-gray-800 hover:border-gray-200 dark:bg-gray-800 dark:text-white/90 dark:hover:border-gray-800">
                         <span x-text="options.find(o => o.id === id).name"></span>
                         <button type="button" @click.stop="toggleOption(id)"
-                            class="ml-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                            class="ms-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
                             <svg class="fill-current" role="button" width="14" height="14" viewBox="0 0 14 14"
                                 fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -50,7 +50,7 @@
 
                 <!-- Show placeholder when nothing is selected -->
                 <span x-show="selected.length === 0" class="text-sm text-gray-500 dark:text-gray-400">
-                    Select options...
+                    {{ __('Select options...') }}
                 </span>
             </div>
 

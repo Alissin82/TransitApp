@@ -65,7 +65,7 @@
 >
     <div class="flex flex-col gap-4 px-6 mb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Recent Orders</h3>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">{{ __('Recent Orders') }}</h3>
         </div>
 
         <div class="flex items-center gap-3">
@@ -126,17 +126,17 @@
                 <tr class="border-gray-100 border-y dark:border-white/[0.05]">
                     <th class="px-6 py-3">
                         <div class="flex items-center">
-                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Products</p>
+                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">{{ __('Products') }}</p>
                         </div>
                     </th>
                     <th class="px-6 py-3">
                         <div class="flex items-center">
-                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Category</p>
+                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">{{ __('Category') }}</p>
                         </div>
                     </th>
                     <th class="px-6 py-3">
                         <div class="flex items-center col-span-2">
-                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Country</p>
+                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">{{ __('Country') }}</p>
                         </div>
                     </th>
                     <th class="px-6 py-3">
@@ -146,7 +146,7 @@
                     </th>
                     <th class="px-6 py-3">
                         <div class="flex items-center col-span-2">
-                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Value</p>
+                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">{{ __('Value') }}</p>
                         </div>
                     </th>
                 </tr>

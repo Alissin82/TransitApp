@@ -9,41 +9,41 @@ class MenuHelper
         return [
             [
                 'icon' => 'dashboard',
-                'name' => 'Dashboard',
+                'name' => __('Dashboard'),
                 'subItems' => [
-                    ['name' => 'Ecommerce', 'path' => '/'],
+                    ['name' => __('Ecommerce'), 'path' => '/'],
                 ],
             ],
             [
                 'icon' => 'calendar',
-                'name' => 'Calendar',
+                'name' => __('Calendar'),
                 'path' => '/calendar',
             ],
             [
                 'icon' => 'user-profile',
-                'name' => 'User Profile',
+                'name' => __('User Profile'),
                 'path' => '/profile',
             ],
             [
-                'name' => 'Forms',
+                'name' => __('Forms'),
                 'icon' => 'forms',
                 'subItems' => [
-                    ['name' => 'Form Elements', 'path' => '/form-elements', 'pro' => false],
+                    ['name' => __('Form Elements'), 'path' => '/form-elements', 'pro' => false],
                 ],
             ],
             [
-                'name' => 'Tables',
+                'name' => __('Tables'),
                 'icon' => 'tables',
                 'subItems' => [
-                    ['name' => 'Basic Tables', 'path' => '/basic-tables', 'pro' => false]
+                    ['name' => __('Basic Tables'), 'path' => '/basic-tables', 'pro' => false],
                 ],
             ],
             [
-                'name' => 'Pages',
+                'name' => __('Pages'),
                 'icon' => 'pages',
                 'subItems' => [
-                    ['name' => 'Blank Page', 'path' => '/blank', 'pro' => false],
-                    ['name' => '404 Error', 'path' => '/error-404', 'pro' => false]
+                    ['name' => __('Blank Page'), 'path' => '/blank', 'pro' => false],
+                    ['name' => __('404 Error'), 'path' => '/error-404', 'pro' => false],
                 ],
             ],
         ];
@@ -54,30 +54,30 @@ class MenuHelper
         return [
             [
                 'icon' => 'charts',
-                'name' => 'Charts',
+                'name' => __('Charts'),
                 'subItems' => [
-                    ['name' => 'Line Chart', 'path' => '/line-chart', 'pro' => false],
-                    ['name' => 'Bar Chart', 'path' => '/bar-chart', 'pro' => false]
+                    ['name' => __('Line Chart'), 'path' => '/line-chart', 'pro' => false],
+                    ['name' => __('Bar Chart'), 'path' => '/bar-chart', 'pro' => false],
                 ],
             ],
             [
                 'icon' => 'ui-elements',
-                'name' => 'UI Elements',
+                'name' => __('UI Elements'),
                 'subItems' => [
-                    ['name' => 'Alerts', 'path' => '/alerts', 'pro' => false],
-                    ['name' => 'Avatar', 'path' => '/avatars', 'pro' => false],
-                    ['name' => 'Badge', 'path' => '/badge', 'pro' => false],
-                    ['name' => 'Buttons', 'path' => '/buttons', 'pro' => false],
-                    ['name' => 'Images', 'path' => '/image', 'pro' => false],
-                    ['name' => 'Videos', 'path' => '/videos', 'pro' => false],
+                    ['name' => __('Alerts'), 'path' => '/alerts', 'pro' => false],
+                    ['name' => __('Avatar'), 'path' => '/avatars', 'pro' => false],
+                    ['name' => __('Badge'), 'path' => '/badge', 'pro' => false],
+                    ['name' => __('Buttons'), 'path' => '/buttons', 'pro' => false],
+                    ['name' => __('Images'), 'path' => '/image', 'pro' => false],
+                    ['name' => __('Videos'), 'path' => '/videos', 'pro' => false],
                 ],
             ],
             [
                 'icon' => 'authentication',
-                'name' => 'Authentication',
+                'name' => __('Authentication'),
                 'subItems' => [
-                    ['name' => 'Sign In', 'path' => '/signin', 'pro' => false],
-                    ['name' => 'Sign Up', 'path' => '/signup', 'pro' => false],
+                    ['name' => __('Sign In'), 'path' => '/signin', 'pro' => false],
+                    ['name' => __('Sign Up'), 'path' => '/signup', 'pro' => false],
                 ],
             ],
         ];
@@ -87,13 +87,13 @@ class MenuHelper
     {
         return [
             [
-                'title' => 'Menu',
-                'items' => self::getMainNavItems()
+                'title' => __('Menu'),
+                'items' => self::getMainNavItems(),
             ],
             [
-                'title' => 'Others',
-                'items' => self::getOthersItems()
-            ]
+                'title' => __('Others'),
+                'items' => self::getOthersItems(),
+            ],
         ];
     }
 
