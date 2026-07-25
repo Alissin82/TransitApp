@@ -28,22 +28,22 @@ class MenuHelper
                 'name' => __('Forms'),
                 'icon' => 'forms',
                 'subItems' => [
-                    ['name' => __('Form Elements'), 'path' => '/form-elements', 'pro' => false],
+                    ['name' => __('Form Elements'), 'path' => '/form-elements'],
                 ],
             ],
             [
                 'name' => __('Tables'),
                 'icon' => 'tables',
                 'subItems' => [
-                    ['name' => __('Basic Tables'), 'path' => '/basic-tables', 'pro' => false],
+                    ['name' => __('Basic Tables'), 'path' => '/basic-tables'],
                 ],
             ],
             [
                 'name' => __('Pages'),
                 'icon' => 'pages',
                 'subItems' => [
-                    ['name' => __('Blank Page'), 'path' => '/blank', 'pro' => false],
-                    ['name' => __('404 Error'), 'path' => '/error-404', 'pro' => false],
+                    ['name' => __('Blank Page'), 'path' => '/blank'],
+                    ['name' => __('404 Error'), 'path' => '/error-404'],
                 ],
             ],
         ];
@@ -56,28 +56,28 @@ class MenuHelper
                 'icon' => 'charts',
                 'name' => __('Charts'),
                 'subItems' => [
-                    ['name' => __('Line Chart'), 'path' => '/line-chart', 'pro' => false],
-                    ['name' => __('Bar Chart'), 'path' => '/bar-chart', 'pro' => false],
+                    ['name' => __('Line Chart'), 'path' => '/line-chart'],
+                    ['name' => __('Bar Chart'), 'path' => '/bar-chart'],
                 ],
             ],
             [
                 'icon' => 'ui-elements',
                 'name' => __('UI Elements'),
                 'subItems' => [
-                    ['name' => __('Alerts'), 'path' => '/alerts', 'pro' => false],
-                    ['name' => __('Avatar'), 'path' => '/avatars', 'pro' => false],
-                    ['name' => __('Badge'), 'path' => '/badge', 'pro' => false],
-                    ['name' => __('Buttons'), 'path' => '/buttons', 'pro' => false],
-                    ['name' => __('Images'), 'path' => '/image', 'pro' => false],
-                    ['name' => __('Videos'), 'path' => '/videos', 'pro' => false],
+                    ['name' => __('Alerts'), 'path' => '/alerts'],
+                    ['name' => __('Avatar'), 'path' => '/avatars'],
+                    ['name' => __('Badge'), 'path' => '/badge'],
+                    ['name' => __('Buttons'), 'path' => '/buttons'],
+                    ['name' => __('Images'), 'path' => '/image'],
+                    ['name' => __('Videos'), 'path' => '/videos'],
                 ],
             ],
             [
                 'icon' => 'authentication',
                 'name' => __('Authentication'),
                 'subItems' => [
-                    ['name' => __('Sign In'), 'path' => '/signin', 'pro' => false],
-                    ['name' => __('Sign Up'), 'path' => '/signup', 'pro' => false],
+                    ['name' => __('Sign In'), 'path' => '/signin'],
+                    ['name' => __('Sign Up'), 'path' => '/signup'],
                 ],
             ],
         ];

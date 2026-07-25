@@ -127,15 +127,6 @@
                                                 x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                                                 class="menu-item-text flex items-center gap-2">
                                                 {{ $item['name'] }}
-                                                {{-- "New" badge for recently added items --}}
-                                                @if (!empty($item['new']))
-                                                    <span class="absolute end-10"
-                                                        :class="isActive('{{ $item['path'] ?? '' }}') ?
-                                                            'menu-dropdown-badge menu-dropdown-badge-active' :
-                                                            'menu-dropdown-badge menu-dropdown-badge-inactive'">
-                                                        جدید
-                                                    </span>
-                                                @endif
                                             </span>
 
                                             {{-- Chevron icon: rotates when submenu is open --}}
@@ -160,26 +151,6 @@
                                                                 'menu-dropdown-item-active' :
                                                                 'menu-dropdown-item-inactive'">
                                                             {{ $subItem['name'] }}
-                                                            <span class="flex items-center gap-1 ms-auto">
-                                                                {{-- Submenu item "New" badge --}}
-                                                                @if (!empty($subItem['new']))
-                                                                    <span
-                                                                        :class="isActive('{{ $subItem['path'] }}') ?
-                                                                            'menu-dropdown-badge menu-dropdown-badge-active' :
-                                                                            'menu-dropdown-badge menu-dropdown-badge-inactive'">
-                                                                        جدید
-                                                                    </span>
-                                                                @endif
-                                                                {{-- Submenu item "Pro" badge --}}
-                                                                @if (!empty($subItem['pro']))
-                                                                    <span
-                                                                        :class="isActive('{{ $subItem['path'] }}') ?
-                                                                            'menu-dropdown-badge-pro menu-dropdown-badge-pro-active' :
-                                                                            'menu-dropdown-badge-pro menu-dropdown-badge-pro-inactive'">
-                                                                        حرفه‌ای
-                                                                    </span>
-                                                                @endif
-                                                            </span>
                                                         </a>
                                                     </li>
                                                 @endforeach
@@ -208,13 +179,6 @@
                                                 x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                                                 class="menu-item-text flex items-center gap-2">
                                                 {{ $item['name'] }}
-                                                {{-- "New" badge for recently added items --}}
-                                                @if (!empty($item['new']))
-                                                    <span
-                                                        class="ms-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-brand-500 text-white">
-                                                        جدید
-                                                    </span>
-                                                @endif
                                             </span>
                                         </a>
                                     @endif
