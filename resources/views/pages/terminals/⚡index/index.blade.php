@@ -39,7 +39,7 @@
                         {{ __('terminal.fields.name') }}
                     </x-tables.sortable-header>
 
-                    <th scope="col" class="px-4 py-3 text-left border border-gray-100 dark:border-gray-800">
+                    <th scope="col" class="px-4 py-3 text-start border border-gray-100 dark:border-gray-800">
                         <p class="font-medium text-gray-700 text-theme-xs dark:text-gray-400">{{ __('Address') }}</p>
                     </th>
 
@@ -47,7 +47,7 @@
                         {{ __('Created at') }}
                     </x-tables.sortable-header>
 
-                    <th scope="col" class="px-4 py-3 text-left border border-gray-100 dark:border-gray-800">
+                    <th scope="col" class="px-4 py-3 text-start border border-gray-100 dark:border-gray-800">
                         <p class="font-medium text-gray-700 text-theme-xs dark:text-gray-400">{{ __('Actions') }}</p>
                     </th>
                 </tr>
