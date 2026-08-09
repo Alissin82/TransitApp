@@ -10,6 +10,7 @@ class TransitServiceService extends Service
     protected string $model = TransitService::class;
 
     protected array $with = [
-        'transitLine',
+        'transitLine.originTerminal',
+        'transitLine.destinationTerminal',
     ];
 }

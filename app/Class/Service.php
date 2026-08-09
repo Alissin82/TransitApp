@@ -82,15 +82,40 @@ abstract class Service
 
         $query->where(function (Builder $query) use ($search) {
             foreach ($this->searchable as $column) {
-                $explodedColumn = explode('.', $column);
-                if (count($explodedColumn) > 1) {
-                    [$relationName, $columnName] = $explodedColumn;
+                $parts = explode('.', $column);
+                $field = array_pop($parts);
 
-                    $query->orWhereHas($relationName, function ($q) use ($search, $columnName) {
-                        $q->where($columnName, 'like', "%$search%");
+                $applyRelationSearch = function (
+                    Builder $query,
+                    array $relations,
+                    string $field
+                ) use (&$applyRelationSearch, $search): void {
+                    if (empty($relations)) {
+                        $query->where($field, 'like', "%$search%");
+                        return;
+                    }
+
+                    $relation = array_shift($relations);
+
+                    $query->whereHas($relation, function (Builder $query) use (
+                        $relations,
+                        $field,
+                        &$applyRelationSearch
+                    ) {
+                        $applyRelationSearch($query, $relations, $field);
                     });
+                };
+
+                if (empty($parts)) {
+                    $query->orWhere($field, 'like', "%$search%");
                 } else {
-                    $query->orWhere($column, 'like', "%$search%");
+                    $query->orWhere(function (Builder $query) use (
+                        $parts,
+                        $field,
+                        &$applyRelationSearch
+                    ) {
+                        $applyRelationSearch($query, $parts, $field);
+                    });
                 }
             }
         });
