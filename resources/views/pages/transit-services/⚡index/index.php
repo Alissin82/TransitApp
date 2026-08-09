@@ -22,8 +22,6 @@ new class extends Component
     protected string $service = TransitServiceService::class;
 
     protected array $sortable = [
-        'transitLine.originTerminal.name',
-        'transitLine.destinationTerminal.name',
         'departure_time',
         'vehicle_type',
         'capacity',

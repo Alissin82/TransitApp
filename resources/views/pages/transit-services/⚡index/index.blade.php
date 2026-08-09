@@ -34,24 +34,13 @@
             <table class="w-full min-w-full">
                 <thead class="border-gray-100 border-y bg-gray-50 dark:border-white/5 dark:bg-gray-900">
                 <tr>
-                    <x-tables.sortable-header
-                            field="transitLine.originTerminal.name"
-                            :sortBy="$sortField"
-                            :sortDirection="$sortDirection"
-                    >
-                        <x-slot:before>
-                            <x-tables.checkbox wire:model.live="selectAll" />
-                        </x-slot:before>
-                        {{ __('transit-service.fields.origin_terminal') }}
-                    </x-tables.sortable-header>
+                    <th scope="col" class="px-4 py-3 text-start border border-gray-100 dark:border-gray-800">
+                        <p class="font-medium text-gray-700 text-theme-xs dark:text-gray-400">{{ __('transit-service.fields.origin_terminal') }}</p>
+                    </th>
 
-                    <x-tables.sortable-header
-                            field="transitLine.destinationTerminal.name"
-                            :sortBy="$sortField"
-                            :sortDirection="$sortDirection"
-                    >
-                        {{ __('transit-service.fields.destination_terminal') }}
-                    </x-tables.sortable-header>
+                    <th scope="col" class="px-4 py-3 text-start border border-gray-100 dark:border-gray-800">
+                        <p class="font-medium text-gray-700 text-theme-xs dark:text-gray-400">{{ __('transit-service.fields.destination_terminal') }}</p>
+                    </th>
 
                     <x-tables.sortable-header
                             field="departure_time"
