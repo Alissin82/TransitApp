@@ -39,7 +39,7 @@ new class extends Component
             perPage: 1000,
             sortable: ['id'],
         )->mapWithKeys(fn ($line) => [
-            $line->id => $line->originTerminal->name . ' → ' . $line->destinationTerminal->name,
+            $line->id => $line->originTerminal->name . ' => ' . $line->destinationTerminal->name,
         ])->toArray();
 
         if ($transitService) {

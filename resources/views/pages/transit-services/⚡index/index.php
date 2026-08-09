@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\TransitServices\Modals\Delete;
 use App\Models\TransitService;
 use App\Services\TransitPricingService;
 use App\Services\TransitServiceService;
@@ -7,6 +8,7 @@ use App\Traits\withDatatable;
 use App\Traits\withModal;
 use App\Traits\withTableDelete;
 use App\Traits\withToastNotification;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -52,6 +54,19 @@ new class extends Component
             $this->resetPage();
             $this->resetSelection();
         }
+    }
+
+    public function openDeleteModal(int $id): void
+    {
+        $this->pendingDeleteId = $id;
+        $this->openModal(Delete::class, ['id' => $id]);
+    }
+
+    #[On('transitService-delete-confirmed')]
+    public function onTransitServiceDeleteConfirmed(int $id): void
+    {
+        $this->pendingDeleteId = $id;
+        $this->executeDelete();
     }
 
     public function resetFilters(): void

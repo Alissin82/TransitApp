@@ -35,7 +35,7 @@ trait withTableDelete
 
     protected function translationResource(): string
     {
-        return Str::snake(class_basename($this->model));
+        return Str::snake(class_basename($this->model), '-');
     }
 
     public function confirmDelete(int $id): void
@@ -59,12 +59,12 @@ trait withTableDelete
         if ($record = $modelClass::find($this->pendingDeleteId)) {
             try {
                 app($this->service)->delete($record);
-                $this->toastSuccess(model_trans($this->translationResource(), 'messages.deleted'));
+                $this->toastSuccess(model_trans($this->translationResource(), 'deleted'));
             } catch (CannotDeleteException $e) {
                 $this->toastError($e->getMessage());
             }
         } else {
-            $this->toastError(model_trans($this->translationResource(), 'messages.not_found'));
+            $this->toastError(model_trans($this->translationResource(), 'not_found'));
         }
 
         $this->pendingDeleteId = null;
@@ -81,7 +81,7 @@ trait withTableDelete
 
         if ($deleted > 0) {
             $this->toastSuccess(
-                model_trans($this->translationResource(), 'messages.deleted_many', ['count' => $deleted])
+                model_trans($this->translationResource(), 'deleted_many', ['count' => $deleted])
             );
         }
 
