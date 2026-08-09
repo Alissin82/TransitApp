@@ -11,16 +11,24 @@ class TerminalsSeeder extends Seeder
 {
     public function run(): void
     {
-        Terminal::factory(20)
+        $terminals = Terminal::factory(20)->create();
+
+        TransitLine::factory(40)
+            ->state(function () use ($terminals) {
+                $origin = $terminals->random();
+
+                do {
+                    $destination = $terminals->random();
+                } while ($destination->is($origin));
+
+                return [
+                    'origin_terminal_id' => $origin->id,
+                    'destination_terminal_id' => $destination->id,
+                ];
+            })
             ->has(
-                TransitLine::factory(20)
-                    ->has(TransitService::factory(rand(1, 3))),
-                'originTransitLines'
-            )
-            ->has(
-                TransitLine::factory(20)
-                    ->has(TransitService::factory(rand(1, 3))),
-                'destinationTransitLines'
+                TransitService::factory()
+                    ->count(2)
             )
             ->create();
     }

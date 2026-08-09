@@ -16,3 +16,9 @@ Route::prefix('transit-lines')->name('transit-lines.')->group(function () {
     Route::livewire('/create', 'pages::transit-lines.form')->name('create');
     Route::livewire('/{transitLine}/edit', 'pages::transit-lines.form')->name('edit');
 });
+
+Route::prefix('transit-services')->name('transit-services.')->group(function () {
+    Route::livewire('/', 'pages::transit-services.index')->name('index');
+    Route::livewire('/create', 'pages::transit-services.form')->name('create');
+    Route::livewire('/{transitService}/edit', 'pages::transit-services.form')->name('edit');
+});

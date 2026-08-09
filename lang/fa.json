@@ -3,7 +3,9 @@
 
   "Actions": "عملیات",
   "Active": "فعال",
+  "Account settings": "تنظیمات حساب",
   "Address": "آدرس",
+  "Airplane": "هواپیما",
   "All rights reserved.": "تمامی حقوق محفوظ است.",
   "All Counties": "همه شهرستان ها",
   "All Districts": "همه بخش ها",
@@ -17,6 +19,7 @@
   "Are you sure you want to delete the selected records?": "آیا از حذف ردیف های انتخاب شده اطمینان دارید؟",
 
   "Back": "بازگشت",
+  "Base price": "قیمت پایه",
   "Bio": "بیوگرافی",
   "Browse file": "انتخاب فایل",
   "Buttons": "دکمه‌ها",
@@ -37,6 +40,7 @@
   "Create": "ایجاد",
   "Created at": "تاریخ ایجاد",
   "Customers": "مشتریان",
+  "Current dynamic price": "قیمت پویای فعلی",
 
   "Danger": "خطر",
   "Dashboard": "داشبورد",
@@ -48,6 +52,9 @@
   "Description": "توضیحات",
   "Disabled": "غیرفعال",
   "District": "بخش",
+  "Distance": "مسافت",
+  "Duration": "مدت زمان",
+  "Dynamic price": "قیمت پویا",
 
   "Edit": "ویرایش",
   "Edit profile": "ویرایش پروفایل",
@@ -66,6 +73,8 @@
   "Inactive": "غیرفعال",
 
   "Last name": "نام خانوادگی",
+  "Last price change": "آخرین تغییر قیمت",
+  "Last updated": "آخرین تغییر",
   "Latitude": "عرض جغرافیایی",
   "Logo": "لوگو",
   "Longitude": "طول جغرافیایی",
@@ -83,6 +92,7 @@
   "No records found": "موردی یافت نشد",
   "Notifications": "اعلان‌ها",
 
+  "Occupancy / demand": "میزان اشغال / تقاضا",
   "of": "از",
   "Optional": "اختیاری",
   "Orders": "سفارشات",
@@ -139,9 +149,11 @@
 
   "Tables": "جداول",
   "to": "تا",
+  "Time / last minute": "زمان / لحظه آخری",
   "Today": "امروز",
   "Toggle mobile menu": "باز/بستن منوی موبایل",
   "Toggle sidebar": "باز/بستن نوار کناری",
+  "Tooman": "تومان",
   "Try adjusting your search or filters": "جست‌وجو یا فیلترها را تغییر دهید",
 
   "UI Elements": "عناصر رابط کاربری",
@@ -149,6 +161,8 @@
   "Upload file": "آپلود فایل",
   "URL": "آدرس وب",
   "User": "کاربر",
+
+  "VIP": "وی‌آی‌پی",
 
   "Village": "روستا",
 

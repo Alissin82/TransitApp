@@ -14,9 +14,11 @@ class TransitLine extends Model
     use HasFactory;
 
     protected $fillable = [
-        'price',
+        'base_price',
         'origin_terminal_id',
         'destination_terminal_id',
+        'estimated_distance_km',
+        'estimated_duration_min',
     ];
 
     public function originTerminal(): BelongsTo

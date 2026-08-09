@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TransitServiceVehicleType;
 use App\Models\TransitLine;
 use App\Models\TransitService;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,8 +20,26 @@ class TransitServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'departure_time' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
+            'departure_time' => fake()->dateTimeBetween(
+                '+1 hour',
+                '+1 week'
+            ),
+
             'transit_line_id' => TransitLine::factory(),
+
+            'vehicle_type' => TransitServiceVehicleType::AIRPLANE,
+
+            'capacity' => fake()->randomElement([
+                120,
+                150,
+                180,
+                220,
+                300,
+            ]),
+
+            'occupancy_percentage' => fake()->numberBetween(10, 95),
+
+            'is_vip' => fake()->boolean(25),
         ];
     }
 }

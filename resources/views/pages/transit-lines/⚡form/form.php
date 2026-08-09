@@ -14,9 +14,11 @@ new class extends Component
 
     public ?TransitLine $transitLine = null;
 
-    public ?int $price = null;
+    public ?int $base_price = null;
     public ?int $origin_terminal_id = null;
     public ?int $destination_terminal_id = null;
+    public ?int $estimated_distance_km = null;
+    public ?int $estimated_duration_min = null;
 
     public array $originTerminals = [];
     public array $destinationTerminals = [];
@@ -31,9 +33,11 @@ new class extends Component
         if ($transitLine) {
             $this->transitLine = $transitLineService->find($transitLine->id);
 
-            $this->price = $this->transitLine->price;
+            $this->base_price = $this->transitLine->base_price;
             $this->origin_terminal_id = $this->transitLine->origin_terminal_id;
             $this->destination_terminal_id = $this->transitLine->destination_terminal_id;
+            $this->estimated_distance_km = $this->transitLine->estimated_distance_km;
+            $this->estimated_duration_min = $this->transitLine->estimated_duration_min;
 
             // Scope each dropdown to the region of its own currently-picked terminal,
             // so the selected value is always present in its own list.
@@ -112,9 +116,11 @@ new class extends Component
     {
         try {
             $validated = $this->validate([
-                'price' => 'required|integer|min:1',
+                'base_price' => 'required|integer|min:1',
                 'origin_terminal_id' => 'required|exists:terminals,id',
                 'destination_terminal_id' => 'required|exists:terminals,id|different:origin_terminal_id',
+                'estimated_distance_km' => 'required|integer|min:1',
+                'estimated_duration_min' => 'required|integer|min:1',
             ]);
 
             if ($this->transitLine) {

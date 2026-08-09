@@ -49,7 +49,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "set FORCE_COLOR=true && npx concurrently -c \"#93c5fd,#fdba74\" \"php artisan serve\" \"npm run dev\" --names=server,vite --kill-others"
+            "set FORCE_COLOR=true && npx concurrently -c \"blue,yellow,green\" \"php artisan serve\" \"npm run dev\" \"php artisan schedule:work\"  --names=server,vite,schedule --kill-others"
         ],
         "test": [
             "@php artisan config:clear --ansi",

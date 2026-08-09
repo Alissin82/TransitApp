@@ -24,8 +24,16 @@ new class extends Component
 
     protected string $service = TransitLineService::class;
 
-    protected array $sortable = ['price', 'originTerminal.name', 'destinationTerminal.name', 'created_at'];
-    protected array $searchable = ['price', 'originTerminal.name', 'destinationTerminal.name', 'created_at'];
+    protected array $sortable = [
+        'base_price',
+        'originTerminal.name',
+        'destinationTerminal.name',
+        'estimated_distance_km',
+        'estimated_duration_min',
+        'created_at'
+    ];
+
+    protected array $searchable = ['base_price', 'originTerminal.name', 'destinationTerminal.name', 'created_at'];
 
     #[Url(history: true, keep: false)]
     public ?int $province_id = null;

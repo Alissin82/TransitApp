@@ -38,6 +38,11 @@ class MenuHelper
                         'path' => route('transit-lines.index'),
                         'active_routes' => ['transit-lines.*'],
                     ],
+                    [
+                        'name' => __('transit-service.plural'),
+                        'path' => route('transit-services.index'),
+                        'active_routes' => ['transit-services.*'],
+                    ],
                 ],
             ],
         ];

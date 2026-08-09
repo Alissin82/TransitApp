@@ -92,9 +92,23 @@
                         />
 
                         <x-forms.text
-                                name="price"
-                                label="{{ __('transit-line.fields.price') }}"
-                                wire:model="price"
+                                name="estimated_distance_km"
+                                label="{{ __('transit-line.fields.estimated_distance_km') }}"
+                                wire:model="estimated_distance_km"
+                                type="number"
+                        />
+
+                        <x-forms.text
+                                name="estimated_duration_min"
+                                label="{{ __('transit-line.fields.estimated_duration_min') }}"
+                                wire:model="estimated_duration_min"
+                                type="number"
+                        />
+
+                        <x-forms.text
+                                name="base_price"
+                                label="{{ __('transit-line.fields.base_price') }}"
+                                wire:model="base_price"
                                 type="number"
                         />
 

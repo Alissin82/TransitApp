@@ -22,9 +22,11 @@ return [
         'village_id' => 'روستا',
 
         // TransitLine attributes
-        'price' => 'قیمت',
+        'base_price' => 'قیمت پایه',
         'origin_terminal_id' => 'پایانه مبدأ',
         'destination_terminal_id' => 'پایانه مقصد',
+        'estimated_distance_km' => 'فاصله تقریبی',
+        'estimated_duration_min' => 'زمان تقریبی',
 
         // TransitService attributes
         'departure_time' => 'زمان حرکت',
@@ -48,6 +50,7 @@ return [
         'count' => 'تعداد',
         'file' => 'فایل',
         'image' => 'تصویر',
+        'price' => 'قیمت',
     ],
 
     /*

@@ -10,8 +10,9 @@ return [
     'fields' => [
         'origin_terminal'      => 'پایانه مبدأ',
         'destination_terminal' => 'پایانه مقصد',
-        'price'                => 'قیمت',
-        'price(Tooman)'        => 'قیمت (تومان)',
+        'base_price' => 'قیمت پایه(تومان)',
+        'estimated_distance_km' => 'فاصله تقریبی(کیلومتر)',
+        'estimated_duration_min' => 'زمان تقریبی(دقیقه)',
     ],
 
     // Model-specific filters

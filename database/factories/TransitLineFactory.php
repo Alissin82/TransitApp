@@ -19,9 +19,13 @@ class TransitLineFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => $this->faker->numberBetween(1000, 10000),
+            'base_price' => fake()->numberBetween(500_000, 5_000_000),
+
             'origin_terminal_id' => Terminal::factory(),
             'destination_terminal_id' => Terminal::factory(),
+
+            'estimated_distance_km' => fake()->numberBetween(200, 1500),
+            'estimated_duration_min' => fake()->numberBetween(60, 240),
         ];
     }
 }

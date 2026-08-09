@@ -118,8 +118,16 @@
                         {{ __('transit-line.fields.destination_terminal') }}
                     </x-tables.sortable-header>
 
-                    <x-tables.sortable-header field="price" :sortBy="$sortField" :sortDirection="$sortDirection">
-                        {{ __('transit-line.fields.price') }}
+                    <x-tables.sortable-header field="base_price" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        {{ __('transit-line.fields.base_price') }}
+                    </x-tables.sortable-header>
+
+                    <x-tables.sortable-header field="estimated_distance_km" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        {{ __('transit-line.fields.estimated_distance_km') }}
+                    </x-tables.sortable-header>
+
+                    <x-tables.sortable-header field="estimated_duration_min" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        {{ __('transit-line.fields.estimated_duration_min') }}
                     </x-tables.sortable-header>
 
                     <x-tables.sortable-header field="created_at" :sortBy="$sortField" :sortDirection="$sortDirection">
@@ -146,12 +154,21 @@
                         </td>
 
                         <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
-                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">{{ $item->price }}</p>
+                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">{{ $item->base_price }}</p>
+                        </td>
+
+                        <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
+                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">{{ $item->estimated_distance_km }}</p>
+                        </td>
+
+                        <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
+                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">{{ $item->estimated_duration_min }}</p>
                         </td>
 
                         <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
                             <p class="text-gray-700 text-theme-sm dark:text-gray-400">
-                                <x-ui.jalali :datetime="$item->created_at" />
+                                <x-ui.jalali :datetime="$item->created_at" format="Y/m/d"/> <br>
+                                <x-ui.jalali :datetime="$item->created_at" format="H:i:s"/>
                             </p>
                         </td>
 
