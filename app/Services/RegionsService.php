@@ -10,9 +10,6 @@ use App\Models\IranRegion\Village;
 
 class RegionsService
 {
-    /**
-     * Get provinces for dropdown
-     */
     public function getProvincesForSelect(): array
     {
         return Province::query()
@@ -21,9 +18,6 @@ class RegionsService
             ->toArray();
     }
 
-    /**
-     * Get counties by province ID for dropdown
-     */
     public function getCountiesByProvince(int $provinceId): array
     {
         return County::where('province_id', $provinceId)
@@ -32,9 +26,6 @@ class RegionsService
             ->toArray();
     }
 
-    /**
-     * Get districts by county ID for dropdown
-     */
     public function getDistrictsByCounty(int $countyId): array
     {
         return District::where('county_id', $countyId)
@@ -43,9 +34,6 @@ class RegionsService
             ->toArray();
     }
 
-    /**
-     * Get settlements by district ID for dropdown
-     */
     public function getSettlementsByDistrict(int $districtId): array
     {
         return Settlement::where('district_id', $districtId)
@@ -54,9 +42,6 @@ class RegionsService
             ->toArray();
     }
 
-    /**
-     * Get villages by settlement ID for dropdown
-     */
     public function getVillagesBySettlement(int $settlementId): array
     {
         return Village::where('settlement_id', $settlementId)

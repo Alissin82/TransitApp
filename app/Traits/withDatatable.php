@@ -7,23 +7,11 @@ use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
 /**
- *
  * @property string $service
  * @property array $sortable
  * @property array $searchable
- *
- * Generic datatable state: search, per-page, sort, row selection.
- *
- * Requires the consuming component to declare:
- *
- *     protected string $service = TerminalService::class;   // extends App\Class\Service
- *     protected array $sortable = ['name', 'created_at'];    // whitelist for sortBy()
- *
- * query() and selectableRowIds() are built generically from $service — no
- * need to write them per component unless a resource genuinely needs
- * something the base Service::paginate() can't express (override query()
- * directly in that case).
- */
+*/
+
 
 trait withDatatable
 {
@@ -52,11 +40,9 @@ trait withDatatable
 
     protected string $defaultSortDirection = 'desc';
 
-    // ── Lifecycle ─────────────────────────────────────────────────
 
     public function mountWithDatatable(): void
     {
-        // Guard against tampered / stale query strings.
         if (! in_array($this->sortField, $this->sortable, true)) {
             $this->sortField = $this->defaultSortField;
             $this->sortDirection = $this->defaultSortDirection;
@@ -71,14 +57,11 @@ trait withDatatable
         }
     }
 
-    // ── Filter ─────────────────────────────────────────────────────
 
     protected function filters(): array
     {
         return [];
     }
-
-    // ── Query ─────────────────────────────────────────────────────
 
     protected function query(): LengthAwarePaginator
     {
@@ -101,8 +84,6 @@ trait withDatatable
             ->all();
     }
 
-    // ── Search ────────────────────────────────────────────────────
-
     public function updatedSearch(): void
     {
         $this->resetPage();
@@ -116,8 +97,6 @@ trait withDatatable
         $this->resetSelection();
     }
 
-    // ── Per page ──────────────────────────────────────────────────
-
     public function updatedPerPage(mixed $value): void
     {
         $this->perPage = in_array((int) $value, $this->perPageOptions, true)
@@ -127,8 +106,6 @@ trait withDatatable
         $this->resetPage();
         $this->resetSelection();
     }
-
-    // ── Sorting ───────────────────────────────────────────────────
 
     public function sortBy(string $field): void
     {
@@ -156,8 +133,6 @@ trait withDatatable
 
         $this->resetPage();
     }
-
-    // ── Selection ─────────────────────────────────────────────────
 
     public function updatedSelectAll(mixed $value): void
     {

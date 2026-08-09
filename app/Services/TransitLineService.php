@@ -71,7 +71,6 @@ class TransitLineService extends Service
 
     protected function transitServicesCount(TransitLine $transitLine): int
     {
-        // Use eager-loaded counts if available (bulk path), otherwise query them.
         if (isset($transitLine->transit_services_count)) {
             return $transitLine->transit_services_count;
         }

@@ -17,7 +17,7 @@ class TerminalService extends Service
     ];
 
     /**
-     * @throws CannotDeleteException if the terminal still has transit lines attached.
+     * @throws CannotDeleteException
      */
     public function delete(Model $model): bool
     {
@@ -27,9 +27,6 @@ class TerminalService extends Service
         return parent::delete($model);
     }
 
-    /**
-     * Get terminals for select dropdown (filtered by region)
-     */
     public function getTerminalsForSelect(
         ?int $provinceId = null,
         ?int $countyId = null,
@@ -64,9 +61,6 @@ class TerminalService extends Service
             ->toArray();
     }
 
-    /**
-     * Format terminal name with region hierarchy
-     */
     public function formatTerminalName(Terminal $terminal): string
     {
         $parts = array_filter([
@@ -96,7 +90,6 @@ class TerminalService extends Service
 
     protected function transitLinesCount(Terminal $terminal): int
     {
-        // Use eager-loaded counts if available (bulk path), otherwise query them.
         if (isset($terminal->origin_transit_lines_count, $terminal->destination_transit_lines_count)) {
             return $terminal->origin_transit_lines_count + $terminal->destination_transit_lines_count;
         }

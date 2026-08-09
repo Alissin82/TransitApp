@@ -7,27 +7,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-/**
- * Base for all "resource services" (TerminalService, TransitLineService, ...).
- *
- * A child only needs to set $model (and usually $with / $sortable) to get
- * find/create/update/delete/deleteMany/paginate for free. Override any
- * method when a resource needs something the default can't express —
- * e.g. TerminalService overrides delete() to guard against dependent
- * transit lines, and applySearch()/applySort() to search/sort by relations.
- */
 abstract class Service
 {
-    /** Eloquent model class this service operates on, e.g. Terminal::class. */
     protected string $model;
 
-    /** Relations to eager-load on find()/paginate(). */
     protected array $with = [];
 
-    /** Columns searched with LIKE when a search term is given (plain columns only — see applySearch() for relations). */
     protected array $searchable = [];
 
-    /** Whitelisted sortable fields. */
     protected array $sortable = [];
 
     protected string $defaultSortField = 'id';
@@ -177,13 +164,6 @@ abstract class Service
         return $model->delete();
     }
 
-    /**
-     * Deletes each row via delete(), silently skipping any that throw
-     * CannotDeleteException. Returns the count actually deleted.
-     *
-     * Override this if a resource needs different bulk semantics
-     * (e.g. all-or-nothing instead of skip-and-continue).
-     */
     public function deleteMany(array $ids): int
     {
         $ids = array_filter(array_map('intval', $ids));
