@@ -1,135 +1,91 @@
-<div class="py-4">
-    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
-        <h2 class="text-2xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-bus text-primary"></i>
-            {{ __('Terminal.Manage Records') }}
-        </h2>
-        <a href="{{ route('terminals.create') }}" class="btn btn-primary btn-sm gap-2" wire:navigate>
-            <i class="fa-solid fa-plus"></i>
-            {{ __('Terminal.New Record') }}
-        </a>
-    </div>
+<x-layouts.app-content>
+    <x-common.page-breadcrumb :pageTitle="__('terminal.plural')" />
 
-    <!-- Search -->
-    <div class="card bg-base-100 shadow-sm mb-4">
-        <div class="card-body py-4">
-            <div class="form-control">
-                <input
-                    type="text"
-                    placeholder="{{ __('Terminal.Search Placeholder') }}"
-                    wire:model.live.debounce.300ms="search"
-                    class="input input-bordered w-full"
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
+
+        <div class="flex flex-col gap-4 px-4 py-4 border border-b-0 border-gray-100 dark:border-white/5 rounded-t-xl sm:flex-row sm:items-center sm:justify-between">
+
+            <x-tables.per-page wire:model.live="perPage" />
+
+            <div class="flex flex-col w-full gap-3 sm:w-auto sm:flex-row sm:items-center">
+
+                <x-tables.search
+                        wire:model.live.debounce.300ms="search"
+                        placeholder="{{ __('Search') }}"
                 />
+
+                @if($this->hasSelection())
+                    <x-tables.button
+                            variant="danger"
+                            wire:click="deleteSelected"
+                            wire:confirm="{{ __('Are you sure you want to delete the selected records?') }}"
+                    >
+                        {{ __('Delete') }} ({{ count($selectedRows) }})
+                    </x-tables.button>
+                @endif
+
+                <x-tables.create-button href="{{ route('terminals.create') }}" wire:navigate>
+                    {{ model_trans('terminal', 'new') }}
+                </x-tables.create-button>
+
             </div>
         </div>
-    </div>
 
-    <!-- Table -->
-    <div class="card bg-base-100 shadow-sm">
-        <div class="card-body p-0">
-            <div class="p-4">
-                {{ $terminals->links() }}
-            </div>
+        <div class="max-w-full overflow-x-auto custom-scrollbar">
+            <table class="w-full min-w-full">
+                <thead class="border-gray-100 border-y bg-gray-50 dark:border-white/5 dark:bg-gray-900">
+                <tr>
+                    <x-tables.sortable-header field="name" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        {{ __('terminal.fields.name') }}
+                    </x-tables.sortable-header>
 
-            <div class="overflow-x-auto">
-                <table class="table table-zebra">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>{{ __('Terminal.Attributes.Name') }}</th>
-                        <th>{{ __('Region.Province') }}</th>
-                        <th>{{ __('Region.County') }}</th>
-                        <th>{{ __('Region.District') }}</th>
-                        <th>{{ __('Region.Settlement') }}</th>
-                        <th>{{ __('Region.Village') }}</th>
-                        <th class="text-center">{{ __('Actions') }}</th>
+                    <th scope="col" class="px-4 py-3 text-left border border-gray-100 dark:border-gray-800">
+                        <p class="font-medium text-gray-700 text-theme-xs dark:text-gray-400">{{ __('Address') }}</p>
+                    </th>
+
+                    <x-tables.sortable-header field="created_at" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        {{ __('Created at') }}
+                    </x-tables.sortable-header>
+
+                    <th scope="col" class="px-4 py-3 text-left border border-gray-100 dark:border-gray-800">
+                        <p class="font-medium text-gray-700 text-theme-xs dark:text-gray-400">{{ __('Actions') }}</p>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @forelse ($items as $item)
+                    <tr class="border-t border-gray-100 dark:border-white/5 {{ in_array($item->id, (array) $selectedRows) ? 'bg-gray-50 dark:bg-gray-900' : '' }}">
+                        <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
+                            <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                                {{ $item->name }}
+                            </span>
+                        </td>
+
+                        <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
+                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">{{ $item->address }}</p>
+                        </td>
+
+                        <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
+                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">
+                                <x-ui.jalali :datetime="$item->created_at" />
+                            </p>
+                        </td>
+
+                        <td class="px-4 py-[17.5px] border border-gray-100 dark:border-gray-800">
+                            <x-tables.action-buttons>
+                                <x-tables.edit-action href="{{ route('terminals.edit', $item->id) }}" />
+                                <x-tables.delete-action wire:click="openDeleteModal({{ $item->id }})"/>
+                            </x-tables.action-buttons>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                        @if($terminals->count() == 0)
-                            <tr>
-                                <td colspan="8" class="text-center text-base-content/50 py-8">
-                                    <i class="fa-solid fa-inbox text-4xl mb-2 block text-base-content/30"></i>
-                                    {{ __('Terminal.No Records Found') }}
-                                </td>
-                            </tr>
-                        @else
-                            @foreach ($terminals as $terminal)
-                                <tr class="hover">
-                                    <td class="font-mono text-sm">{{ $terminal->id }}</td>
-                                    <td class="font-medium">{{ $terminal->name }}</td>
-                                    <td>{{ $terminal->province->name }}</td>
-                                    <td>{{ $terminal->county->name }}</td>
-                                    <td>{{ $terminal->district->name }}</td>
-                                    <td>{{ $terminal->settlement->name }}</td>
-                                    <td>{{ $terminal->village->name ?? '-' }}</td>
-                                    <td>
-                                        <div class="flex gap-1 justify-center">
-                                            <a
-                                                href="{{ route('terminals.edit', $terminal) }}"
-                                                wire:navigate
-                                                class="btn btn-ghost btn-xs text-info"
-                                                title="{{ __('Edit') }}"
-                                            >
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
-                                            <button
-                                                wire:click="confirmDelete({{ $terminal->id }})"
-                                                class="btn btn-ghost btn-xs text-error"
-                                                title="{{ __('Delete') }}"
-                                            >
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="p-4">
-                {{ $terminals->links() }}
-            </div>
+                @empty
+                    <x-tables.empty-state colspan="5" />
+                @endforelse
+                </tbody>
+            </table>
         </div>
+
+        <x-tables.pagination :items="$items"/>
     </div>
-
-    <!-- Delete Confirmation Modal -->
-    <dialog id="deleteConfirmModal" class="modal">
-        <div class="modal-box">
-            <h3 class="font-bold text-lg">{{ __('Terminal.Delete Confirmation Title') }}</h3>
-            <p class="py-4">{{ __('Terminal.Delete Confirmation Message') }}</p>
-
-            @if($this->affectedCount > 0)
-                <div class="alert alert-warning">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span>{{ __('Terminal.Delete Cascade Warning', ['count' => $this->affectedCount]) }}</span>
-                </div>
-            @endif
-
-            <div class="modal-action">
-                <form method="dialog">
-                    <button class="btn" wire:click="cancelDelete()">{{ __('Cancel') }}</button>
-                </form>
-                <form method="dialog">
-                    <button class="btn btn-error" wire:click="executeDelete()">
-                        <i class="fa-solid fa-trash"></i>
-                        {{ __('Delete') }}
-                    </button>
-                </form>
-            </div>
-        </div>
-        <form method="dialog" class="modal-backdrop">
-            <button>close</button>
-        </form>
-    </dialog>
-
-    @script
-    <script>
-        $wire.on('show-delete-confirm', () => {
-            document.getElementById('deleteConfirmModal').showModal();
-        });
-    </script>
-    @endscript
-</div>
+</x-layouts.app-content>

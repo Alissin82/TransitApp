@@ -9,6 +9,12 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/*
+ * wire-elements/modal builds its width class dynamically in JS
+ * (e.g. "sm:max-w-" + size), so Tailwind's static content scan never
+ * sees the literal class name and never generates the utility.
+ */
+@source inline("sm:max-w-sm sm:max-w-md sm:max-w-lg sm:max-w-xl sm:max-w-2xl sm:max-w-3xl sm:max-w-4xl sm:max-w-5xl sm:max-w-6xl sm:max-w-7xl");
 
 @custom-variant dark (&:is(.dark *));
 

@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait ToastR
+trait withToastNotification
 {
     /**
      * Show success toast using toastr

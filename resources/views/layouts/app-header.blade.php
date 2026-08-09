@@ -55,8 +55,8 @@
 
             {{-- Mobile logo (visible below xl only) --}}
             <a href="/" class="xl:hidden">
-                <img class="dark:hidden" src="{{ asset('images/logo/logo.svg') }}" alt="{{ __('لوگو') }}" />
-                <img class="hidden dark:block" src="{{ asset('images/logo/logo-dark.svg') }}" alt="{{ __('لوگو') }}" />
+                <img class="dark:hidden" src="{{ asset('images/logo/logo.svg') }}" alt="{{ __('Logo') }}" />
+                <img class="hidden dark:block" src="{{ asset('images/logo/logo-dark.svg') }}" alt="{{ __('Logo') }}" />
             </a>
 
             {{-- Mobile application menu toggle: shows/hides the action buttons on mobile --}}
@@ -83,13 +83,12 @@
                                     fill="" />
                             </svg>
                         </span>
-                        <input type="text" placeholder="جستجو"
+                        <input type="text" placeholder="{{ __("Search") }}"
                             class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 ps-12 pe-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-800 dark:bg-white/3 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 xl:w-107.5" />
                         {{-- Keyboard shortcut badge (Cmd+K) --}}
                         <button
                             class="absolute end-2.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-1.75 py-[4.5px] text-xs -tracking-[0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/3 dark:text-gray-400">
-                            <span> ⌘ </span>
-                            <span> K </span>
+                            <i class="fas fa-search"></i>
                         </button>
                     </div>
                 </form>
@@ -122,7 +121,7 @@
                 </button>
 
                 {{-- Notification dropdown component --}}
-                <x-header.notification-dropdown />
+                {{-- <x-header.notification-dropdown /> --}}
             </div>
 
             {{-- User dropdown component --}}

@@ -1,203 +1,121 @@
-<div class="py-4">
-    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
-        <h2 class="text-2xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-route text-primary"></i>
-            {{ $transitLine ? __('TransitLine.Edit Record') : __('TransitLine.New Record') }}
-        </h2>
-        <a href="{{ route('transit-lines.index') }}" class="btn btn-outline btn-sm gap-2" wire:navigate>
-            <i class="fa-solid fa-arrow-right"></i>
-            {{ __('Back') }}
-        </a>
-    </div>
+<x-layouts.app-content>
+    <x-common.page-breadcrumb :pageTitle="$transitLine ? model_trans('transit-line', 'edit') : model_trans('transit-line', 'create')" />
 
-    <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-            <!-- Region Filters -->
-            <div class="collapse collapse-arrow bg-base-200 mb-4">
-                <input type="checkbox" />
-                <div class="collapse-title text-lg font-medium flex items-center gap-2">
-                    <i class="fa-solid fa-filter text-primary"></i>
-                    {{ __('TransitLine.Filters.Terminals Region') }}
-                </div>
-                <div class="collapse-content">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="form-control">
-                            <label class="label" for="province_id">
-                                <span class="label-text font-medium">{{ __('Region.Province') }}</span>
-                            </label>
-                            <select
-                                id="province_id"
-                                name="province_id"
-                                wire:model.live="province_id"
-                                class="select select-bordered w-full"
-                            >
-                                <option value="">{{ __('Region.Select Province') }}</option>
-                                @foreach($provinces as $value => $label)
-                                    <option value="{{ $value }}">{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-control">
-                            <label class="label" for="county_id">
-                                <span class="label-text font-medium">{{ __('Region.County') }}</span>
-                            </label>
-                            <select
-                                id="county_id"
-                                name="county_id"
-                                wire:model.live="county_id"
-                                {{ !$province_id ? 'disabled' : '' }}
-                                class="select select-bordered w-full"
-                            >
-                                <option value="">{{ __('Region.Select County') }}</option>
-                                @foreach($counties as $value => $label)
-                                    <option value="{{ $value }}">{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+    <div class="flex flex-col gap-5">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="form-control">
-                            <label class="label" for="district_id">
-                                <span class="label-text font-medium">{{ __('Region.District') }}</span>
-                            </label>
-                            <select
-                                id="district_id"
-                                name="district_id"
-                                wire:model.live="district_id"
-                                {{ !$county_id ? 'disabled' : '' }}
-                                class="select select-bordered w-full"
-                            >
-                                <option value="">{{ __('Region.Select District') }}</option>
-                                @foreach($districts as $value => $label)
-                                    <option value="{{ $value }}">{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-control">
-                            <label class="label" for="settlement_id">
-                                <span class="label-text font-medium">{{ __('Region.Settlement') }}</span>
-                            </label>
-                            <select
-                                id="settlement_id"
-                                name="settlement_id"
-                                wire:model.live="settlement_id"
-                                {{ !$district_id ? 'disabled' : '' }}
-                                class="select select-bordered w-full"
-                            >
-                                <option value="">{{ __('Region.Select Settlement') }}</option>
-                                @foreach($settlements as $value => $label)
-                                    <option value="{{ $value }}">{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+        <x-tables.filters-panel class="grid! grid-cols-2!">
+            <x-forms.select
+                    name="province_id"
+                    label="{{ __('Province') }}"
+                    placeholder="{{ __('Select Province') }}"
+                    :options="$provinces"
+                    :selected="(bool) $province_id"
+                    wire:model.live="province_id"
+            />
+            <x-forms.select
+                    name="county_id"
+                    label="{{ __('County') }}"
+                    placeholder="{{ __('Select County') }}"
+                    :options="$counties"
+                    :selected="(bool) $county_id"
+                    wire:model.live="county_id"
+                    :disabled="!$province_id"
+            />
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="form-control">
-                            <label class="label" for="village_id">
-                                <span class="label-text font-medium">{{ __('Region.Village') }}</span>
-                            </label>
-                            <select
-                                id="village_id"
-                                name="village_id"
-                                wire:model.live="village_id"
-                                {{ !$settlement_id ? 'disabled' : '' }}
-                                class="select select-bordered w-full"
-                            >
-                                <option value="">{{ __('Region.Select Village') }}</option>
-                                @foreach($villages as $value => $label)
-                                    <option value="{{ $value }}">{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+            <x-forms.select
+                    name="district_id"
+                    label="{{ __('District') }}"
+                    placeholder="{{ __('Select District') }}"
+                    :options="$districts"
+                    :selected="(bool) $district_id"
+                    wire:model.live="district_id"
+                    :disabled="!$county_id"
+            />
+            <x-forms.select
+                    name="settlement_id"
+                    label="{{ __('Settlement') }}"
+                    placeholder="{{ __('Select Settlement') }}"
+                    :options="$settlements"
+                    :selected="(bool) $settlement_id"
+                    wire:model.live="settlement_id"
+                    :disabled="!$district_id"
+            />
 
-                    <div class="flex gap-2">
-                        <button class="btn btn-primary btn-sm gap-2" wire:click.prevent="applyFilters">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            {{ __('Apply Filters') }}
-                        </button>
-                        <button class="btn btn-outline btn-sm gap-2" wire:click.prevent="clearFilters">
-                            <i class="fa-solid fa-xmark"></i>
-                            {{ __('Clear Filters') }}
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <x-forms.select
+                    name="village_id"
+                    label="{{ __('Village') }}"
+                    hint="{{ __('Optional') }}"
+                    placeholder="{{ __('Select Village') }}"
+                    :options="$villages"
+                    wire:model.live="village_id"
+                    :disabled="!$settlement_id"
+            />
 
-            <form wire:submit.prevent="save" id="transit-line-form">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-control">
-                        <label class="label" for="origin_terminal_id">
-                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Origin Terminal') }}</span>
-                        </label>
-                        <select
-                            id="origin_terminal_id"
-                            name="origin_terminal_id"
-                            wire:model.live="origin_terminal_id"
-                            form="transit-line-form"
-                            class="select select-bordered w-full"
-                        >
-                            <option value=""></option>
-                            @foreach($originTerminals as $value => $label)
-                                <option value="{{ $value }}" {{ (string) $value === (string) $origin_terminal_id ? 'selected' : '' }}>{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-control">
-                        <label class="label" for="destination_terminal_id">
-                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Destination Terminal') }}</span>
-                        </label>
-                        <select
-                            id="destination_terminal_id"
-                            name="destination_terminal_id"
-                            wire:model.live="destination_terminal_id"
-                            form="transit-line-form"
-                            {{ !$originTerminals ? 'disabled' : '' }}
-                            class="select select-bordered w-full"
-                        >
-                            <option value=""></option>
-                            @foreach($destinationTerminals as $value => $label)
-                                <option value="{{ $value }}" {{ (string) $value === (string) $destination_terminal_id ? 'selected' : '' }}>{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div class="form-control">
-                        <label class="label" for="price">
-                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Price') }}</span>
-                        </label>
-                        <input
-                            type="number"
-                            id="price"
-                            name="price"
-                            placeholder="50000"
-                            wire:model="price"
-                            form="transit-line-form"
-                            class="input input-bordered w-full @error('price') input-error @enderror"
-                        />
-                        @error('price')
-                            <label class="label">
-                                <span class="label-text-alt text-error">{{ $message }}</span>
-                            </label>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="flex gap-2">
-                    <button type="submit" class="btn btn-primary gap-2">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                        {{ $transitLine ? __('Save Changes') : __('Save') }}
-                    </button>
-                    <a href="{{ route('transit-lines.index') }}" class="btn btn-outline gap-2" wire:navigate>
+            <x-slot:footer>
+                <x-ui.button variant="outline" wire:click="resetFilters">
+                    <x-slot name="startIcon">
                         <i class="fa-solid fa-xmark"></i>
-                        {{ __('Cancel') }}
-                    </a>
-                </div>
-            </form>
+                    </x-slot>
+                    {{ __('Reset filters') }}
+                </x-ui.button>
+            </x-slot:footer>
+        </x-tables.filters-panel>
+
+        <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/3">
+            {{-- Card Header --}}
+            <div class="px-6 py-5">
+                <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
+                    {{ __('transit-line.singular') }}
+                </h3>
+            </div>
+            {{-- Card Body --}}
+            <div class="p-4 border-t border-gray-100 dark:border-gray-800 sm:p-6">
+                <form wire:submit.prevent="save">
+                    <div class="-mx-2.5 grid grid-cols-2 gap-x-3 gap-y-5">
+
+                        <x-forms.select
+                                name="origin_terminal_id"
+                                label="{{ __('transit-line.fields.origin_terminal') }}"
+                                placeholder="{{ __('Select(verb)') }}"
+                                :options="$originTerminals"
+                                :selected="(bool) $origin_terminal_id"
+                                wire:model="origin_terminal_id"
+                        />
+
+                        <x-forms.select
+                                name="destination_terminal_id"
+                                label="{{ __('transit-line.fields.destination_terminal') }}"
+                                placeholder="{{ __('Select(verb)') }}"
+                                :options="$destinationTerminals"
+                                :selected="(bool) $destination_terminal_id"
+                                wire:model="destination_terminal_id"
+                        />
+
+                        <x-forms.text
+                                name="price"
+                                label="{{ __('transit-line.fields.price') }}"
+                                wire:model="price"
+                                type="number"
+                        />
+
+                        {{-- Actions --}}
+                        <div class="col-span-full px-2.5">
+                            <div class="mt-1 flex items-center gap-3 border-t border-gray-100 pt-6 dark:border-gray-800">
+
+                                <x-ui.button type="submit">
+                                    {{ $transitLine ? __('Save changes') : __('Save') }}
+                                </x-ui.button>
+
+                                <x-tables.button href="{{ route('transit-lines.index') }}" wire:navigate>
+                                    {{ __('Cancel') }}
+                                </x-tables.button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</x-layouts.app-content>

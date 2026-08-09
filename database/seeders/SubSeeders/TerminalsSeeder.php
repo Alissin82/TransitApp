@@ -15,12 +15,12 @@ class TerminalsSeeder extends Seeder
             ->has(
                 TransitLine::factory(20)
                     ->has(TransitService::factory(rand(1, 3))),
-                'departureTransitLines'
+                'originTransitLines'
             )
             ->has(
                 TransitLine::factory(20)
                     ->has(TransitService::factory(rand(1, 3))),
-                'arrivalTransitLines'
+                'destinationTransitLines'
             )
             ->create();
     }

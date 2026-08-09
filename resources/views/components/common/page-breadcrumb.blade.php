@@ -1,7 +1,9 @@
 {{-- Breadcrumb component: page title and navigation path --}}
-@props(['pageTitle' => 'Page'])
+@props([
+    'pageTitle' => __('Default Text')
+])
 
-<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+<div class="flex flex-wrap items-center justify-between gap-3 mb-3">
     {{-- Page title --}}
     <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">
         {{ $pageTitle }}

@@ -1,3 +1,3 @@
-<div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+<div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6 flex flex-col gap-3">
     {{ $slot }}
 </div>

@@ -2,6 +2,8 @@ document.addEventListener('livewire:init', () => {
     // Livewire toast event handler
     // noinspection JSUnresolvedReference
     Livewire.on('toast', (toast) => {
+        console.log('toast', toast);
+
         const titles = {
             success: 'موفق',
             error: 'خطا',
@@ -15,15 +17,21 @@ document.addEventListener('livewire:init', () => {
             case 'success':
                 window.toastr.success(toast.message, title)
                 break;
-            case 'danger':
+            case 'error':
                 window.toastr.error(toast.message, title)
                 break;
             case 'warning':
                 window.toastr.warning(toast.message, title)
                 break;
-            case 'info':
+            default:
                 window.toastr.info(toast.message, title)
                 break;
         }
+    });
+});
+
+document.addEventListener('alpine:init', () => {
+    Alpine.store('modalLoading', {
+        visible: false,
     });
 });

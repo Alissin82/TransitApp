@@ -1,69 +1,50 @@
 <?php
 
+use App\Livewire\Terminals\Modals\Delete;
 use App\Models\Terminal;
 use App\Services\TerminalService;
-use App\Traits\ToastR;
+use App\Traits\withModal;
+use App\Traits\withTableDelete;
+use App\Traits\withToastNotification;
+use App\Traits\withDatatable;
+use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 new class extends Component
 {
-    use ToastR, WithPagination;
+    use withToastNotification, withDatatable, withTableDelete, withModal;
 
-    public int $perPage = 15;
-    public string $search = '';
-    public ?int $pendingDeleteId = null;
+    protected string $model = Terminal::class;
 
-    public function updatedSearch(): void
+    protected string $service = TerminalService::class;
+
+    protected array $sortable = ['name', 'created_at'];
+    protected array $searchable = [
+        'name',
+        'province.name',
+        'county.name',
+        'district.name',
+        'settlement.name',
+        'created_at',
+    ];
+
+    public function openDeleteModal(int $id): void
     {
-        $this->resetPage();
+        $this->pendingDeleteId = $id;
+        $this->openModal(Delete::class, ['id' => $id]);
     }
 
-    public function confirmDelete(int $terminalId): void
+    #[On('terminal-delete-confirmed')]
+    public function onTerminalDeleteConfirmed(int $id): void
     {
-        $this->pendingDeleteId = $terminalId;
-        $this->dispatch('show-delete-confirm');
+        $this->pendingDeleteId = $id;
+        $this->executeDelete();
     }
 
-    public function executeDelete(TerminalService $service): void
-    {
-        if ($this->pendingDeleteId === null) {
-            return;
-        }
-
-        $terminal = Terminal::find($this->pendingDeleteId);
-        if ($terminal) {
-            $service->delete($terminal);
-            $this->toastSuccess(__('Terminal.Record Deleted Successfully.'));
-        }
-
-        $this->pendingDeleteId = null;
-    }
-
-    public function cancelDelete(): void
-    {
-        $this->pendingDeleteId = null;
-    }
-
-    public function getAffectedCountProperty(): int
-    {
-        if ($this->pendingDeleteId === null) {
-            return 0;
-        }
-
-        $terminal = Terminal::find($this->pendingDeleteId);
-        if (!$terminal) {
-            return 0;
-        }
-
-        return $terminal->departureTransitLines()->count()
-            + $terminal->arrivalTransitLines()->count();
-    }
-
-    public function render(TerminalService $service)
+    public function render()
     {
         return $this->view()->with([
-            'terminals' => $service->paginate($this->perPage, $this->search)
-        ])->title(__('Terminal.Plural'));
+            'items' => $this->query()
+        ])->title(__('terminal.plural'));
     }
 };

@@ -1,312 +1,174 @@
-<div class="py-4">
-    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
-        <h2 class="text-2xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-route text-primary"></i>
-            {{ __('TransitLine.Manage Records') }}
-        </h2>
-        <a href="{{ route('transit-lines.create') }}" class="btn btn-primary btn-sm gap-2" wire:navigate>
-            <i class="fa-solid fa-plus"></i>
-            {{ __('TransitLine.New Record') }}
-        </a>
-    </div>
+<x-layouts.app-content>
+    <x-common.page-breadcrumb :pageTitle="__('transit-line.plural')" />
 
-    <!-- Filters -->
-    <div class="card bg-base-100 shadow-sm mb-4">
-        <div class="collapse collapse-arrow">
-            <input type="checkbox" />
-            <div class="collapse-title text-lg font-medium flex items-center gap-2">
-                <i class="fa-solid fa-filter text-primary"></i>
-                {{ __('Filters') }}
-            </div>
-            <div class="collapse-content">
-                <!-- Search -->
-                <div class="form-control mb-4">
-                    <input
-                        type="text"
-                        placeholder="{{ __('TransitLine.Search Placeholder') }}"
+    <x-tables.filters-panel class="grid! grid-cols-2!">
+        <x-forms.select
+                name="province_id"
+                label="{{ __('Province') }}"
+                placeholder="{{ __('All Provinces') }}"
+                :options="$provinces"
+                :selected="(bool) $province_id"
+                wire:model.live="province_id"
+        />
+        <x-forms.select
+                name="county_id"
+                label="{{ __('County') }}"
+                placeholder="{{ __('All Counties') }}"
+                :options="$counties"
+                :selected="(bool) $county_id"
+                wire:model.live="county_id"
+                :disabled="!$province_id"
+        />
+
+        <x-forms.select
+                name="district_id"
+                label="{{ __('District') }}"
+                placeholder="{{ __('All Districts') }}"
+                :options="$districts"
+                :selected="(bool) $district_id"
+                wire:model.live="district_id"
+                :disabled="!$county_id"
+        />
+        <x-forms.select
+                name="settlement_id"
+                label="{{ __('Settlement') }}"
+                placeholder="{{ __('All Settlements') }}"
+                :options="$settlements"
+                :selected="(bool) $settlement_id"
+                wire:model.live="settlement_id"
+                :disabled="!$district_id"
+        />
+
+        <x-forms.select
+                name="village_id"
+                label="{{ __('Village') }}"
+                hint="{{ __('Optional') }}"
+                placeholder="{{ __('All Villages') }}"
+                :options="$villages"
+                wire:model.live="village_id"
+                :disabled="!$settlement_id"
+        />
+
+        <br>
+
+        <x-forms.text
+                name="min_price"
+                label="{{ __('Minimum price(Tooman)') }}"
+                wire:model.live.debounce="min_price"
+                type="number"
+        />
+
+        <x-forms.text
+                name="max_price"
+                label="{{ __('Maximum price(Tooman)') }}"
+                wire:model.live.debounce="max_price"
+                type="number"
+        />
+
+        <x-slot:footer>
+            <x-ui.button
+                    variant="outline"
+                    wire:click="resetFilters"
+            >
+                <x-slot name="startIcon">
+                    <i class="fa-solid fa-xmark"></i>
+                </x-slot>
+                {{ __('Reset filters') }}
+            </x-ui.button>
+        </x-slot:footer>
+    </x-tables.filters-panel>
+
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
+        <div class="flex flex-col gap-4 px-4 py-4 border border-b-0 border-gray-100 dark:border-white/5 rounded-t-xl sm:flex-row sm:items-center sm:justify-between">
+            <x-tables.per-page wire:model.live="perPage" />
+            <div class="flex flex-col w-full gap-3 sm:w-auto sm:flex-row sm:items-center">
+                <x-tables.search
                         wire:model.live.debounce.300ms="search"
-                        class="input input-bordered w-full"
-                    />
-                </div>
+                        placeholder="{{ __('Search') }}"
+                />
 
-                <!-- Region Filters -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-control">
-                        <label class="label" for="province_id">
-                            <span class="label-text font-medium">{{ __('Region.Province') }}</span>
-                        </label>
-                        <select
-                            id="province_id"
-                            name="province_id"
-                            wire:model.live="province_id"
-                            class="select select-bordered w-full"
-                        >
-                            <option value="">{{ __('Region.All Provinces') }}</option>
-                            @foreach($provinces as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-control">
-                        <label class="label" for="county_id">
-                            <span class="label-text font-medium">{{ __('Region.County') }}</span>
-                        </label>
-                        <select
-                            id="county_id"
-                            name="county_id"
-                            wire:model.live="county_id"
-                            {{ !$province_id ? 'disabled' : '' }}
-                            class="select select-bordered w-full"
-                        >
-                            <option value="">{{ __('Region.All Counties') }}</option>
-                            @foreach($counties as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                @if($this->hasSelection())
+                    <x-tables.button
+                            variant="danger"
+                            wire:click="deleteSelected"
+                            wire:confirm="{{ __('Are you sure you want to delete the selected records?') }}"
+                    >
+                        {{ __('Delete') }} ({{ count($selectedRows) }})
+                    </x-tables.button>
+                @endif
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-control">
-                        <label class="label" for="district_id">
-                            <span class="label-text font-medium">{{ __('Region.District') }}</span>
-                        </label>
-                        <select
-                            id="district_id"
-                            name="district_id"
-                            wire:model.live="district_id"
-                            {{ !$county_id ? 'disabled' : '' }}
-                            class="select select-bordered w-full"
-                        >
-                            <option value="">{{ __('Region.All Districts') }}</option>
-                            @foreach($districts as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-control">
-                        <label class="label" for="settlement_id">
-                            <span class="label-text font-medium">{{ __('Region.Settlement') }}</span>
-                        </label>
-                        <select
-                            id="settlement_id"
-                            name="settlement_id"
-                            wire:model.live="settlement_id"
-                            {{ !$district_id ? 'disabled' : '' }}
-                            class="select select-bordered w-full"
-                        >
-                            <option value="">{{ __('Region.All Settlements') }}</option>
-                            @foreach($settlements as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-control">
-                        <label class="label" for="village_id">
-                            <span class="label-text font-medium">{{ __('Region.Village') }}</span>
-                        </label>
-                        <select
-                            id="village_id"
-                            name="village_id"
-                            wire:model.live="village_id"
-                            {{ !$settlement_id ? 'disabled' : '' }}
-                            class="select select-bordered w-full"
-                        >
-                            <option value="">{{ __('Region.All Villages') }}</option>
-                            @foreach($villages as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Terminal Filters -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-control">
-                        <label class="label" for="origin_terminal_id">
-                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Origin Terminal') }}</span>
-                        </label>
-                        <select
-                            id="origin_terminal_id"
-                            name="origin_terminal_id"
-                            wire:model="origin_terminal_id"
-                            class="select select-bordered w-full"
-                        >
-                            <option value="">{{ __('TransitLine.Filters.All Origin Terminals') }}</option>
-                            @foreach($originTerminals as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-control">
-                        <label class="label" for="destination_terminal_id">
-                            <span class="label-text font-medium">{{ __('TransitLine.Attributes.Destination Terminal') }}</span>
-                        </label>
-                        <select
-                            id="destination_terminal_id"
-                            name="destination_terminal_id"
-                            wire:model="destination_terminal_id"
-                            class="select select-bordered w-full"
-                        >
-                            <option value="">{{ __('TransitLine.Filters.All Destination Terminals') }}</option>
-                            @foreach($destinationTerminals as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Price Filters -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-control">
-                        <label class="label" for="min_price">
-                            <span class="label-text font-medium">{{ __('Min Price') }}</span>
-                        </label>
-                        <input
-                            type="number"
-                            id="min_price"
-                            name="min_price"
-                            wire:model="min_price"
-                            class="input input-bordered w-full"
-                        />
-                    </div>
-                    <div class="form-control">
-                        <label class="label" for="max_price">
-                            <span class="label-text font-medium">{{ __('Max Price') }}</span>
-                        </label>
-                        <input
-                            type="number"
-                            id="max_price"
-                            name="max_price"
-                            wire:model="max_price"
-                            class="input input-bordered w-full"
-                        />
-                    </div>
-                </div>
-
-                <!-- Filter Actions -->
-                <div class="flex gap-2">
-                    <button class="btn btn-outline btn-sm gap-2" wire:click.prevent="clearFilters">
-                        <i class="fa-solid fa-xmark"></i>
-                        {{ __('Clear Filters') }}
-                    </button>
-                </div>
+                <x-tables.create-button href="{{ route('transit-lines.create') }}" wire:navigate>
+                    {{ model_trans('transit-line', 'new') }}
+                </x-tables.create-button>
             </div>
         </div>
-    </div>
 
-    <!-- Table -->
-    <div class="card bg-base-100 shadow-sm">
-        <div class="card-body p-0">
-            <div class="p-4">
-                {{ $transitLines->links() }}
-            </div>
+        <div class="max-w-full overflow-x-auto custom-scrollbar">
+            <table class="w-full min-w-full">
+                <thead class="border-gray-100 border-y bg-gray-50 dark:border-white/5 dark:bg-gray-900">
+                <tr>
+                    <x-tables.sortable-header field="originTerminal.name" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        <x-slot:before>
+                            <x-tables.checkbox wire:model.live="selectAll" />
+                        </x-slot:before>
+                        {{ __('transit-line.fields.origin_terminal') }}
+                    </x-tables.sortable-header>
 
-            <div class="overflow-x-auto">
-                <table class="table table-zebra">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>{{ __('TransitLine.Attributes.Origin Terminal') }}</th>
-                        <th>{{ __('TransitLine.Attributes.Destination Terminal') }}</th>
-                        <th>{{ __('TransitLine.Attributes.Price') }}</th>
-                        <th class="text-center">{{ __('Actions') }}</th>
+                    <x-tables.sortable-header field="destinationTerminal.name" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        {{ __('transit-line.fields.destination_terminal') }}
+                    </x-tables.sortable-header>
+
+                    <x-tables.sortable-header field="price" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        {{ __('transit-line.fields.price') }}
+                    </x-tables.sortable-header>
+
+                    <x-tables.sortable-header field="created_at" :sortBy="$sortField" :sortDirection="$sortDirection">
+                        {{ __('Created at') }}
+                    </x-tables.sortable-header>
+
+                    <th scope="col" class="px-4 py-3 text-left border border-gray-100 dark:border-gray-800">
+                        <p class="font-medium text-gray-700 text-theme-xs dark:text-gray-400">{{ __('Actions') }}</p>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @forelse ($items as $item)
+                    <tr class="border-t border-gray-100 dark:border-white/5 {{ in_array($item->id, (array) $selectedRows) ? 'bg-gray-50 dark:bg-gray-900' : '' }}">
+                        <x-tables.selectable-cell value="{{ $item->id }}">
+                            <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                                {{ $item->originTerminal->name }}
+                            </span>
+                        </x-tables.selectable-cell>
+
+                        <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
+                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">{{ $item->destinationTerminal->name }}</p>
+                        </td>
+
+                        <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
+                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">{{ $item->price }}</p>
+                        </td>
+
+                        <td class="px-4 py-3 border border-gray-100 dark:border-gray-800">
+                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">
+                                <x-ui.jalali :datetime="$item->created_at" />
+                            </p>
+                        </td>
+
+                        <td class="px-4 py-[17.5px] border border-gray-100 dark:border-gray-800">
+                            <x-tables.action-buttons>
+                                <x-tables.edit-action href="{{ route('transit-lines.edit', $item->id) }}" />
+                                <x-tables.delete-action wire:click="openDeleteModal({{ $item->id }})"/>
+                            </x-tables.action-buttons>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                        @if($transitLines->count() == 0)
-                            <tr>
-                                <td colspan="5" class="text-center text-base-content/50 py-8">
-                                    <i class="fa-solid fa-inbox text-4xl mb-2 block text-base-content/30"></i>
-                                    {{ __('TransitLine.No Records Found') }}
-                                </td>
-                            </tr>
-                        @else
-                            @foreach ($transitLines as $transitLine)
-                                <tr class="hover">
-                                    <td class="font-mono text-sm">{{ $transitLine->id }}</td>
-                                    <td>
-                                        <div class="flex flex-col">
-                                            <span class="font-medium">{{ $transitLine->originTerminal->name }}</span>
-                                            <span class="text-xs text-base-content/60">
-                                                {{ $transitLine->originTerminal->province->name }}
-                                                - {{ $transitLine->originTerminal->county->name }}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="flex flex-col">
-                                            <span class="font-medium">{{ $transitLine->destinationTerminal->name }}</span>
-                                            <span class="text-xs text-base-content/60">
-                                                {{ $transitLine->destinationTerminal->province->name }}
-                                                - {{ $transitLine->destinationTerminal->county->name }}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td dir="ltr" class="text-end font-mono">{{ number_format($transitLine->price) }}</td>
-                                    <td>
-                                        <div class="flex gap-1 justify-center">
-                                            <a
-                                                href="{{ route('transit-lines.edit', $transitLine) }}"
-                                                wire:navigate
-                                                class="btn btn-ghost btn-xs text-info"
-                                                title="{{ __('Edit') }}"
-                                            >
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
-                                            <button
-                                                wire:click="confirmDelete({{ $transitLine->id }})"
-                                                class="btn btn-ghost btn-xs text-error"
-                                                title="{{ __('Delete') }}"
-                                            >
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="p-4">
-                {{ $transitLines->links() }}
-            </div>
+                @empty
+                    <x-tables.empty-state colspan="5" />
+                @endforelse
+                </tbody>
+            </table>
         </div>
+
+        <x-tables.pagination :items="$items"/>
     </div>
-
-    <!-- Delete Confirmation Modal -->
-    <dialog id="deleteConfirmModal" class="modal">
-        <div class="modal-box">
-            <h3 class="font-bold text-lg">{{ __('TransitLine.Delete Confirmation Title') }}</h3>
-            <p class="py-4">{{ __('TransitLine.Delete Confirmation Message') }}</p>
-
-            <div class="modal-action">
-                <form method="dialog">
-                    <button class="btn" wire:click="cancelDelete()">{{ __('Cancel') }}</button>
-                </form>
-                <form method="dialog">
-                    <button class="btn btn-error gap-2" wire:click="executeDelete()">
-                        <i class="fa-solid fa-trash"></i>
-                        {{ __('Delete') }}
-                    </button>
-                </form>
-            </div>
-        </div>
-        <form method="dialog" class="modal-backdrop">
-            <button>close</button>
-        </form>
-    </dialog>
-
-    @script
-    <script>
-        $wire.on('show-delete-confirm', () => {
-            document.getElementById('deleteConfirmModal').showModal();
-        });
-    </script>
-    @endscript
-</div>
+</x-layouts.app-content>

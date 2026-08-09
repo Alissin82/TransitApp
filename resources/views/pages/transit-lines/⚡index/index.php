@@ -1,246 +1,101 @@
 <?php
 
+use App\Livewire\TransitLines\Modals\Delete;
 use App\Models\TransitLine;
-use App\Services\RegionsService;
-use App\Services\TerminalService;
 use App\Services\TransitLineService;
-use App\Traits\ToastR;
+use App\Traits\withDatatable;
+use App\Traits\withModal;
+use App\Traits\withRegionSelects;
+use App\Traits\withTableDelete;
+use App\Traits\withToastNotification;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 new class extends Component
 {
-    use ToastR, WithPagination;
+    use withToastNotification,
+        withRegionSelects,
+        withDatatable,
+        withTableDelete,
+        withModal;
 
-    public int $perPage = 15;
-    public ?string $search = '';
-    public ?int $pendingDeleteId = null;
+    protected string $model = TransitLine::class;
 
-    // Region filters
+    protected string $service = TransitLineService::class;
+
+    protected array $sortable = ['price', 'originTerminal.name', 'destinationTerminal.name', 'created_at'];
+    protected array $searchable = ['price', 'originTerminal.name', 'destinationTerminal.name', 'created_at'];
+
+    #[Url(history: true, keep: false)]
     public ?int $province_id = null;
+
+    #[Url(history: true, keep: false)]
     public ?int $county_id = null;
+
+    #[Url(history: true, keep: false)]
     public ?int $district_id = null;
+
+    #[Url(history: true, keep: false)]
     public ?int $settlement_id = null;
+
+    #[Url(history: true, keep: false)]
     public ?int $village_id = null;
 
-    // Terminal filters
-    public ?int $origin_terminal_id = null;
-    public ?int $destination_terminal_id = null;
-
-    // Price filters
     public ?int $min_price = null;
     public ?int $max_price = null;
 
-    // Dropdown options
-    public array $provinces = [];
-    public array $counties = [];
-    public array $districts = [];
-    public array $settlements = [];
-    public array $villages = [];
-    public array $originTerminals = [];
-    public array $destinationTerminals = [];
-
-    public function mount(RegionsService $service): void
+    protected function filters(): array
     {
-        $this->provinces = $service->getProvincesForSelect();
-        $this->min_price = TransitLine::min('price');
-        $this->max_price = TransitLine::max('price');
+        return [
+            'min_price'     => $this->min_price,
+            'max_price'     => $this->max_price,
+            'province_id'   => $this->province_id,
+            'county_id'     => $this->county_id,
+            'district_id'   => $this->district_id,
+            'settlement_id' => $this->settlement_id,
+            'village_id'    => $this->village_id,
+        ];
     }
 
-    public function updatedProvinceId($value, RegionsService $regionsService, TerminalService $terminalService): void
+    public function mount(): void
     {
-        $this->county_id = null;
-        $this->district_id = null;
-        $this->settlement_id = null;
-        $this->village_id = null;
-        $this->counties = [];
-        $this->districts = [];
-        $this->settlements = [];
-        $this->villages = [];
+        $this->initRegions();
+    }
 
-        $this->clearTerminals();
+    public function openDeleteModal(int $id): void
+    {
+        $this->pendingDeleteId = $id;
+        $this->openModal(Delete::class, ['id' => $id]);
+    }
 
-        if ($value) {
-            $this->counties = $regionsService->getCountiesByProvince($value);
+    #[On('transitline-delete-confirmed')]
+    public function onTransitLineDeleteConfirmed(int $id): void
+    {
+        $this->pendingDeleteId = $id;
+        $this->executeDelete();
+    }
+
+    public function updated($name): void
+    {
+        if (in_array($name, array_keys($this->filters()), true)) {
+            $this->resetPage();
+            $this->resetSelection();
         }
-
-        $this->loadTerminals($terminalService);
     }
 
-    public function updatedCountyId($value, RegionsService $regionsService, TerminalService $terminalService): void
+    public function resetFilters(): void
     {
-        $this->district_id = null;
-        $this->settlement_id = null;
-        $this->village_id = null;
-        $this->districts = [];
-        $this->settlements = [];
-        $this->villages = [];
-
-        $this->clearTerminals();
-
-        if ($value) {
-            $this->districts = $regionsService->getDistrictsByCounty($value);
-        }
-
-        $this->loadTerminals($terminalService);
-    }
-
-    public function updatedDistrictId($value, RegionsService $regionsService, TerminalService $terminalService): void
-    {
-        $this->settlement_id = null;
-        $this->village_id = null;
-        $this->settlements = [];
-        $this->villages = [];
-
-        $this->clearTerminals();
-
-        if ($value) {
-            $this->settlements = $regionsService->getSettlementsByDistrict($value);
-        }
-
-        $this->loadTerminals($terminalService);
-    }
-
-    public function updatedSettlementId($value, RegionsService $regionsService, TerminalService $terminalService): void
-    {
-        $this->village_id = null;
-        $this->villages = [];
-
-        $this->clearTerminals();
-
-        if ($value) {
-            $this->villages = $regionsService->getVillagesBySettlement($value);
-        }
-
-        $this->loadTerminals($terminalService);
-    }
-
-    public function updatedVillageId(TerminalService $service): void
-    {
-        $this->clearTerminals();
-
-        $this->loadTerminals($service);
-    }
-
-    public function updatedSearch(): void
-    {
+        $this->reset(['min_price', 'max_price']);
+        $this->resetRegions();
         $this->resetPage();
+        $this->resetSelection();
     }
 
-    public function updatedMinPrice(): void
+    public function render()
     {
-        $this->resetPage();
-    }
-
-    public function updatedMaxPrice(): void
-    {
-        $this->resetPage();
-    }
-
-    public function clearFilters(): void
-    {
-        $this->search = '';
-        $this->min_price = TransitLine::min('price');
-        $this->max_price = TransitLine::max('price');
-        $this->province_id = null;
-        $this->county_id = null;
-        $this->district_id = null;
-        $this->settlement_id = null;
-        $this->village_id = null;
-        $this->origin_terminal_id = null;
-        $this->destination_terminal_id = null;
-        $this->counties = [];
-        $this->districts = [];
-        $this->settlements = [];
-        $this->villages = [];
-        $this->originTerminals = [];
-        $this->destinationTerminals = [];
-
-        $this->resetPage();
-    }
-
-    public function clearTerminals(): void
-    {
-        if (empty($this->origin_terminal_id)) {
-            $this->originTerminals = [];
-        }
-        if (empty($this->destination_terminal_id)) {
-            $this->destinationTerminals = [];
-        }
-    }
-
-    private function loadTerminals(TerminalService $service): void
-    {
-        if (empty($this->origin_terminal_id)) {
-            $this->originTerminals = $service->getTerminalsForSelect(
-                $this->province_id,
-                $this->county_id,
-                $this->district_id,
-                $this->settlement_id,
-                $this->village_id
-            );
-        }
-        if (empty($this->destination_terminal_id)) {
-            $this->destinationTerminals = $service->getTerminalsForSelect(
-                $this->province_id,
-                $this->county_id,
-                $this->district_id,
-                $this->settlement_id,
-                $this->village_id
-            );
-        }
-    }
-
-    public function confirmDelete(int $transitLineId): void
-    {
-        $this->pendingDeleteId = $transitLineId;
-        $this->dispatch('show-delete-confirm');
-    }
-
-    public function executeDelete(TransitLineService $service): void
-    {
-        if ($this->pendingDeleteId === null) {
-            return;
-        }
-
-        $transitLine = TransitLine::find($this->pendingDeleteId);
-        if ($transitLine) {
-            $service->delete($transitLine);
-            $this->toastSuccess(__('TransitLine.Record Deleted Successfully.'));
-        }
-
-        $this->pendingDeleteId = null;
-    }
-
-    public function cancelDelete(): void
-    {
-        $this->pendingDeleteId = null;
-    }
-
-    public function delete(TransitLine $transitLine, TransitLineService $service): void
-    {
-        $service->delete($transitLine);
-        $this->toastSuccess(__('TransitLine.Record Deleted Successfully.'));
-    }
-
-    public function render(TransitLineService $service)
-    {
-        $transitLines = $service->paginate(
-            perPage: $this->perPage,
-            search: $this->search ?: null,
-            provinceId: $this->province_id,
-            countyId: $this->county_id,
-            districtId: $this->district_id,
-            settlementId: $this->settlement_id,
-            villageId: $this->village_id,
-            minPrice: $this->min_price ?: null,
-            maxPrice: $this->max_price ?: null,
-            originTerminalId: $this->origin_terminal_id,
-            destinationTerminalId: $this->destination_terminal_id
-        );
-
         return $this->view()->with([
-            'transitLines' => $transitLines
-        ])->title(__('TransitLine.Plural'));
+            'items' => $this->query()
+        ])->title(__('transit-line.plural'));
     }
 };

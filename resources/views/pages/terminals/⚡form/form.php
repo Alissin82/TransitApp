@@ -3,37 +3,25 @@
 use App\Models\Terminal;
 use App\Services\RegionsService;
 use App\Services\TerminalService;
-use App\Traits\ToastR;
+use App\Traits\withRegionSelects;
+use App\Traits\withToastNotification;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 new class extends Component
 {
-    use ToastR;
+    use withToastNotification, withRegionSelects;
 
     public ?Terminal $terminal = null;
 
     public string $name = '';
-    public ?int $province_id = null;
-    public ?int $county_id = null;
-    public ?int $district_id = null;
-    public ?int $settlement_id = null;
-    public ?int $village_id = null;
-
-    public array $provinces = [];
-    public array $counties = [];
-    public array $districts = [];
-    public array $settlements = [];
-    public array $villages = [];
-
 
     public function mount(
         TerminalService $terminalService,
         RegionsService $regionsService,
-        $terminal = null
-    ): void
-    {
-        $this->provinces = $regionsService->getProvincesForSelect();
+        ?Terminal $terminal = null
+    ): void {
+        $this->initRegions();
 
         if ($terminal) {
             $this->terminal = $terminalService->find($terminal->id);
@@ -52,58 +40,6 @@ new class extends Component
         }
     }
 
-    public function updatedProvinceId($value, RegionsService $service): void
-    {
-        $this->county_id = null;
-        $this->district_id = null;
-        $this->settlement_id = null;
-        $this->village_id = null;
-        $this->counties = [];
-        $this->districts = [];
-        $this->settlements = [];
-        $this->villages = [];
-
-        if ($value) {
-            $this->counties = $service->getCountiesByProvince((int) $value);
-        }
-    }
-
-    public function updatedCountyId($value, RegionsService $service): void
-    {
-        $this->district_id = null;
-        $this->settlement_id = null;
-        $this->village_id = null;
-        $this->districts = [];
-        $this->settlements = [];
-        $this->villages = [];
-
-        if ($value) {
-            $this->districts = $service->getDistrictsByCounty((int) $value);
-        }
-    }
-
-    public function updatedDistrictId($value, RegionsService $service): void
-    {
-        $this->settlement_id = null;
-        $this->village_id = null;
-        $this->settlements = [];
-        $this->villages = [];
-
-        if ($value) {
-            $this->settlements = $service->getSettlementsByDistrict((int) $value);
-        }
-    }
-
-    public function updatedSettlementId($value, RegionsService $service): void
-    {
-        $this->village_id = null;
-        $this->villages = [];
-
-        if ($value) {
-            $this->villages = $service->getVillagesBySettlement((int) $value);
-        }
-    }
-
     public function save(TerminalService $service): void
     {
         try {
@@ -118,13 +54,11 @@ new class extends Component
 
             if ($this->terminal) {
                 $service->update($this->terminal, $validated);
-                $this->toastSuccess(__('Terminal.Record Edited Successfully.'));
+                $this->toastSuccess(model_trans('terminal', 'updated'));
             } else {
                 $terminal = $service->create($validated);
-                $this->toastSuccess(__('Terminal.Record Created Successfully.'));
-                $this->redirect(route('terminals.edit',[
-                    'id' => $terminal->id,
-                ]), true);
+                $this->toastSuccess(model_trans('terminal', 'created'));
+                $this->redirect(route('terminals.edit', $terminal), true);
             }
         } catch (ValidationException $e) {
             $this->toastValidationError();
@@ -135,7 +69,7 @@ new class extends Component
     public function render()
     {
         return $this->view()->title(
-            $this->terminal ? $this->terminal->name : __('Terminal.New Record')
+            $this->terminal ? $this->terminal->name : model_trans('terminal', 'new')
         );
     }
 };

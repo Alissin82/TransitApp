@@ -9,13 +9,11 @@
     <title>
         {{ $title ?? 'داشبورد' }}
         |
-        سامانه ترابری
+        پایانه‌یار
     </title>
 
     {{-- Vite assets: CSS and JS bundles --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    {{-- Alpine.js: loaded via Vite, not CDN --}}
 
     {{-- Alpine.js store: theme management --}}
     <script>
@@ -84,12 +82,27 @@
             const savedTheme = localStorage.getItem('theme');
             const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             const theme = savedTheme || systemTheme;
+
             if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
-                document.body.classList.add('dark', 'bg-gray-900');
+
+                if (document.body) {
+                    document.body.classList.add('dark', 'bg-gray-900');
+                } else {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        document.body.classList.add('dark', 'bg-gray-900');
+                    });
+                }
             } else {
                 document.documentElement.classList.remove('dark');
-                document.body.classList.remove('dark', 'bg-gray-900');
+
+                if (document.body) {
+                    document.body.classList.remove('dark', 'bg-gray-900');
+                } else {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        document.body.classList.remove('dark', 'bg-gray-900');
+                    });
+                }
             }
         })();
     </script>
@@ -142,6 +155,7 @@
 
     </div>
 
+    @livewire('wire-elements-modal')
 </body>
 
 @stack('scripts')

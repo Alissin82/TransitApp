@@ -7,6 +7,7 @@ use App\Models\IranRegion\District;
 use App\Models\IranRegion\Province;
 use App\Models\IranRegion\Settlement;
 use App\Models\IranRegion\Village;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Database\Factories\TerminalFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,17 @@ class Terminal extends Model
         'settlement_id',
         'village_id',
     ];
+
+    protected function address(): Attribute
+    {
+        return Attribute::get(fn () => implode(' - ', array_filter([
+            $this->province->name,
+            $this->county->name,
+            $this->district->name,
+            $this->settlement->name,
+            $this->village?->name,
+        ])) ?: '-');
+    }
 
     public function province(): BelongsTo
     {
@@ -52,12 +64,12 @@ class Terminal extends Model
         return $this->belongsTo(Village::class);
     }
 
-    public function departureTransitLines(): HasMany
+    public function originTransitLines(): HasMany
     {
         return $this->hasMany(TransitLine::class, 'origin_terminal_id', 'id');
     }
 
-    public function arrivalTransitLines(): HasMany
+    public function destinationTransitLines(): HasMany
     {
         return $this->hasMany(TransitLine::class, 'destination_terminal_id', 'id');
     }

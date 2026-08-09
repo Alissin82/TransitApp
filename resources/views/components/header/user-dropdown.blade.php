@@ -16,10 +16,10 @@
         type="button"
     >
         <span class="me-3 overflow-hidden rounded-full h-11 w-11">
-            <img src="/images/user/owner.png" alt="{{ __('User') }}" />
+            <img src="{{ asset('images/user/owner.png') }}" alt="{{ __('User') }}" />
         </span>
 
-       <span class="block me-1 font-medium text-theme-sm">Musharof</span>
+       <span class="block me-1 font-medium text-theme-sm">علی</span>
 
         {{-- Chevron icon: rotates when dropdown is open --}}
         <svg
@@ -42,13 +42,13 @@
         x-transition:leave="transition ease-in duration-75"
         x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95"
-        class="absolute end-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark z-50"
+        class="absolute end-0 mt-4.25 flex w-65 flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark z-50"
         style="display: none;"
     >
         {{-- User info section --}}
         <div>
-            <span class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">Musharof Chowdhury</span>
-            <span class="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">randomuser@pimjo.com</span>
+            <span class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">علی انصاریپور</span>
+            <span class="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">aliansaipoor82@gmail.com</span>
         </div>
 
         {{-- Menu items list --}}

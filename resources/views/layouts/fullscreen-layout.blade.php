@@ -9,7 +9,7 @@
     <title>
         {{ $title ?? 'داشبورد' }}
         |
-        سامانه ترابری
+        پایانه‌یار
     </title>
 
     {{-- Vite assets --}}
@@ -112,6 +112,7 @@ window.addEventListener('resize', checkMobile);">
         @yield('content')
     @endif
 
+    <livewire:wire-elements-modal />
 </body>
 
 @stack('scripts')

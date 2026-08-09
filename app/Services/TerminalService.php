@@ -2,88 +2,33 @@
 
 namespace App\Services;
 
+use App\Class\Service;
+use App\Exceptions\CannotDeleteException;
 use App\Models\Terminal;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
-class TerminalService
+class TerminalService extends Service
 {
+    protected string $model = Terminal::class;
+
+    protected array $with = [
+        'province'
+    ];
+
     /**
-     * Get all terminals with pagination
+     * @throws CannotDeleteException if the terminal still has transit lines attached.
      */
-    public function paginate(int $perPage = 15, string $search = ''): LengthAwarePaginator
+    public function delete(Model $model): bool
     {
-        $query = Terminal::with([
-            'province',
-            'county',
-            'district',
-            'settlement',
-            'village'
-        ]);
+        /** @var Terminal $model */
+        $this->guardAgainstDependentTransitLines($model);
 
-        if ($search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('name', 'like', "%$search%")
-                    ->orWhereHas('province', function ($query) use ($search) {
-                        $query->where('name', 'like', "%$search%");
-                    })
-                    ->orWhereHas('county', function ($query) use ($search) {
-                        $query->where('name', 'like', "%$search%");
-                    })
-                    ->orWhereHas('district', function ($query) use ($search) {
-                        $query->where('name', 'like', "%$search%");
-                    })
-                    ->orWhereHas('settlement', function ($query) use ($search) {
-                        $query->where('name', 'like', "%$search%");
-                    })
-                    ->orWhereHas('village', function ($query) use ($search) {
-                        $query->where('name', 'like', "%$search%");
-                    });
-            });
-        }
-
-        return $query->latest()->paginate($perPage);
+        return parent::delete($model);
     }
 
     /**
-     * Get terminal by ID
-     */
-    public function find(int $id): ?Terminal
-    {
-        return Terminal::with([
-            'province',
-            'county',
-            'district',
-            'settlement',
-            'village'
-        ])->find($id);
-    }
-
-    /**
-     * Create a new terminal
-     */
-    public function create(array $data): Terminal
-    {
-        return Terminal::create($data);
-    }
-
-    /**
-     * Update an existing terminal
-     */
-    public function update(Terminal $terminal, array $data): bool
-    {
-        return $terminal->update($data);
-    }
-
-    /**
-     * Delete a terminal
-     */
-    public function delete(Terminal $terminal): bool
-    {
-        return $terminal->delete();
-    }
-
-    /**
-     * Get terminals for select dropdown (grouped by region)
+     * Get terminals for select dropdown (filtered by region)
      */
     public function getTerminalsForSelect(
         ?int $provinceId = null,
@@ -99,30 +44,22 @@ class TerminalService
             'settlement',
         ]);
 
-        if ($provinceId) {
-            $query->where('province_id', $provinceId);
-        }
+        $filters = [
+            'province_id'   => $provinceId,
+            'county_id'     => $countyId,
+            'district_id'   => $districtId,
+            'settlement_id' => $settlementId,
+            'village_id'    => $villageId,
+        ];
 
-        if ($countyId) {
-            $query->where('county_id', $countyId);
-        }
-
-        if ($districtId) {
-            $query->where('district_id', $districtId);
-        }
-
-        if ($settlementId) {
-            $query->where('settlement_id', $settlementId);
-        }
-
-        if ($villageId) {
-            $query->where('village_id', $villageId);
+        foreach ($filters as $column => $value) {
+            $query->when($value, fn (Builder $query) => $query->where($column, $value));
         }
 
         return $query->orderBy('name')
             ->get()
-            ->mapWithKeys(fn ($terminal) => [
-                $terminal->id => $this->formatTerminalName($terminal)
+            ->mapWithKeys(fn (Terminal $terminal) => [
+                $terminal->id => $this->formatTerminalName($terminal),
             ])
             ->toArray();
     }
@@ -130,26 +67,40 @@ class TerminalService
     /**
      * Format terminal name with region hierarchy
      */
-    private function formatTerminalName(Terminal $terminal): string
+    public function formatTerminalName(Terminal $terminal): string
     {
-        $parts = [$terminal->name];
-
-        if ($terminal->province) {
-            $parts[] = $terminal->province->name;
-        }
-
-        if ($terminal->county) {
-            $parts[] = $terminal->county->name;
-        }
-
-        if ($terminal->district) {
-            $parts[] = $terminal->district->name;
-        }
-
-        if ($terminal->settlement) {
-            $parts[] = $terminal->settlement->name;
-        }
+        $parts = array_filter([
+            $terminal->name,
+            $terminal->province?->name,
+            $terminal->county?->name,
+            $terminal->district?->name,
+            $terminal->settlement?->name,
+        ]);
 
         return implode(' - ', $parts);
+    }
+
+    /**
+     * @throws CannotDeleteException
+     */
+    protected function guardAgainstDependentTransitLines(Terminal $terminal): void
+    {
+        $count = $this->transitLinesCount($terminal);
+
+        if ($count > 0) {
+            throw new CannotDeleteException(
+                model_trans('terminal', 'messages.has_transit_lines', ['count' => $count])
+            );
+        }
+    }
+
+    protected function transitLinesCount(Terminal $terminal): int
+    {
+        // Use eager-loaded counts if available (bulk path), otherwise query them.
+        if (isset($terminal->origin_transit_lines_count, $terminal->destination_transit_lines_count)) {
+            return $terminal->origin_transit_lines_count + $terminal->destination_transit_lines_count;
+        }
+
+        return $terminal->originTransitLines()->count() + $terminal->destinationTransitLines()->count();
     }
 }
